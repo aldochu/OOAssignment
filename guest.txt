@@ -1,0 +1,2 @@
+Alice Bob|s1609483f|hougang ave 6|8173723|Singapore|true|Alice Alice|18293843938|324|Visa Card|10/10/2020
+aldo chu|f343434f|amk ave 6|3432432|India|true|Aldo alfo|434343434|343|Master|10/11/2022
