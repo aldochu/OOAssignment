@@ -16,10 +16,10 @@ public abstract class StoreData {
 	
 	
   // sub class override this function, read from file
-	public abstract void readClass(String filename,Object[] o) throws IOException;
+	public abstract void readClass(String filename,ArrayList o) throws IOException;
 
   // sub class override this function, save to file
-	public abstract void saveClass(String filename, Object[] o) throws IOException;
+	public abstract void saveClass(String filename,ArrayList o) throws IOException;
 
 	
   /** Write fixed content to the given file. */

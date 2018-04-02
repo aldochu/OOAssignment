@@ -3,13 +3,15 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class GuestApp {
 	
 
-	private Guest[] hotelGuest = new Guest[30]; //created 20 array
+	//private Guest[] hotelGuest = new Guest[30]; //created 20 array
+	private ArrayList<Guest> hotelGuest = new ArrayList<Guest>();
 	private GuestData db = new GuestData();
 	Scanner sc = new Scanner(System.in);
 	
@@ -17,8 +19,13 @@ public class GuestApp {
 	protected GuestApp()
 	{
 		try {
-			db.readClass("guest.txt", (Object[])hotelGuest); //to read data from files
-			printGuest(hotelGuest[0]);
+			db.readClass("guest.txt", hotelGuest); //to read data from files
+			
+			for (int k = 0 ; k < hotelGuest.size() ; k++)
+				System.out.println(hotelGuest.get(k).name);
+
+
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,44 +33,34 @@ public class GuestApp {
 	}
 	
 	///////////////////////////////////Create Guest//////////////////////////////////////////////
-	public int createGuest()
+
+	public int createGuest()//pass by reference
 	{
-		for(int i = 0;i<hotelGuest.length;i++)
-		{
-			if(hotelGuest[i]==null)
-			{
-				hotelGuest[i] = new Guest();
-				return addGuestDetails(hotelGuest[i]);
-			}
-		}
-		return 0;
-	}
-	
-	private int addGuestDetails(Guest hotelGuest)//pass by reference
-	{
+		
+		Guest _hotelGuest = new Guest();
 		String var; //this var is for looping condition
 		
 		System.out.println("Please enter the guest name:");
-		hotelGuest.name = sc.nextLine();
+		_hotelGuest.name = sc.nextLine();
 		System.out.println("Please enter the guest ic:");
-		hotelGuest.ic = sc.nextLine();
+		_hotelGuest.ic = sc.nextLine();
 		System.out.println("Please enter the guest nationality:");
-		hotelGuest.nationality = sc.nextLine();
+		_hotelGuest.nationality = sc.nextLine();
 		System.out.println("Please enter the guest contact number:");
-		hotelGuest.contactNo = sc.nextLine();
+		_hotelGuest.contactNo = sc.nextLine();
 		System.out.println("Please enter the guest address:");
-		hotelGuest.address = sc.nextLine();
+		_hotelGuest.address = sc.nextLine();
 		//loop
 		do{
 		System.out.println("Please enter the guest gender M/F:");
 		var = sc.nextLine();
 		if(var.equals("M"))
 		{
-		hotelGuest.gender = true;
+			_hotelGuest.gender = true;
 		break;
 		}
 		else 
-			hotelGuest.gender = false;
+			_hotelGuest.gender = false;
 		}while(!var.equals("M") || !var.equals("M"));
 		
 		do{
@@ -71,24 +68,25 @@ public class GuestApp {
 			var = sc.nextLine();
 			if(var.equals("Y"))
 			{
-				addCCDetail(hotelGuest);
+				addCCDetail(_hotelGuest);
 			break;
 			}
 			else if(var.equals("N"))
-				hotelGuest.ccdetails = null;
+				_hotelGuest.ccdetails = null;
 			}while(!var.equals("Y") || !var.equals("N"));
+		
+		hotelGuest.add(_hotelGuest);
 
 		System.out.println("Guest created successfully!");
 		
 		try {
-			db.saveClass("guest.txt", (Object[])this.hotelGuest);
+			db.saveClass("guest.txt", hotelGuest);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} //to read data from files
 		
-		
-		return 1; //failed to create
+		return 1;
 		
 	}
 	
@@ -120,13 +118,16 @@ public class GuestApp {
 	public int updateGuest()
 	{
 		
-		System.out.println("Please enter the name of the guest:");
-		String Name = sc.nextLine();
-		for(int i = 0;i<hotelGuest.length;i++)
+		System.out.println("Please enter the nric of the guest:");
+		String ic = sc.nextLine();
+		for(int i = 0;i<hotelGuest.size();i++)
 		{
-			if(hotelGuest[i].name==Name)
+			if(hotelGuest.get(i).ic.equals(ic))
 			{
-				updateGuestDetails(hotelGuest[i]); //pass by reference
+				Guest temp = hotelGuest.get(i);
+				updateGuestDetails(temp); //pass by reference
+				hotelGuest.remove(i); //delete from the searched index
+				hotelGuest.add(i, temp); //add the new updateed record into the deleted index
 				return 1;
 			}
 		}
@@ -149,10 +150,11 @@ public class GuestApp {
 			System.out.println("7: Credit card details");
 			System.out.println("8: quit");
 			choice = sc.nextInt();
+			sc.nextLine();
 			switch (choice) {
 			 case 1: 
 				 System.out.println("Please enter the updated name");
-				 hotelguest.name = sc.nextLine();
+				 hotelguest.name = sc.nextLine();;
 			 break;
 			 case 2: 
 				 System.out.println("Please enter the updated ic");
@@ -180,6 +182,7 @@ public class GuestApp {
 			 case 8: System.out.println("return to previous");
 			}
 			} while (choice < 8);
+		//return hotelguest;
 	}
 	
 	private void updateCCDetails(Guest hotelguest)
@@ -231,15 +234,14 @@ public class GuestApp {
 	
 	public Guest SearchGuest(String name)
 	{
-		System.out.println("Please enter the name of the guest:");
-		String Name = sc.nextLine();
-		for(int i = 0;i<hotelGuest.length;i++)
+		for(int i = 0;i<hotelGuest.size();i++)
 		{
-			if(hotelGuest[i].name==Name)
+			if(hotelGuest.get(i).name.equals(name))
 			{
-				return hotelGuest[i]; //Search Successfully
+				return hotelGuest.get(i);
 			}
 		}
+		
 		return null; //failed to create
 	}
 	
@@ -276,9 +278,11 @@ public class GuestApp {
 		System.out.println("Expiry date of the credit card: " + new SimpleDateFormat("dd-MM-yyyy").format(hotelguest.ccdetails.expiry));
 	}
 	
-	public void printGuestDetail(String name)
+	public void printGuestDetail()
 	{
-		printGuest(SearchGuest(name));
+		System.out.println("Please enter the name of the guest:");
+		String Name = sc.nextLine();
+		printGuest(SearchGuest(Name));
 	}
 
 	

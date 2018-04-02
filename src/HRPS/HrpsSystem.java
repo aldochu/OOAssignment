@@ -29,7 +29,7 @@ public class HrpsSystem {
 			 break;
 			 
 			 case 3: 
-				 guestController.printGuestDetail(sc.nextLine());;
+				 guestController.printGuestDetail();
 			 break;
 			 
 			 case 4: /* add countDigits() call */
