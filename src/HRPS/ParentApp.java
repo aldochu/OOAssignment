@@ -20,12 +20,17 @@ public class ParentApp {
 		try {
 			db.readClass2("parent.txt", myParent, childarray); //to read data from files
 			
-			System.out.println("Parent Name:"+myParent.get(0).name);
+			for(int i =0;i<myParent.size();i++)
+			{
 			
-			for (int k = 0 ; k < myParent.get(0).mychild.size() ; k++)
+			System.out.println("Parent Name:"+myParent.get(i).name);
+			
+			for (int k = 0 ; k < myParent.get(i).mychild.size() ; k++)
 			{
 				
-				System.out.print(myParent.get(0).mychild.get(k).myname + " ");
+				System.out.print("child name:" + myParent.get(i).mychild.get(k).myname + " ");
+			}
+			System.out.println("\n");
 			}
 
 

@@ -64,14 +64,13 @@
 					String childchild;
 					for(int k=0;k< temp.mychild.size();k++)
 					{
-						ParentChild = temp.mychild.get(k).myname;
+
 						for(int g=0;g<ChildArray.size();g++)
 						{
-							childchild = ((Child)ChildArray.get(g)).myname;
 					
-							if(ParentChild.equals(childchild))
+							if(temp.mychild.get(k).myname.equals(((Child)ChildArray.get(g)).myname))
 							{
-								System.out.println(ParentChild + " and " + childchild);
+								
 								st.append(g);
 								st.append("#");
 							}
