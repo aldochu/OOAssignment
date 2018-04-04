@@ -44,6 +44,15 @@ public class GuestApp {
 		_hotelGuest.name = sc.nextLine();
 		System.out.println("Please enter the guest ic:");
 		_hotelGuest.ic = sc.nextLine();
+		
+		if(SearchGuestExist(_hotelGuest.ic))
+		{
+			System.out.println(_hotelGuest.ic + " is already registered as guest");
+			System.out.println("Add guest action terminating . . . ");
+			return 0;
+		}
+		else
+		{
 		System.out.println("Please enter the guest nationality:");
 		_hotelGuest.nationality = sc.nextLine();
 		System.out.println("Please enter the guest contact number:");
@@ -87,6 +96,7 @@ public class GuestApp {
 		} //to read data from files
 		
 		return 1;
+		}
 		
 	}
 	
@@ -232,7 +242,10 @@ public class GuestApp {
 	
 ///////////////////////////////////End of Update Guest//////////////////////////////////////////////
 	
-	public Guest SearchGuest(String name)
+	
+///////////////////////////////////Start of Search Guest//////////////////////////////////////////////
+	
+	public Guest SearchGuest(String name) //search by name
 	{
 		for(int i = 0;i<hotelGuest.size();i++)
 		{
@@ -244,6 +257,35 @@ public class GuestApp {
 		
 		return null; //failed to create
 	}
+	
+	public Guest SearchGuestByIc(String IC) //search by ic
+	{
+		for(int i = 0;i<hotelGuest.size();i++)
+		{
+			if(hotelGuest.get(i).ic.equals(IC))
+			{
+				return hotelGuest.get(i);
+			}
+		}
+		
+		return null; //failed to create
+	}
+	
+	public boolean SearchGuestExist(String IC) //search by ic to check existence
+	{
+		for(int i = 0;i<hotelGuest.size();i++)
+		{
+			if(hotelGuest.get(i).ic.equals(IC))
+			{
+				return true;
+			}
+		}
+		
+		return false; //failed to create
+	}
+	
+	
+///////////////////////////////////END of Search Guest//////////////////////////////////////////////
 	
 	private void printGuest(Guest hotelguest)
 	{
