@@ -52,7 +52,7 @@ public class PromoApp
 		}
 		
 		System.out.println("Enter Discount in %");
-		promocode.discount = sc.nextLine();
+		promocode.discount = sc.nextDouble();
 		
 		promocode.today = currentDate;
 		promocode.expiry = expDate;

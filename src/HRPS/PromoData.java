@@ -24,7 +24,7 @@ public class PromoData extends StoreData
 				
 			Promo temp = new Promo();
 			temp.pname = star.nextToken().trim();	
-			temp.discount = star.nextToken().trim();
+			temp.discount = Double.parseDouble(star.nextToken().trim());
 		
 			try
 			{ 
