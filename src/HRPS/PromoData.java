@@ -15,6 +15,7 @@ public class PromoData extends StoreData
 		// TODO Auto-generated method stub
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy"); //for date variable
 		// read String from text file
+		@SuppressWarnings("rawtypes")
 		ArrayList stringArray = (ArrayList)read(filename); 
 	    for (int i = 0 ; i < stringArray.size() ; i++)
 	    {
