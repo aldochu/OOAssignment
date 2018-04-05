@@ -61,7 +61,7 @@ public class PaymentApp
 		System.out.println("Booking for " + guest.name + " found");
 		pm.rDate = currentDate;
 		
-		//res = ra.SearchResById(pm.guestId);
+		res = ra.SearchResById(pm.guestId);
 		if(res == null)
 		{
 			pm.paymentId = "WALK IN";
@@ -70,6 +70,9 @@ public class PaymentApp
 		{
 			pm.paymentId = res.res_id;
 		}
+		
+		rm = r.getRoomDetails(pm.guestId);
+		
 		pm.guestId = guest.ic;
 		pm.GuestName = guest.name;
 		pm.roomNumber = roomId;
