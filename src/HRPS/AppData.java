@@ -1,0 +1,18 @@
+package HRPS;
+
+public class AppData {
+	
+	public static final int RES_STATUS_CONFIRMED =1;
+	public static final int RES_STATUS_WAITLIST =2;
+	public static final int RES_STATUS_CHECKED_IN =3;
+	public static final int RES_STATUS_EXPIRED =4;
+	public static final int RES_STATUS_CHECKED_OUT=5;
+	
+	
+	public static final int ROOM_TYPE_SINGLE =1;
+	public static final int ROOM_TYPE_DOUBLE  =2;
+	public static final int ROOM_TYPE_MASTER =3;
+	
+	
+
+}

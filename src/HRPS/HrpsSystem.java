@@ -6,8 +6,12 @@ public class HrpsSystem {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GuestApp guestController = new GuestApp();
+<<<<<<< Updated upstream
 		PromoApp promoController = new PromoApp();
 		PaymentApp payController = new PaymentApp();
+=======
+		ReservationApp ReservationController = new ReservationApp();
+>>>>>>> Stashed changes
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		
@@ -76,12 +80,35 @@ public class HrpsSystem {
 			choice = sc.nextInt();
 			switch (choice) {
 			 case 1: 
+<<<<<<< Updated upstream
 				 payController.createPayment();
 				 break;
 			 case 2:
 				 payController.printPayments();
 				 break;
 			 case 3: System.out.println("Program terminating ….");
+=======
+				 ReservationController.createRes();
+			 break;
+			 
+			 case 2: 
+				 ReservationController.updateRes();
+			 break;
+			 
+			 case 3: 
+				 ReservationController.printResOnly();;
+			 break;
+			 
+			 case 4: /* add countDigits() call */
+			 break;
+			 
+			 case 5: /* add position() call */
+			 break;
+			 
+			 case 6: 
+			 break; 
+			 case 7: System.out.println("Program terminating ….");
+>>>>>>> Stashed changes
 			}
 			} while (choice < 3);
 		

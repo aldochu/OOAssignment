@@ -164,7 +164,7 @@ public class GuestApp {
 			switch (choice) {
 			 case 1: 
 				 System.out.println("Please enter the updated name");
-				 hotelguest.name = sc.nextLine();;
+				 hotelguest.name = sc.nextLine();
 			 break;
 			 case 2: 
 				 System.out.println("Please enter the updated ic");
