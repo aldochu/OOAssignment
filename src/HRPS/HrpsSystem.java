@@ -5,58 +5,59 @@ public class HrpsSystem {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		GuestApp guestController = new GuestApp();
-		PromoApp promoController = new PromoApp();
-<<<<<<< Updated upstream
-		PaymentApp payController = new PaymentApp();
-<<<<<<< HEAD
-		ReservationApp ReservationController = new ReservationApp();
-=======
-		RoomServiceApp roomSvcController = new RoomServiceApp();
->>>>>>> adding classes for room service, will update further changes soon
-=======
 		RoomApp roomController = new RoomApp();
-		
->>>>>>> Stashed changes
 		Scanner sc = new Scanner(System.in);
 		int choice;
+/*		GuestApp guestController = new GuestApp();
+		PromoApp promoController = new PromoApp();
+
+		PaymentApp payController = new PaymentApp();
+
+		ReservationApp ReservationController = new ReservationApp();
+
+		RoomServiceApp roomSvcController = new RoomServiceApp();
+
 		
-//		do {
-//			System.out.println("Perform the following methods:");
-//			System.out.println("1: Add guest");
-//			System.out.println("2: Update guest");
-//			System.out.println("3: Show guest details");
-//			System.out.println("4: Show the list of customers together with their seat numbers in the order of the customer ID");
-//			System.out.println("5: Assign a customer to a seat");
-//			System.out.println("6: Remove a seat assignment");
-//			System.out.println("7: quit");
-//			choice = sc.nextInt();
-//			switch (choice) {
-//			 case 1: 
-//				 guestController.createGuest();
-//			 break;
-//			 
-//			 case 2: 
-//				 guestController.updateGuest();
-//			 break;
-//			 
-//			 case 3: 
-//				 guestController.printGuestDetail();
-//			 break;
-//			 
-//			 case 4: /* add countDigits() call */
-//			 break;
-//			 
-//			 case 5: /* add position() call */
-//			 break;
-//			 
-//			 case 6: 
-//			 break; 
-//			 case 7: System.out.println("Program terminating ….");
-//			}
-//			} while (choice < 7);
 		
-/*		do {
+
+		
+		
+		do {
+		System.out.println("Perform the following methods:");
+			System.out.println("1: Add guest");
+			System.out.println("2: Update guest");
+			System.out.println("3: Show guest details");
+			System.out.println("4: Show the list of customers together with their seat numbers in the order of the customer ID");
+			System.out.println("5: Assign a customer to a seat");
+			System.out.println("6: Remove a seat assignment");
+			System.out.println("7: quit");
+			choice = sc.nextInt();
+			switch (choice) {
+			 case 1: 
+				 guestController.createGuest();
+			 break;
+			 
+			 case 2: 
+				 guestController.updateGuest();
+			 break;
+			 
+			 case 3: 
+				 guestController.printGuestDetail();
+			 break;
+			 
+			 case 4:  add countDigits() call 
+			 break;
+			 
+			 case 5:  add position() call 
+			 break;
+			 
+			 case 6: 
+			 break; 
+			 case 7: System.out.println("Program terminating ….");
+			}
+			} while (choice < 7);
+		
+		do {
 			System.out.println("Perform the following methods:");
 			System.out.println("1: Add Promo");
 			System.out.println("2: Delete Promo");
@@ -158,7 +159,7 @@ public class HrpsSystem {
 		Room temp = new Room();
 		do {
 			System.out.println("Perform the following methods:");
-			System.out.println("1: Add Room");
+			System.out.println("1: Assign Room");
 			System.out.println("2: Update Room");
 			System.out.println("3: Check Availability");
 			System.out.println("4: Room Status Statistic Report");
@@ -170,7 +171,7 @@ public class HrpsSystem {
 			switch (choice) {
 			 case 1: 
 				 System.out.println("Please enter your NRIC: ");
-				 roomController.newRoom(sc.nextLine());
+				 roomController.assignRoom(sc.nextLine());
 			 break;
 			 
 			 case 2: 
@@ -181,12 +182,14 @@ public class HrpsSystem {
 				 roomController.checkAvailability();
 				 break;
 			 case 4:
-				 roomController.roomStatusReport();
+				 roomController.roomStatisticReport();
 				 break;
 				 
 			 case 5:
+				 String guestIc;
 				 System.out.println("Please enter guest IC: ");
-				 roomController.calculateRate(sc.nextLine());
+				guestIc = sc.nextLine();
+				 roomController.calculateRate(guestIc);
 				 break;
 				 
 			 case 6: 
@@ -201,7 +204,7 @@ public class HrpsSystem {
 			 case 8: System.out.println("Program terminating ….");
 			}
 			} while (choice < 8);
->>>>>>> Stashed changes
+
 	}
 
 }

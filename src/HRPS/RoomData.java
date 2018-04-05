@@ -13,7 +13,7 @@ public class RoomData extends StoreData {
 	
 	public void readClass(String filename, ArrayList RoomArray) throws IOException{
 		
-		//DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		ArrayList stringArray = (ArrayList)read(filename);
 		
 		for(int i = 0; i < stringArray.size(); i++) {
@@ -23,19 +23,23 @@ public class RoomData extends StoreData {
 			
 			Room temp = new Room();
 
-			temp.roomId = star.nextToken().trim();	
-			temp.guestIc = star.nextToken().trim();	
-			temp.roomType = star.nextToken().trim();
-			temp.status = star.nextToken().trim();	
-			temp.bedType = star.nextToken().trim();	
-			temp.breakfast = Boolean.parseBoolean(star.nextToken().trim());
-			temp.wifi = Boolean.parseBoolean(star.nextToken().trim());
-			temp.cityView = Boolean.parseBoolean(star.nextToken().trim());
-			temp.smoking = Boolean.parseBoolean(star.nextToken().trim());
-			temp.rate = Double.parseDouble(star.nextToken().trim());
+			temp.roomId = star.nextToken().trim();
 			temp.levelNo = Integer.parseInt(star.nextToken().trim());
 			temp.roomNo = Integer.parseInt(star.nextToken());
-
+			temp.status = star.nextToken().trim();	
+			temp.guestIc = star.nextToken().trim();	
+			if(!temp.guestIc.equals(null)) {
+				temp.roomType = star.nextToken().trim();
+				temp.bedType = star.nextToken().trim();	
+				temp.breakfast = Boolean.parseBoolean(star.nextToken().trim());
+				temp.wifi = Boolean.parseBoolean(star.nextToken().trim());
+				temp.cityView = Boolean.parseBoolean(star.nextToken().trim());
+				temp.smoking = Boolean.parseBoolean(star.nextToken().trim());
+				temp.rate = Double.parseDouble(star.nextToken().trim());
+			}
+			else {
+				//do nothing
+			}
 			RoomArray.add(temp);
 		}
 	}
