@@ -47,53 +47,52 @@ public class HrpsSystem {
 //			}
 //			} while (choice < 7);
 		
-//		do {
-//			System.out.println("Perform the following methods:");
-//			System.out.println("1: Add Promo");
-//			System.out.println("2: Delete Promo");
-//			System.out.println("3: Show all Promo");
-//			System.out.println("4: quit");
-//			choice = sc.nextInt();
-//			switch (choice) {
-//			 case 1: 
-//				 promoController.createPromo();
-//			 break;
-//			 
-//			 case 2: 
-//				 promoController.deletePromo();
-//				 break;
-//			 
-//			 case 3: 
-//				 promoController.printPromo();
-//				 break;
-//			 case 4: System.out.println("Program terminating ….");
-//			}
-//			} while (choice < 4);
-
-		do 
-		{
+		do {
 			System.out.println("Perform the following methods:");
-			System.out.println("1: Add Payment");
-			System.out.println("2: Display todays bills");
+			System.out.println("1: Add Promo");
+			System.out.println("2: Delete Promo");
+			System.out.println("3: Show all Promo");
+			System.out.println("4: quit");
 			choice = sc.nextInt();
-			switch (choice) 
-			{
-			 case 1:
-				 ReservationController.createRes();
+			switch (choice) {
+			 case 1: 
+				 payController.createPayment();
 			 break;
 			 
 			 case 2: 
-				 ReservationController.updateRes();
-			 break;
+				 payController.printPayments();
+				 break;
 			 
 			 case 3: 
-				 ReservationController.printResOnly();
-			 break;
-			 case 4:
-				 System.exit(0);
 				 break;
-			} 	
-		}while (choice < 4);
+			 case 4: System.out.println("Program terminating ….");
+			}
+			} while (choice < 4);
+
+//		do 
+//		{
+//			System.out.println("Perform the following methods:");
+//			System.out.println("1: Add Payment");
+//			System.out.println("2: Display todays bills");
+//			choice = sc.nextInt();
+//			switch (choice) 
+//			{
+//			 case 1:
+//				 ReservationController.createRes();
+//			 break;
+//			 
+//			 case 2: 
+//				 ReservationController.updateRes();
+//			 break;
+//			 
+//			 case 3: 
+//				 ReservationController.printResOnly();
+//			 break;
+//			 case 4:
+//				 System.exit(0);
+//				 break;
+//			} 	
+//		}while (choice < 4);
 	}
 
 }

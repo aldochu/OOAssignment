@@ -5,7 +5,7 @@ import java.util.Date;
 public class Payment
 {
 	public Date rDate;
-	public String paymentId = "Walk In";
+	public String paymentId;
 	public String guestId;
 	public String GuestName;
 	public int roomNumber;
