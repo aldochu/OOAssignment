@@ -76,12 +76,12 @@ import HRPS.GuestData;
 		    myClassRoom.setTeacherName(TeacherName);
 		}*/
 		
-		public int createRes()//pass by reference
+		public void createRes()//pass by reference
 		{
 			
 			Reservation res = new Reservation();
 			Guest g = new Guest();
-			GuestApp guest = new GuestApp();
+			GuestApp ga= new GuestApp();
 			String var; //this var is for looping condition
 			
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -93,10 +93,12 @@ import HRPS.GuestData;
 			System.out.println("Please enter the guestid:");
 			res.guestId = sc.nextLine();
 			
-			g = guest.
-				/*if(guestController.createGuest().equals(reserve.guestId)) {
-					System.out.println("User ic is found");
-				}*/
+			g = ga.SearchGuestByIc(res.guestId);
+			if(g==null) {
+				System.out.println("Please enter a valid guestid");
+				return;
+			}
+				
 			
 			//System.out.println("Please enter the room type(Single, Double, Deluxe, VIP Suite):");
 			//res.roomType = sc.nextLine();
@@ -150,15 +152,8 @@ import HRPS.GuestData;
 			} //to read data from files
 			
 			System.out.println("Reservation created successfully!");
-			
-			return 1;
-			
-			
-			
-			
-		
-			
-			
+
+
 		}
 		
 		
@@ -305,6 +300,7 @@ import HRPS.GuestData;
 					return;
 				for(int i = 0; i < reserve.size(); i++)
 				{
+				System.out.println("Guest ID: " + reserve.get(i).guestId);
 				System.out.println("Reservation ID: " + reserve.get(i).res_id);
 				System.out.println("Check in date: " + reserve.get(i).check_in);
 				System.out.println("Check out date: " + reserve.get(i).check_out);

@@ -28,7 +28,8 @@ public class Reservationdb extends StoreData {
 				
 						StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
 						temp.status = Integer.parseInt(star.nextToken().trim());
-						temp.res_id = star.nextToken().trim();	
+						temp.res_id = star.nextToken().trim();
+						temp.guestId = star.nextToken().trim();
 						//temp.roomType = star.nextToken().trim();
 						//temp.bedType = star.nextToken().trim();	
 						temp.NoOfAdult = Integer.parseInt(star.nextToken().trim());	
@@ -65,6 +66,8 @@ public class Reservationdb extends StoreData {
 		builder.append(String.valueOf(temp.status));
 		builder.append(SEPARATOR);
 		builder.append(temp.res_id.trim());
+		builder.append(SEPARATOR);
+		builder.append(temp.guestId.trim());
 		builder.append(SEPARATOR);
 		//builder.append(temp.roomType.trim());
 		//builder.append(SEPARATOR);

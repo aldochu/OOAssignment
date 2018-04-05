@@ -13,9 +13,9 @@ public class Reservation {
 	public Date check_out;
 	public int NoOfAdult;
 	public int NoOfChild;
-//	public String roomType,bedType;
+	public String roomType,bedType;
 	public int status;
-//	Boolean roomStatus;
+	Boolean roomStatus;
 	
 	
 
