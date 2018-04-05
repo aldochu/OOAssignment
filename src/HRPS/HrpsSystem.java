@@ -8,7 +8,11 @@ public class HrpsSystem {
 		GuestApp guestController = new GuestApp();
 		PromoApp promoController = new PromoApp();
 		PaymentApp payController = new PaymentApp();
+<<<<<<< HEAD
 		ReservationApp ReservationController = new ReservationApp();
+=======
+		RoomServiceApp roomSvcController = new RoomServiceApp();
+>>>>>>> adding classes for room service, will update further changes soon
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		
@@ -67,6 +71,7 @@ public class HrpsSystem {
 				 break;
 			 case 4: System.out.println("Program terminating ….");
 			}
+<<<<<<< HEAD
 			} while (choice < 4);
 
 //		do 
@@ -93,6 +98,55 @@ public class HrpsSystem {
 //				 break;
 //			} 	
 //		}while (choice < 4);
+=======
+		do {
+			System.out.println("Perform the following methods:");
+			System.out.println("1: Add food catalogue");
+			System.out.println("2: Update food catalogue");
+			System.out.println("3: Show list of foods(name,description,price)");
+			System.out.println("4: Add order");
+			System.out.println("5: Update order status");
+			System.out.println("6: Remove Order ");
+			System.out.println("7: quit");
+			choice = sc.nextInt();
+			switch (choice) {
+				 case 1: 
+				 {
+					 roomSvcController.createFoodData();
+				     break;
+				 }
+				 case 2:
+				 {
+					 roomSvcController.updateFood();
+				     break;
+				 }
+				 case 3:
+				 {
+					 roomSvcController.printFoodList();
+				     break;
+				 }
+				 case 4:
+				 {
+					 roomSvcController.createOrder();
+					 break;
+				 }
+				 case 5:
+				 {
+					 roomSvcController.updateOrder();
+					 break;
+				 }
+				 case 6: 
+				 {
+					 roomSvcController.removeOrder();
+					 break;
+				 }
+				 case 7:
+	                 System.out.println("Program terminating ….");
+				}
+			}
+			  while (choice < 7);
+		 }
+>>>>>>> adding classes for room service, will update further changes soon
 	}
 
 }
