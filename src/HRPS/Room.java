@@ -2,9 +2,10 @@ package HRPS;
 
 public class Room {
 	public int roomNo, levelNo;
-	public String roomType, bedType, guest;
+	public String roomType, bedType, guestIc, roomId;
 	public double rate;
-	public boolean wifi, smoking, cityView, breakfast;
+	public boolean wifi = false, smoking = false, cityView = false, breakfast = false;
 	
-	public String status = "Available";
+	public String status = "Vacant";
+	
 }

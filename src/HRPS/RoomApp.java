@@ -1,41 +1,150 @@
 package HRPS;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RoomApp {
 	
-	private Room[] hotelRoom = new Room[48]; //roomId
+	private ArrayList<Room> hotelRoom = new ArrayList<Room>(); 
+	private RoomData db = new RoomData();
 	private float occupancyPercentage;
+	private int vipCount = 0, deluxeCount = 0, singleCount = 0, doubleCount = 0; 
 	Scanner sc = new Scanner(System.in);
 	
-	public int newRoom(String name, String roomType, String bedType, boolean wifi, boolean smoking, boolean cityView, boolean breakkie)
+	protected RoomApp()
 	{
-		//48 rooms; 6 floors - level 2 to 7; 4 rooms each floor
-		for(int i = 0; i<hotelRoom.length; i++) {
-			if(hotelRoom[i].status == "Available") {
-				hotelRoom[i].bedType = bedType;
-				hotelRoom[i].roomType = roomType;
-				hotelRoom[i].guest = name;
-				hotelRoom[i].cityView = cityView;
-				hotelRoom[i].smoking = smoking;
-				hotelRoom[i].wifi = wifi;
-				hotelRoom[i].breakfast = breakkie;
-				hotelRoom[i].roomNo = i%8;
-				hotelRoom[i].levelNo = i/8 + 2;
-				hotelRoom[i].status = "Occupied";
-				return i;
-			}
+		try {
+			db.readClass("room.txt", hotelRoom); //to read data from files
+			
+			for (int k = 0 ; k < hotelRoom.size() ; k++)
+				System.out.println(hotelRoom.get(k).guestIc);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return -1; //no rooms available
 	}
 	
-	public void updateRoomDetails(int roomId)
+	public int newRoom(String guestIC) //returns 1 for room assigned
+	{
+		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
+		//top floor: 2 VIP, 6 deluxe
+		//20 single rooms
+		//20 double rooms
+		
+		if( hotelRoom.size() < 48) {
+			Room _hotelRoom = new Room();
+				System.out.println("Please enter the room type:");
+				_hotelRoom.roomType = checkRoom(sc.nextLine(), _hotelRoom);
+				System.out.println("Do you wish to have city view? Y: Yes");
+				if(sc.nextLine().equals("Y")) _hotelRoom.cityView = true;
+				System.out.println("Do you wish to have breakfast included? Y: Yes");
+				if(sc.nextLine().equals("Y")) _hotelRoom.breakfast = true;
+				System.out.println("Do you wish to have WiFi enabled? Y: Yes");
+				if(sc.nextLine().equals("Y")) _hotelRoom.wifi = true;
+				System.out.println("Do you wish to have smoking area? Y: Yes");
+				if(sc.nextLine().equals("Y")) _hotelRoom.smoking = true;
+				
+				_hotelRoom.guestIc = guestIC;
+				_hotelRoom.status = "Reserved";
+				hotelRoom.add(_hotelRoom);
+				return 1; //room assigned
+		}
+		System.out.println("Sorry, no rooms available :(");
+		return 0; //no rooms available
+	}
+	
+	private String checkRoom(String roomType, Room _hotelRoom)
+	{
+		
+		//VIP
+		if(roomType.equals("VIP") && vipCount < 2) {
+			vipCount++;
+			_hotelRoom.bedType = "2 King Beds";
+			_hotelRoom.levelNo = 7;
+			_hotelRoom.roomNo = vipCount;
+			System.out.println("here");
+			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
+			return roomType;
+		}
+		
+		//Deluxe
+		else if(roomType.equals("Deluxe") && deluxeCount < 6) {
+			deluxeCount++;
+				System.out.println("Would you rather 2 Double Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					_hotelRoom.bedType = "2 Double Beds";
+				else 
+					_hotelRoom.bedType = "1 King Bed";
+			_hotelRoom.levelNo = 7;
+			_hotelRoom.roomNo = deluxeCount + 2;
+			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
+			return roomType;
+		}
+		
+		//Double
+		else if(roomType.equals("Double") && doubleCount < 20) {
+			doubleCount++;
+				System.out.println("Would you rather 2 Single Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					_hotelRoom.bedType = "2 Single Beds";
+				else 
+					_hotelRoom.bedType = "1 Double Bed";
+			_hotelRoom.levelNo = (doubleCount + singleCount) / 8 + 2;
+			_hotelRoom.roomNo = (doubleCount + singleCount) % 8;
+			if(_hotelRoom.roomNo == 0) _hotelRoom.roomNo = 8;
+			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
+			return roomType;
+		}
+		
+		//Single
+		
+		else if(roomType.equals("Single") && singleCount < 20) {
+			
+			singleCount++;
+			_hotelRoom.bedType = "1 Single Bed";
+			_hotelRoom.levelNo = (doubleCount + singleCount) / 8 + 2;
+			_hotelRoom.roomNo = (doubleCount + singleCount) % 8;
+			if(_hotelRoom.roomNo == 0) _hotelRoom.roomNo = 8;
+			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
+			return roomType;
+		}
+		else 
+			return null;
+	}
+	
+	public void checkIn(String roomId)
+	{
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(roomId)) hotelRoom.get(i).status = "Occupied";
+		}
+	}
+	
+	public int updateRoom()
+	{
+		System.out.println("Please enter the room ID(eg. 02-08):");
+		String id = sc.nextLine();
+		for(int i = 0;i<hotelRoom.size();i++)
+		{
+			if(hotelRoom.get(i).roomId.equals(id))
+			{
+				Room temp = hotelRoom.get(i);
+				updateRoomDetails(temp); //pass by reference
+				hotelRoom.remove(i); //delete from the searched index
+				hotelRoom.add(i, temp); //add the new updated record into the deleted index
+				return 1;
+			}
+		}
+		return 0;
+	}
+	
+	private void updateRoomDetails(Room _hotelRoom)
 	{
 		int choice;
-		String change;
 		do {
 			System.out.println("Which information do you want to update?");
-			System.out.println("1. Guest");
+			System.out.println("1. Guest IC");
 			System.out.println("2. Status");
 			System.out.println("3. Room Type");
 			System.out.println("4. Bed Type");
@@ -45,38 +154,35 @@ public class RoomApp {
 			System.out.println("8. Breakfast");
 			System.out.println("9. Quit");
 			choice = sc.nextInt();
+			sc.nextLine();
 			switch (choice) {
-				case 1: System.out.println("Please enter the updated Guest Name: ");
-						hotelRoom[roomId].guest = sc.nextLine();
+				case 1: System.out.println("Please enter the updated Guest IC: ");
+						_hotelRoom.guestIc = sc.nextLine();
 						break;
 				case 2: System.out.println("Please enter the updated Status: ");
-						hotelRoom[roomId].status = checkInput(sc.nextLine(), 3);
+						_hotelRoom.status = checkInput(sc.nextLine(), 3);
 						break;
 				case 3: System.out.println("Please enter the updated Room Type: ");
-						hotelRoom[roomId].roomType = checkInput(sc.nextLine(), 1);
+						_hotelRoom.roomType = checkInput(sc.nextLine(), 1);
 						break;
 				case 4: System.out.println("Please enter the updated Bed Type: ");
-						hotelRoom[roomId].bedType = checkInput(sc.nextLine(), 2);
+						_hotelRoom.bedType = checkInput(sc.nextLine(), 2);
 						break;
-				case 5: System.out.println("Change smoking option from " + hotelRoom[roomId].smoking + " to " + !hotelRoom[roomId].smoking + "?");
+				case 5: System.out.println("Change smoking option from " + _hotelRoom.smoking + " to " + !_hotelRoom.smoking + "?");
 						System.out.println("Y: Yes, N: No");
-						change = sc.nextLine();
-						if(change == "Y") hotelRoom[roomId].smoking = !hotelRoom[roomId].smoking;
+						if(sc.nextLine().equals("Y")) _hotelRoom.smoking = !_hotelRoom.smoking;
 						break;
-				case 6: System.out.println("Change WiFi option from " + hotelRoom[roomId].wifi + " to " + !hotelRoom[roomId].wifi + "?");
+				case 6: System.out.println("Change WiFi option from " + _hotelRoom.wifi + " to " + !_hotelRoom.wifi + "?");
 						System.out.println("Y: Yes, N: No");
-						change = sc.nextLine();
-						if(change == "Y") hotelRoom[roomId].wifi = !hotelRoom[roomId].wifi;
+						if(sc.nextLine().equals("Y")) _hotelRoom.wifi = !_hotelRoom.wifi;
 						break;
-				case 7: System.out.println("Change city view option from " + hotelRoom[roomId].cityView + " to " + !hotelRoom[roomId].cityView + "?");
+				case 7: System.out.println("Change city view option from " + _hotelRoom.cityView + " to " + !_hotelRoom.cityView + "?");
 						System.out.println("Y: Yes, N: No");
-						change = sc.nextLine();
-						if(change == "Y") hotelRoom[roomId].cityView = !hotelRoom[roomId].cityView;
+						if(sc.nextLine().equals("Y")) _hotelRoom.cityView = !_hotelRoom.cityView;
 						break;
-				case 8: System.out.println("Change breakfast option from " + hotelRoom[roomId].breakfast + " to " + !hotelRoom[roomId].breakfast + "?");
+				case 8: System.out.println("Change breakfast option from " + _hotelRoom.breakfast + " to " + !_hotelRoom.breakfast + "?");
 						System.out.println("Y: Yes, N: No");
-						change = sc.nextLine();
-						if(change == "Y") hotelRoom[roomId].breakfast = !hotelRoom[roomId].breakfast;
+						if(sc.nextLine().equals("Y")) _hotelRoom.breakfast = !_hotelRoom.breakfast;
 						break;
 				case 9: System.out.println("Bye");
 						break;
@@ -85,7 +191,15 @@ public class RoomApp {
 		} while (choice < 9);
 	}
 	
-	public void calculateRate(int roomId)
+	public Room getRoomDetails(String guestIc)
+	{
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).guestIc.equals(guestIc)) return hotelRoom.get(i);
+		}
+		return null;
+	}
+	
+	public double calculateRate(String guestIC)
 	{
 		//per night
 		//Room type: single = 100, double = 150, deluxe = 200, vip = 300
@@ -94,87 +208,110 @@ public class RoomApp {
 		//wifi = 10
 		//city view = 25
 		//breakfast = 15
+		
 		double result = 0;
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).guestIc.equals(guestIC)) {
+				if(hotelRoom.get(i).roomType.equals("Single")) result += 100;
+				else if(hotelRoom.get(i).roomType.equals("Double")) result += 150;
+				else if(hotelRoom.get(i).roomType.equals("Deluxe")) result += 200;
+				else if(hotelRoom.get(i).roomType.equals("VIP")) result += 300;
+				
+				if(hotelRoom.get(i).smoking == false) result += 25;
+				
+				if(hotelRoom.get(i).wifi == true) result += 10;
+				
+				if(hotelRoom.get(i).cityView == true) result += 25;
+				
+				if(hotelRoom.get(i).breakfast == true) result += 15;
+				
+				hotelRoom.get(i).rate = result;
+				System.out.println("The rate per night for Room " + hotelRoom.get(i).roomId + " is :" + hotelRoom.get(i).rate);
+				return result;
+			}
+		}
 		
-		if(hotelRoom[roomId].roomType == "Single") result += 100;
-		else if(hotelRoom[roomId].roomType == "Double") result += 150;
-		else if(hotelRoom[roomId].roomType == "Deluxe") result += 200;
-		else if(hotelRoom[roomId].roomType == "VIP") result += 300;
+		return 0;
 		
-		if(hotelRoom[roomId].bedType == "Single") result += 50;
-		else if(hotelRoom[roomId].bedType == "Double") result += 75;
-		else if(hotelRoom[roomId].bedType == "Queen") result += 100;
-		else if(hotelRoom[roomId].bedType == "King") result += 150;
-		
-		if(hotelRoom[roomId].smoking == false) result += 25;
-		
-		if(hotelRoom[roomId].wifi == true) result += 10;
-		
-		if(hotelRoom[roomId].cityView == true) result += 25;
-		
-		if(hotelRoom[roomId].breakfast == true) result += 15;
-		
-		hotelRoom[roomId].rate = result;
 	}
 	
-	public void displayRoom(int roomId)
+	public void displayRoom(Room _hotelRoom)
 	{
-		System.out.println("Room number: " + String.format("%02d", hotelRoom[roomId].levelNo) + "-" + String.format("%02d", hotelRoom[roomId].roomNo));
-		System.out.println("Guest: " + hotelRoom[roomId].guest);
-		System.out.println("Room Type: " + hotelRoom[roomId].roomType);
-		System.out.println("Bed Type: " + hotelRoom[roomId].bedType);
-		System.out.println("Smoking: " + hotelRoom[roomId].smoking);
-		System.out.println("City View: " + hotelRoom[roomId].cityView);
-		System.out.println("Wifi enabled: " + hotelRoom[roomId].wifi);
-		System.out.println("Breakfast Included: " + hotelRoom[roomId].breakfast);
+		System.out.println("Room Id: " + _hotelRoom.roomId);
+		System.out.println("Guest IC: " + _hotelRoom.guestIc);
+		System.out.println("Room Type: " + _hotelRoom.roomType);
+		System.out.println("Bed Type: " + _hotelRoom.bedType);
+		System.out.println("Smoking: " + _hotelRoom.smoking);
+		System.out.println("City View: " + _hotelRoom.cityView);
+		System.out.println("Wifi enabled: " + _hotelRoom.wifi);
+		System.out.println("Breakfast Included: " + _hotelRoom.breakfast);
 	}
 	
-	public int checkAvailability(int roomId)
+	public int checkAvailability()
 	{
-		//return 1 for vacant, 0 for unavailable
-		if(hotelRoom[roomId].status == "Vacant") {
-			System.out.println("Room number: " + String.format("%02d", hotelRoom[roomId].levelNo) + "-" + String.format("%02d", hotelRoom[roomId].roomNo) + " is Available");
-			return 1;
+		String check;
+		System.out.println("Please enter the room ID or guest IC: ");
+		check = sc.nextLine();
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(check) || hotelRoom.get(i).guestIc.equals(check)) {
+				if(hotelRoom.get(i).status.equals("Vacant")) 
+					System.out.println("Room number: " + hotelRoom.get(i).roomId + " is Available");
+				else
+					System.out.println("Sorry, Room number: " + hotelRoom.get(i).roomId + " is " + hotelRoom.get(i).status);
+				return 1;
+			}
 		}
-		else {
-			System.out.println("Sorry, Room number: " + String.format("%02d", hotelRoom[roomId].levelNo) + "-" + String.format("%02d", hotelRoom[roomId].roomNo) + " is " + hotelRoom[roomId].status);
-			return 0;
-		}
+		System.out.println("Invalid Entry. Please try again.");
+		return 0;
 	}
 	
 	public void roomOccupancyReport()
 	{
 		int count=0;
-		for(int i=1; i<=hotelRoom.length; i++) {
-			if(hotelRoom[i].status == "Occupied") count++;
+		for(int i=1; i<=hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).status == "Occupied") count++;
 		}
-		occupancyPercentage = (float)(count/hotelRoom.length) * 100;
+		occupancyPercentage = (float)(count/48) * 100;
 		System.out.println("Occupancy Percentage: " + occupancyPercentage + "%");
 	}
 	
-	public void roomStatusReport(String status)
+	public void roomStatusReport()
 	{
-		int count = 0;
-		int[] list = {};
-		System.out.println(status + " : ");
-		for(int i = 0; i<hotelRoom.length; i++) {
-			if(hotelRoom[i].status == status) {
-				list[count] = i;
-				count++;
-				System.out.print(String.format("%02d", hotelRoom[i].levelNo) + "-" + String.format("%02d", hotelRoom[i].roomNo));
-			}
+		StringBuilder vacant =  new StringBuilder() ;
+		StringBuilder occupied =  new StringBuilder() ;
+		StringBuilder reserved =  new StringBuilder() ;
+		StringBuilder um =  new StringBuilder() ;
+
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).status.equals("Vacant")) 
+				vacant.append(hotelRoom.get(i).roomId);
+			else if(hotelRoom.get(i).status.equals("Occupied")) 
+				occupied.append(hotelRoom.get(i).roomId);
+			else if(hotelRoom.get(i).status.equals("Reserved")) 
+				reserved.append(hotelRoom.get(i).roomId);
+			else if(hotelRoom.get(i).status.equals("Under Maintenance")) 
+				um.append(hotelRoom.get(i).roomId);
 		}
+		
+		System.out.println("Vacant: ");
+		System.out.println("Rooms: " + vacant);
+		System.out.println("Occupied: ");
+		System.out.println("Rooms: " + occupied);
+		System.out.println("Reserved: ");
+		System.out.println("Reserved: " + reserved);
+		System.out.println("Under Maintenance: ");
+		System.out.println("Rooms: " + um);
 	}
 	
 	private String checkInput(String input, int type)
 	{
 		boolean result = false;
 		switch (type) {
-			case 1: if(input == "Single" || input == "Double" || input == "Deluxe" || input == "VIP") result = true;
+			case 1: if(input.equals("Single") || input.equals("Double") || input.equals("Deluxe") || input.equals("VIP")) result = true;
 					break;
-			case 2: if(input == "Single" || input == "Double" || input == "Queen" || input == "King") result = true;
+			case 2: if(input.equals("1 Single Bed") || input.equals("2 Single Beds") || input.equals("1 Double Bed") || input.equals("2 Double Beds") || input.equals("1 King Bed") || input.equals("2 King Beds")) result = true;
 					break;
-			case 3: if(input == "Vacant" || input == "Occupied" || input == "Reserved" || input == "Under Maintenance") result = true;
+			case 3: if(input.equals("Vacant") || input.equals("Occupied" ) || input.equals("Reserved") || input.equals("Under Maintenance")) result = true;
 					break;
 		}
 		if(result == false) {

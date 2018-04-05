@@ -7,12 +7,17 @@ public class HrpsSystem {
 		// TODO Auto-generated method stub
 		GuestApp guestController = new GuestApp();
 		PromoApp promoController = new PromoApp();
+<<<<<<< Updated upstream
 		PaymentApp payController = new PaymentApp();
 <<<<<<< HEAD
 		ReservationApp ReservationController = new ReservationApp();
 =======
 		RoomServiceApp roomSvcController = new RoomServiceApp();
 >>>>>>> adding classes for room service, will update further changes soon
+=======
+		RoomApp roomController = new RoomApp();
+		
+>>>>>>> Stashed changes
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		
@@ -51,7 +56,7 @@ public class HrpsSystem {
 //			}
 //			} while (choice < 7);
 		
-		do {
+/*		do {
 			System.out.println("Perform the following methods:");
 			System.out.println("1: Add Promo");
 			System.out.println("2: Delete Promo");
@@ -73,6 +78,7 @@ public class HrpsSystem {
 			}
 <<<<<<< HEAD
 			} while (choice < 4);
+<<<<<<< Updated upstream
 
 //		do 
 //		{
@@ -147,6 +153,55 @@ public class HrpsSystem {
 			  while (choice < 7);
 		 }
 >>>>>>> adding classes for room service, will update further changes soon
+=======
+*/
+		Room temp = new Room();
+		do {
+			System.out.println("Perform the following methods:");
+			System.out.println("1: Add Room");
+			System.out.println("2: Update Room");
+			System.out.println("3: Check Availability");
+			System.out.println("4: Room Status Statistic Report");
+			System.out.println("5: Calculate Rate");
+			System.out.println("6: Print Room");
+			System.out.println("7. Check In");
+			System.out.println("8: Quit");
+			choice = sc.nextInt();
+			switch (choice) {
+			 case 1: 
+				 System.out.println("Please enter your NRIC: ");
+				 roomController.newRoom(sc.nextLine());
+			 break;
+			 
+			 case 2: 
+				 roomController.updateRoom();
+				 break;
+			 
+			 case 3: 
+				 roomController.checkAvailability();
+				 break;
+			 case 4:
+				 roomController.roomStatusReport();
+				 break;
+				 
+			 case 5:
+				 System.out.println("Please enter guest IC: ");
+				 roomController.calculateRate(sc.nextLine());
+				 break;
+				 
+			 case 6: 
+				 roomController.displayRoom(temp);
+				 break;
+				 
+			 case 7:
+				 System.out.println("Please enter the room ID for checking in: ");
+				 roomController.checkIn(sc.nextLine());
+				 break;
+				 
+			 case 8: System.out.println("Program terminating ….");
+			}
+			} while (choice < 8);
+>>>>>>> Stashed changes
 	}
 
 }
