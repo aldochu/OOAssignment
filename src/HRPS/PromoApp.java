@@ -74,7 +74,6 @@ public class PromoApp
 	public void printPromo()
 	{		
 		System.out.println("The Promo Codes below are valid as at " + currentDate);
-		System.out.println("Code|Discount(%)|Entry|Expiry");
 		System.out.println("------------------------------------------------------------");
 		for(int i = 0;i<promo.size();i++)
 		{
@@ -84,6 +83,25 @@ public class PromoApp
 				System.out.println(promo.get(i).pname + "|" + promo.get(i).discount + "\t|" + promo.get(i).today + "\t|" + promo.get(i).expiry);
 			}
 		}
+	}
+	
+	public Promo SearchPromo(String promoname) //search by name
+	{
+		for(int i = 0;i<promo.size();i++)
+		{
+			if(promo.get(i).pname.equals(promoname) && (currentDate.before(promo.get(i).expiry) || currentDate.equals(promo.get(i).expiry)))
+			{
+				return promo.get(i);
+			}
+			
+			else if(promo.get(i).pname.equals(promoname) && currentDate.after(promo.get(i).expiry));
+			{
+				return null;
+			}
+			
+		}
+		
+		return null; //failed to create
 	}
 	
 	public void deletePromo()

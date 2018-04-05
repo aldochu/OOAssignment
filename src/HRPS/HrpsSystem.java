@@ -7,7 +7,7 @@ public class HrpsSystem {
 		// TODO Auto-generated method stub
 		GuestApp guestController = new GuestApp();
 		PromoApp promoController = new PromoApp();
-		
+		PaymentApp payController = new PaymentApp();
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		
@@ -46,29 +46,45 @@ public class HrpsSystem {
 //			}
 //			} while (choice < 7);
 		
+//		do {
+//			System.out.println("Perform the following methods:");
+//			System.out.println("1: Add Promo");
+//			System.out.println("2: Delete Promo");
+//			System.out.println("3: Show all Promo");
+//			System.out.println("4: quit");
+//			choice = sc.nextInt();
+//			switch (choice) {
+//			 case 1: 
+//				 promoController.createPromo();
+//			 break;
+//			 
+//			 case 2: 
+//				 promoController.deletePromo();
+//				 break;
+//			 
+//			 case 3: 
+//				 promoController.printPromo();
+//				 break;
+//			 case 4: System.out.println("Program terminating ….");
+//			}
+//			} while (choice < 4);
+
 		do {
 			System.out.println("Perform the following methods:");
-			System.out.println("1: Add Promo");
-			System.out.println("2: Delete Promo");
-			System.out.println("3: Show all Promo");
-			System.out.println("4: quit");
+			System.out.println("1: Add Payment");
+			System.out.println("2: Display todays bills");
 			choice = sc.nextInt();
 			switch (choice) {
 			 case 1: 
-				 promoController.createPromo();
-			 break;
-			 
-			 case 2: 
-				 promoController.deletePromo();
+				 payController.createPayment();
 				 break;
-			 
-			 case 3: 
-				 promoController.printPromo();
+			 case 2:
+				 payController.printPayments();
 				 break;
-			 case 4: System.out.println("Program terminating ….");
+			 case 3: System.out.println("Program terminating ….");
 			}
-			} while (choice < 4);
-
+			} while (choice < 3);
+		
 	}
 
 }
