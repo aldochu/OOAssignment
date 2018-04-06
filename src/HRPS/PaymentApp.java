@@ -61,7 +61,7 @@ public class PaymentApp
 		System.out.println("Booking for " + guest.name + " found");
 		pm.rDate = currentDate;
 		
-		res = ra.SearchResById(pm.guestId);
+		res = ra.SearchResByGuestId(pm.guestId);
 		if(res == null)
 		{
 			pm.paymentId = "WALK IN";
@@ -200,4 +200,6 @@ public class PaymentApp
 		diffdays = diff/(24*60*60*1000);
 		return diffdays;
 	}
+
+	
 }

@@ -92,7 +92,7 @@ import HRPS.GuestData;
 			
 			System.out.println("Please enter the guestid:");
 			res.guestId = sc.nextLine();
-			
+		
 			g = ga.SearchGuestByIc(res.guestId);
 			if(g==null) {
 				System.out.println("Please enter a valid guestid");
@@ -415,7 +415,26 @@ import HRPS.GuestData;
 				}
 
 			}
-
+			
+			
+			public Reservation SearchResByGuestId(String guestId)
+			{
+				
+			
+				
+				
+				
+				for(int i = 0;i<reserve.size();i++)
+				{
+					
+					if(reserve.get(i).guestId.equals(guestId))
+					{
+					
+						return reserve.get(i); //Search Successfully
+					}
+				}
+				return null; //failed to create
+			}
 
 
 
