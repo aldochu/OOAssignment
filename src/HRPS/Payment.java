@@ -19,4 +19,5 @@ public class Payment
 	public Double roomtax;
 	public Double tcost;
 	public String payType;
+	//public RoomService rsvc = new RoomService();
 }

@@ -29,7 +29,6 @@ public class PaymentApp
 	
 	public void createPayment()//pass by reference
 	{
-		int roomId = 0;
 		String c;
 		Double disc,promoCost = 0.00;
 
@@ -38,52 +37,62 @@ public class PaymentApp
 		Reservation res = new Reservation();
 		Guest guest = new Guest();
 		Room rm = new Room();
+		RoomService rs = new RoomService();
 
 		PromoApp pa = new PromoApp();
 		ReservationApp ra = new ReservationApp();
 		GuestApp g = new GuestApp();
 		RoomApp r = new RoomApp();
+		//RoomServiceApp rsa = new RoomServiceApp();
 		
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		df.format(currentDate);
 		
 		System.out.println("Enter Guest IC");
 		pm.guestId = sc.nextLine();
-		guest = g.SearchGuestByIc(pm.guestId);
+		guest = g.SearchGuestByIc(pm.guestId);	
 		
 		if(guest == null)
-		{	
-			System.out.println("Guest Does Not Exist");
+		{
+			System.out.println("Guest ID is not valid");
 			return;
 		}
-		
 		
 		System.out.println("Booking for " + guest.name + " found");
 		pm.rDate = currentDate;
 		
 		res = ra.SearchResByGuestId(pm.guestId);
+		rm = r.getRoomDetails(pm.guestId);
+
+		pm.GuestName = guest.name;
+		
 		if(res == null)
 		{
 			pm.paymentId = "WALK IN";
+			pm.roomNumber = rm.roomNo;
+			pm.roomType = rm.roomType;
+			pm.bedType = rm.bedType;
+			pm.checkInDate = res.check_in;
+			pm.checkOutDate = res.check_out;
+			pm.adults = res.NoOfAdult;
+			pm.child = res.NoOfChild;
 		}
 		else
 		{
 			pm.paymentId = res.res_id;
+			pm.roomNumber = 1;
+			pm.roomType = "Deluxe";
+			pm.bedType = "King";
+			pm.checkInDate = res.check_in;
+			pm.checkOutDate = res.check_out;
+			pm.adults = res.NoOfAdult;
+			pm.child = res.NoOfChild;
+
 		}
 		
-		rm = r.getRoomDetails(pm.guestId);
-		
-		pm.guestId = guest.ic;
-		pm.GuestName = guest.name;
-		pm.roomNumber = roomId;
-		pm.roomType = rm.roomType;
-		pm.bedType = rm.bedType;
-		pm.adults = res.NoOfAdult;
-		pm.child = res.NoOfChild;
-		pm.checkInDate = res.check_in;
-		pm.checkOutDate = res.check_out;
-		pm.duration = timeDiff(pm.checkOutDate, pm.checkOutDate);
-		pm.roomsvc = 15.00;		
+		pm.duration = timeDiff(pm.checkOutDate, pm.checkInDate);
+		pm.roomcost = 10.00;
+		pm.roomsvc = 0.00;	
 		pm.roomtax = 1.17 * pm.roomcost;
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
@@ -107,9 +116,20 @@ public class PaymentApp
 		System.out.println("No. Children : " + pm.child);
 		System.out.println("Check In Date : " + pm.checkInDate);
 		System.out.println("Check Out Date : " + pm.checkOutDate);
-		System.out.println("Total Stay Duration : " + pm.duration);
+		System.out.println("Total Stay Duration : " + pm.duration + " Days");
 		System.out.println("Room Cost (w/o GST) : " + pm.roomcost);
-		System.out.println("Room Service Cost : " + pm.roomsvc);		
+		
+//		if(rs == null)
+//		{
+//			System.out.println("Room Service Breakdown : NONE" );
+//		}
+//		else
+//		{
+//			System.out.println(rs);
+//		}
+		
+		System.out.println("Room Service Breakdown : NONE" );
+		System.out.println("Room Service Cost : " + pm.roomsvc);
 		System.out.println("Room Tax (10% Service Charge + 7% GST) : " + pm.roomtax);
 		System.out.println("Total Cost : " + pm.tcost);
 		System.out.println("Payment By : " + pm.payType);
