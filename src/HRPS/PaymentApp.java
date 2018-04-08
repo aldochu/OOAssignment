@@ -50,51 +50,49 @@ public class PaymentApp
 		
 		System.out.println("Enter Guest IC");
 		pm.guestId = sc.nextLine();
+		
 		guest = g.SearchGuestByIc(pm.guestId);	
+		res = ra.SearchResByGuestId(pm.guestId);
+		rm = r.getRoomDetails(pm.guestId);
 		
 		if(guest == null)
 		{
-			System.out.println("Guest ID is not valid");
+			System.out.println("Guest ID : " + pm.guestId + " is not valid");
 			return;
 		}
 		
-		System.out.println("Booking for " + guest.name + " found");
-		pm.rDate = currentDate;
-		
-		res = ra.SearchResByGuestId(pm.guestId);
-		rm = r.getRoomDetails(pm.guestId);
-
-		pm.GuestName = guest.name;
+		System.out.println("Guest ID : " + pm.guestId + ", Guest Name : " + guest.name + " is valid");
 		
 		if(res == null)
 		{
-			pm.paymentId = "WALK IN";
-			pm.roomNumber = rm.roomNo;
-			pm.roomType = rm.roomType;
-			pm.bedType = rm.bedType;
-			pm.checkInDate = res.check_in;
-			pm.checkOutDate = res.check_out;
-			pm.adults = res.NoOfAdult;
-			pm.child = res.NoOfChild;
+			System.out.println("Booking for Guest ID : " + pm.guestId + ", Guest Name : " + guest.name + " is not found");
+			return;
 		}
-		else
-		{
-			pm.paymentId = res.res_id;
-			pm.roomNumber = 1;
-			pm.roomType = "Deluxe";
-			pm.bedType = "King";
-			pm.checkInDate = res.check_in;
-			pm.checkOutDate = res.check_out;
-			pm.adults = res.NoOfAdult;
-			pm.child = res.NoOfChild;
 
-		}
-		
+		pm.GuestName = guest.name;
+		pm.rDate = currentDate;
+		pm.paymentId = res.res_id;
+		pm.roomNumber = rm.roomNo;
+		pm.roomType = rm.roomType;
+		pm.bedType = rm.bedType;
+		pm.checkInDate = res.check_in;
+		pm.checkOutDate = res.check_out;
+		pm.adults = res.NoOfAdult;
+		pm.child = res.NoOfChild;		
 		pm.duration = timeDiff(pm.checkOutDate, pm.checkInDate);
-		pm.roomcost = 10.00;
-		pm.roomsvc = 0.00;	
-		pm.roomtax = 1.17 * pm.roomcost;
+		pm.roomcost = rm.rate;
+		pm.roomtax = 1.17 * rm.rate;
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
+		
+//		if(rs == null)
+//		{
+//			pm.rsvc = 0.00;	
+//		}
+//		else
+//		{
+//			//pm.rsvc = rs.totalcost;
+//		}
+		
 		
 		if(guest.ccdetails.type == null)
 		{
@@ -128,7 +126,6 @@ public class PaymentApp
 //			System.out.println(rs);
 //		}
 		
-		System.out.println("Room Service Breakdown : NONE" );
 		System.out.println("Room Service Cost : " + pm.roomsvc);
 		System.out.println("Room Tax (10% Service Charge + 7% GST) : " + pm.roomtax);
 		System.out.println("Total Cost : " + pm.tcost);
