@@ -102,20 +102,39 @@ public class GuestApp {
 	
 	private void addCCDetail(Guest hotelGuest)//pass by reference
 	{
+		boolean checkcvv2=false;
+		boolean checkCCExpiry = false;
+		Validation vs = new Validation();
+		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		
 		System.out.println("Please enter the name on the credit card:");
 		hotelGuest.ccdetails.name = sc.nextLine();
 		System.out.println("Please enter the credit card number:");
 		hotelGuest.ccdetails.cardNo = sc.nextLine();
+		
+		do{
 		System.out.println("Please enter the cvv2 behind the credit card:");
 		hotelGuest.ccdetails.cvv2 = sc.nextLine();
+		checkcvv2=vs.CompareNoOfChar(hotelGuest.ccdetails.cvv2,3); //to check the number of string
+		if(!checkcvv2)
+			{
+			System.out.println("Invalid cvv2 number, please try again");
+			}
+		}while(!checkcvv2);
+		
 		System.out.println("Please enter the type of the credit card:");
 		hotelGuest.ccdetails.type = sc.nextLine();
-		System.out.println("Please enter the expiry date of the credit card: mm/dd/yyyy");
-		
-		try {
-			hotelGuest.ccdetails.expiry = df.parse(sc.nextLine());
+		try {		
+			do{
+				System.out.println("Please enter the expiry date of the credit card: mm/dd/yyyy");
+				hotelGuest.ccdetails.expiry = df.parse(sc.nextLine());
+				checkCCExpiry=vs.CheckExpiry(hotelGuest.ccdetails.expiry); //to check the number of string
+				if(!checkCCExpiry)
+					{
+					System.out.println("The card is already expired");
+					}
+				}while(!checkCCExpiry);		
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
