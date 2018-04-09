@@ -309,9 +309,44 @@ import HRPS.GuestData;
 				}
 				
 				}
+			
+			public void checkOut(String Res_Number)
+			{				
+				for(int i = 0;i<reserve.size();i++)
+				{
+					if(reserve.get(i).res_id.equals(Res_Number))
+					{
+						reserve.get(i).status= AppData.RES_STATUS_CHECKED_IN; //Search Successfully
+					}
+				}
+				
+				try {
+					db.saveClass("reservation.txt", reserve);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
 
+			}
 			
-			
+			public void checkIn(String Res_Number)
+			{				
+				for(int i = 0;i<reserve.size();i++)
+				{
+					if(reserve.get(i).res_id.equals(Res_Number))
+					{
+						reserve.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
+					}
+				}
+				
+				try {
+					db.saveClass("reservation.txt", reserve);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
+
+			}
 
 
 

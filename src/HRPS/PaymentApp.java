@@ -159,6 +159,7 @@ public class PaymentApp
 			c = sc.next();
 			if(c.equals("y") || c.equals("Y"))
 			{
+				ra.checkIn(pm.paymentId);
 				pay.add(pm);
 				System.out.println("Payment successfully added!\nThank You, Please Come Again!");
 			}
