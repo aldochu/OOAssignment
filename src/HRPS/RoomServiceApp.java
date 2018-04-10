@@ -1,3 +1,5 @@
+package HRPS;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,7 +53,7 @@ public class RoomServiceApp
 	return 1;
     }
 	
-	public int updateFood()
+	public void updateFood()
 	{
 		sc.nextLine();
 		System.out.println("List of foods(name|description|price):");
@@ -66,7 +68,6 @@ public class RoomServiceApp
 				updateFoodDetails(temp); //pass by reference
 				hotelFood.remove(i); //delete from the searched index
 				hotelFood.add(i, temp); //add the new updated record into the deleted index
-				return 1;
 			}
 		}	
 		try {
@@ -75,7 +76,6 @@ public class RoomServiceApp
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} //to read data from files
-		return 0;
 	}
 	
 	private void updateFoodDetails(Food hotelfood)
@@ -151,7 +151,7 @@ public class RoomServiceApp
 		}
 		if (_roomService.orderNumber>1000)
 			_roomService.orderNumber = _roomService.orderNumber - 1000;
-		String orderagain = "no";
+		Integer orderagain = 0;
 		int i = 0;
 		System.out.println("List of foods(name|description|price):");
 		printFoodList();
@@ -166,10 +166,11 @@ public class RoomServiceApp
 		_roomService.foodList.add(SearchFood(food));
 		//sc.nextLine();
 		} while (SearchFood(food)==null);
-		System.out.println("Do you want to order another food(yes/no):");
-		orderagain=sc.nextLine();
+		System.out.println("Do you want to order another food(yes=1/no=0):");
+		orderagain=sc.nextInt();
 		i++;
-		} while(orderagain=="yes");
+		} while(orderagain==1);
+		sc.nextLine();
 		System.out.println("Please enter remarks for the food:");
 		_roomService.remark = sc.nextLine();
 		System.out.println("Please enter status for the food:");
@@ -187,7 +188,7 @@ public class RoomServiceApp
 		return 1;
 	 }
 	
-	public int updateOrder()
+	public void updateOrder()
 	{
 		sc.nextLine();
 		System.out.println("Please enter order number:");
@@ -200,7 +201,7 @@ public class RoomServiceApp
 				updateOrderDetails(temp); //pass by reference
 				hotelService.remove(i); //delete from the searched index
 				hotelService.add(i, temp); //add the new updated record into the deleted index
-				return 1;
+				System.out.println(hotelService.get(i).foodList);
 			}
 		}
 		try {
@@ -209,13 +210,13 @@ public class RoomServiceApp
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} //to read data from files
-		return 0;
 	}
 	
 	private void updateOrderDetails(RoomService hotelService)
 	{
 		int choice;
-		do {
+		do 
+		{
 			System.out.println("Which information do you want to update:");
 			System.out.println("1: Remarks");
 			System.out.println("2: Status");
@@ -260,8 +261,9 @@ public class RoomServiceApp
 					food = sc.nextLine();
 					for(int i= 0;i<hotelService.foodList.size();i++)
 						{
-						if (SearchFood(hotelService.foodList.get(i).name)!=null)
+						if(hotelService.foodList.get(i).name.equals(food))
 							hotelService.foodList.remove(i);
+						break;
 						}
 					//sc.nextLine();
 					} while (SearchFood(food)==null);
@@ -269,10 +271,11 @@ public class RoomServiceApp
 			  }
 			  case 5:
 			  {
-				  String status;
-				  System.out.println("Please enter the updated status(paid/unpaid)");
-					 status = sc.nextLine();
-					 if(status == "paid")
+				  sc.nextLine();
+				  Integer status;
+				  System.out.println("Please enter the updated status(paid=1/unpaid=0)");
+					 status = sc.nextInt();
+					 if(status == 1)
 						 hotelService.paid = true;
 				  break;
 			  }
@@ -331,6 +334,10 @@ public class RoomServiceApp
 		System.out.println(hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
 	}
 }
+
+
+
+
 
 
 
