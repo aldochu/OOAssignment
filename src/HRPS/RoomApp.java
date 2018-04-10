@@ -18,10 +18,12 @@ public class RoomApp {
 			db.readClass("room.txt", hotelRoom); //to read data from files
 			
 			for (int k = 0 ; k < hotelRoom.size() ; k++) {
-				if(hotelRoom.get(k).roomType.equals("Single")) singleCount++;
-				else if(hotelRoom.get(k).roomType.equals("Double")) doubleCount++;
-				else if(hotelRoom.get(k).roomType.equals("Deluxe")) deluxeCount++;
-				else if(hotelRoom.get(k).roomType.equals("VIP")) vipCount++;
+				if(!hotelRoom.get(k).status.equals("Vacant")) {
+					if(hotelRoom.get(k).roomType.equals("Single")) singleCount++;
+					else if(hotelRoom.get(k).roomType.equals("Double")) doubleCount++;
+					else if(hotelRoom.get(k).roomType.equals("Deluxe")) deluxeCount++;
+					else if(hotelRoom.get(k).roomType.equals("VIP")) vipCount++;
+				}
 			}
 			
 		} catch (IOException e) {
@@ -30,48 +32,26 @@ public class RoomApp {
 		}
 	}
 	
-	public int assignRoom(String guestIC) //returns 1 for room assigned
+	public int assignRoom(String guestIC)
 	{
+		int level, room;
+		String roomId, bedType, roomType;
+		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
 		//20 single rooms
 		//20 double rooms
 		
-		for(int k = 0; k < hotelRoom.size(); k++) {
-			if(hotelRoom.get(k).status.equals("Vacant")) {
-				System.out.println("Please enter the room type:");
-				hotelRoom.get(k).roomType = checkRoom(sc.nextLine(), hotelRoom.get(k));
-				System.out.println("Do you wish to have city view? Y: Yes");
-				if(sc.nextLine().equals("Y")) hotelRoom.get(k).cityView = true;
-				System.out.println("Do you wish to have breakfast included? Y: Yes");
-				if(sc.nextLine().equals("Y")) hotelRoom.get(k).breakfast = true;
-				System.out.println("Do you wish to have WiFi enabled? Y: Yes");
-				if(sc.nextLine().equals("Y")) hotelRoom.get(k).wifi = true;
-				System.out.println("Do you wish to have smoking area? Y: Yes");
-				if(sc.nextLine().equals("Y")) hotelRoom.get(k).smoking = true;
-				
-				hotelRoom.get(k).guestIc = guestIC;
-				hotelRoom.get(k).status = "Reserved";
-				hotelRoom.add(hotelRoom.get(k));
-				return 1; //room assigned
-			}
-		}
-		System.out.println("Sorry, no rooms available :(");
-		return 0; //no rooms available
-	}
-	
-	private String checkRoom(String roomType, Room _hotelRoom)
-	{
-		
+		System.out.println("Please enter the room type:");
+		roomType = sc.nextLine();
 		//VIP
 		if(roomType.equals("VIP") && vipCount < 2) {
 			vipCount++;
-			_hotelRoom.bedType = "2 King Beds";
-			_hotelRoom.levelNo = 7;
-			_hotelRoom.roomNo = vipCount;
+			bedType = "2 King Beds";
+			level = 7;
+			room = vipCount;
 			System.out.println("here");
-			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
-			return roomType;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Deluxe
@@ -79,13 +59,12 @@ public class RoomApp {
 			deluxeCount++;
 				System.out.println("Would you rather 2 Double Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
-					_hotelRoom.bedType = "2 Double Beds";
+					bedType = "2 Double Beds";
 				else 
-					_hotelRoom.bedType = "1 King Bed";
-			_hotelRoom.levelNo = 7;
-			_hotelRoom.roomNo = deluxeCount + 2;
-			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
-			return roomType;
+					bedType = "1 King Bed";
+			level = 7;
+			room = deluxeCount + 2;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Double
@@ -93,30 +72,51 @@ public class RoomApp {
 			doubleCount++;
 				System.out.println("Would you rather 2 Single Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
-					_hotelRoom.bedType = "2 Single Beds";
+					bedType = "2 Single Beds";
 				else 
-					_hotelRoom.bedType = "1 Double Bed";
-			_hotelRoom.levelNo = (doubleCount + singleCount) / 8 + 2;
-			_hotelRoom.roomNo = (doubleCount + singleCount) % 8;
-			if(_hotelRoom.roomNo == 0) _hotelRoom.roomNo = 8;
-			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
-			return roomType;
+					bedType = "1 Double Bed";
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
+			if(room == 0) room = 8;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Single
-		
 		else if(roomType.equals("Single") && singleCount < 20) {
-			
 			singleCount++;
-			_hotelRoom.bedType = "1 Single Bed";
-			_hotelRoom.levelNo = (doubleCount + singleCount) / 8 + 2;
-			_hotelRoom.roomNo = (doubleCount + singleCount) % 8;
-			if(_hotelRoom.roomNo == 0) _hotelRoom.roomNo = 8;
-			_hotelRoom.roomId = String.format("%02d", _hotelRoom.levelNo) + "-" + String.format("%02d", _hotelRoom.roomNo);
-			return roomType;
+			bedType = "1 Single Bed";
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
+			if(room == 0) room = 8;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
-		else 
-			return null;
+		else {
+			System.out.println("No room available");
+			return 0;
+		}
+		
+			for(int i = 0; i<hotelRoom.size(); i++) {
+				if(hotelRoom.get(i).roomId.equals(roomId)) {
+					hotelRoom.get(i).levelNo = level;
+					hotelRoom.get(i).roomNo = room;
+					hotelRoom.get(i).bedType = bedType;
+					hotelRoom.get(i).roomType = roomType;
+					
+					System.out.println("Do you wish to have city view? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).cityView = true;
+					System.out.println("Do you wish to have breakfast included? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).breakfast = true;
+					System.out.println("Do you wish to have WiFi enabled? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).wifi = true;
+					System.out.println("Do you wish to have smoking area? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).smoking = true;
+					
+					hotelRoom.get(i).guestIc = guestIC;
+					hotelRoom.get(i).status = "Reserved";
+					return 1;
+				}
+			}
+			return 0;
 	}
 	
 	public void checkIn(String roomId)
