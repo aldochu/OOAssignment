@@ -26,6 +26,7 @@ public class RoomApp {
 				}
 			}
 			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,9 +40,9 @@ public class RoomApp {
 		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
-		//20 single rooms
-		//20 double rooms
-		
+		//16 single rooms
+		//24 double rooms
+		//System.out.println(doubleCount);
 		System.out.println("Please enter the room type:");
 		roomType = sc.nextLine();
 		//VIP
@@ -75,8 +76,8 @@ public class RoomApp {
 					bedType = "2 Single Beds";
 				else 
 					bedType = "1 Double Bed";
-			level = (doubleCount + singleCount) / 8 + 2;
-			room = (doubleCount + singleCount) % 8;
+			level = doubleCount / 8 + 4;
+			room = doubleCount % 8;
 			if(room == 0) room = 8;
 			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
@@ -85,14 +86,14 @@ public class RoomApp {
 		else if(roomType.equals("Single") && singleCount < 20) {
 			singleCount++;
 			bedType = "1 Single Bed";
-			level = (doubleCount + singleCount) / 8 + 2;
-			room = (doubleCount + singleCount) % 8;
+			level = singleCount / 8 + 2;
+			room = singleCount % 8;
 			if(room == 0) room = 8;
 			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		else {
 			System.out.println("No room available. Sorry");
-			return 0;
+			return 0; //no room available
 		}
 		
 			for(int i = 0; i<hotelRoom.size(); i++) {
@@ -113,10 +114,12 @@ public class RoomApp {
 					
 					hotelRoom.get(i).guestIc = guestIC;
 					hotelRoom.get(i).status = "Reserved";
-					return 1;
+					
+					System.out.println("Your room is " + hotelRoom.get(i).roomId);
+					return 1; //assigned
 				}
 			}
-			return 0;
+			return 0; //no room available
 	}
 	
 	public void checkIn(String roomId)
@@ -270,16 +273,21 @@ public class RoomApp {
 		return 0;
 	}
 	
-	public void displayRoom(Room _hotelRoom)
+	public void displayRoom(String roomId)
 	{
-		System.out.println("Room Id: " + _hotelRoom.roomId);
-		System.out.println("Guest IC: " + _hotelRoom.guestIc);
-		System.out.println("Room Type: " + _hotelRoom.roomType);
-		System.out.println("Bed Type: " + _hotelRoom.bedType);
-		System.out.println("Smoking: " + _hotelRoom.smoking);
-		System.out.println("City View: " + _hotelRoom.cityView);
-		System.out.println("Wifi enabled: " + _hotelRoom.wifi);
-		System.out.println("Breakfast Included: " + _hotelRoom.breakfast);
+		for(int i=0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(roomId)) {
+				System.out.println("Room Id: " + hotelRoom.get(i).roomId);
+				System.out.println("Guest IC: " + hotelRoom.get(i).guestIc);
+				System.out.println("Room Type: " + hotelRoom.get(i).roomType);
+				System.out.println("Bed Type: " + hotelRoom.get(i).bedType);
+				System.out.println("Smoking: " + hotelRoom.get(i).smoking);
+				System.out.println("City View: " + hotelRoom.get(i).cityView);
+				System.out.println("Wifi enabled: " + hotelRoom.get(i).wifi);
+				System.out.println("Breakfast Included: " + hotelRoom.get(i).breakfast);
+			}
+		}
+		
 	}
 	
 	public int checkAvailability()
