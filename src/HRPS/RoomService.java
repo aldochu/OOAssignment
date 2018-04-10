@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Date;
 public class RoomService {
-	Integer RoomNo,orderNumber;
-	String remark,status;
-	public Food foodList = new Food();
+	Integer orderNumber;
+	String remark,status,RoomNo;
+	public ArrayList<Food> foodList= new ArrayList<Food>();
 	Date date;
+	boolean paid=false;
 }
