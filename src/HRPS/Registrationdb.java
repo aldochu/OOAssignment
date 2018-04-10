@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-
-public class Reservationdb extends StoreData {
+public class Registrationdb extends StoreData{
 	
 	@Override
-	public void readClass(String filename, ArrayList ReservationArray) throws IOException {
+	public void readClass(String filename, ArrayList RegistrationArray) throws IOException {
 		// TODO Auto-generated method stub
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); //for date variable
 
@@ -25,7 +24,6 @@ public class Reservationdb extends StoreData {
 						String st = (String)stringArray.get(i);
 				
 						StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
-						temp.status = Integer.parseInt(star.nextToken().trim());
 						temp.res_id = star.nextToken().trim();
 						temp.guestId = star.nextToken().trim();
 						//temp.roomType = star.nextToken().trim();
@@ -44,13 +42,13 @@ public class Reservationdb extends StoreData {
 						}
 						
 						
-						ReservationArray.add(temp);
+						RegistrationArray.add(temp);
 			
 		        }	
 	}
 
 	@Override
-	public void saveClass(String filename, ArrayList ReservationArray) throws IOException {
+	public void saveClass(String filename, ArrayList RegistrationArray) throws IOException {
 		 
 
 		List alw = new ArrayList() ;// to store Professors data
@@ -58,9 +56,9 @@ public class Reservationdb extends StoreData {
 		Reservation temp = new Reservation();
 		
 		
-		 for (int i = 0 ; i < ReservationArray.size(); i++) {
+		 for (int i = 0 ; i < RegistrationArray.size(); i++) {
 		StringBuilder builder =  new StringBuilder();
-		temp = (Reservation) ReservationArray.get(i);
+		temp = (Reservation) RegistrationArray.get(i);
 		builder.append(String.valueOf(temp.status));
 		builder.append(SEPARATOR);
 		builder.append(temp.res_id.trim());

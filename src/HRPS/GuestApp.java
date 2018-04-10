@@ -277,6 +277,23 @@ public class GuestApp {
 		return null; //failed to create
 	}
 	
+	public String SearchGuestExistAndReturnUserId() //search by name
+	{
+		
+		System.out.println("Please enter the nric of the guest:");
+		String ic = sc.nextLine();
+		
+		for(int i = 0;i<hotelGuest.size();i++)
+		{
+			if(hotelGuest.get(i).ic.equals(ic))
+			{
+				return hotelGuest.get(i).ic;
+			}
+		}
+		
+		return null;
+	}
+	
 	public Guest SearchGuestByIc(String IC) //search by ic
 	{
 		for(int i = 0;i<hotelGuest.size();i++)
