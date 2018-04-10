@@ -24,7 +24,7 @@ public class RoomData extends StoreData {
 			Room temp = new Room();
 
 			temp.roomId = star.nextToken().trim();
-			temp.levelNo = Integer.parseInt(star.nextToken().trim());
+			temp.levelNo = Integer.parseInt(star.nextToken());
 			temp.roomNo = Integer.parseInt(star.nextToken());
 			temp.status = star.nextToken().trim();	
 			temp.guestIc = star.nextToken().trim();	
