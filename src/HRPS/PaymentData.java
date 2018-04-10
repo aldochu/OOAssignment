@@ -40,6 +40,7 @@ public class PaymentData extends StoreData
 			{
 				 b.printStackTrace();
 			}
+
 			temp.duration = Long.parseLong(star.nextToken().trim());
 			temp.roomcost = Double.parseDouble((star.nextToken().trim()));
 			temp.roomsvc = Double.parseDouble((star.nextToken().trim()));
