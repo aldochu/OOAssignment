@@ -17,6 +17,12 @@ public class PaymentApp
 	Scanner sc = new Scanner(System.in);
 	Date currentDate = new Date();
 
+	private Guest guest;
+	private Room rm;
+	private Reservation res;
+	private RoomService rs;
+	private Promo p;
+	
 	protected PaymentApp()
 	{
 		try 
@@ -30,48 +36,20 @@ public class PaymentApp
 		}
 	}
 	
-	public void createPayment()//pass by reference
+	public boolean createPayment(String guestId)//pass by reference
 	{
+		boolean successful = true;
 		String c;
 		Double disc,promoCost = 0.00;
 
-		Payment pm= new Payment();
-		Promo p = new Promo();
-		Reservation res = new Reservation();
-		Guest guest = new Guest();
-		Room rm = new Room();
-		RoomService rs = new RoomService();
-
 		PromoApp pa = new PromoApp();
-		ReservationApp ra = new ReservationApp();
-		GuestApp g = new GuestApp();
-		RoomApp r = new RoomApp();
-		//RoomServiceApp rsa = new RoomServiceApp();
+		
+		Payment pm= new Payment();
 		
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		df.format(currentDate);
 		
-		System.out.println("Enter Guest IC");
-		pm.guestId = sc.nextLine();
-		
-		guest = g.SearchGuestByIc(pm.guestId);	
-		res = ra.SearchResByGuestId(pm.guestId);
-		rm = r.getRoomDetails(pm.guestId);
-		
-		if(guest == null)
-		{
-			System.out.println("Guest ID : " + pm.guestId + " is not valid");
-			return;
-		}
-		
-		System.out.println("Guest ID : " + pm.guestId + ", Guest Name : " + guest.name + " is valid");
-		
-		if(res == null)
-		{
-			System.out.println("Booking for Guest ID : " + pm.guestId + ", Guest Name : " + guest.name + " is not found");
-			return;
-		}
-
+		pm.guestId = guestId;
 		pm.GuestName = guest.name;
 		pm.rDate = currentDate;
 		pm.paymentId = res.res_id;
@@ -145,38 +123,37 @@ public class PaymentApp
 			{
 				System.out.println("Please Enter The Promo Code");
 				c = sc.next();
-				p = pa.SearchPromo(c);
-				if(p == null)
+				Promo a = pa.SearchPromo(c);
+				if(a == null)
 				{
 					System.out.println("Promo Does Not Exist");
 				}
 				else
 				{
-					disc = p.discount;
+					disc = a.discount;
 					promoCost = pm.tcost - ((disc/100) * pm.tcost);
 					Double pc = (double) Math.round(promoCost * 100) / 100;
 					System.out.println("Your Final Cost is : " + pc);
 					pm.tcost = promoCost;
 				}
 			}
+			
 			System.out.println("Pay Now?");
 			c = sc.next();
 			if(c.equals("y") || c.equals("Y"))
 			{
-				ra.checkOut(pm.paymentId);
 				pay.add(pm);
-				System.out.println("Payment successfully added!\nThank You, Please Come Again!");
 			}
 			else if(c.equals("n") || c.equals("N"))
 			{
 				System.out.println("Payment incomplete.");
-				return;
+				return false;
 			}
 		}
 		else if(c.equals("n") || c.equals("N"))
 		{
 			System.out.println("Please Hold On While We Ammend Your Details");
-			return;
+			return false;
 		}
 		
 			
@@ -189,6 +166,7 @@ public class PaymentApp
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} //to read data from files
+		return successful;
 	}
 	
 	public void printPayments()
@@ -225,6 +203,56 @@ public class PaymentApp
 		diffdays = diff/(24*60*60*1000);
 		return diffdays;
 	}
-
 	
+	public boolean checkGuest(Guest gTemp)
+	{
+		if(gTemp == null)
+		{
+			return false;
+		}
+		else
+		{
+			guest = gTemp;
+			return true;
+		}
+	}
+
+	public boolean checkRes(Reservation resTemp)
+	{
+		if(resTemp == null)
+		{
+			return false;
+		}
+		else
+		{
+			res = resTemp;
+			return true;
+		}
+	}
+	
+	public boolean checkRoom(Room rmTemp)
+	{
+		if(rmTemp == null)
+		{
+			return false;
+		}
+		else
+		{
+			rm = rmTemp;
+			return true;
+		}
+	}
+	
+	public boolean checkRes(Promo promo)
+	{
+		if(promo == null)
+		{
+			return false;
+		}
+		else
+		{
+			p = promo;
+			return true;
+		}
+	}
 }
