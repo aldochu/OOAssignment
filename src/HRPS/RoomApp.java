@@ -91,7 +91,7 @@ public class RoomApp {
 			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		else {
-			System.out.println("No room available");
+			System.out.println("No room available. Sorry");
 			return 0;
 		}
 		
