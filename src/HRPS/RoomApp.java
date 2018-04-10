@@ -117,7 +117,15 @@ public class RoomApp {
 					hotelRoom.get(i).guestIc = guestIC;
 					hotelRoom.get(i).status = "Reserved";
 					
-					System.out.println("Your room is " + hotelRoom.get(i).roomId);
+					System.out.println("Your room is " + hotelRoom.get(i).roomId + "Thank you.");
+					
+					try {
+						db.saveClass("room.txt", hotelRoom);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //to read data from files
+					
 					return 1; //assigned
 				}
 			}

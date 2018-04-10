@@ -57,7 +57,30 @@ public class HrpsSystem {
 //			}
 //			} while (choice < 7);
 		
-		do {
+
+//		do {
+//			System.out.println("Perform the following methods:");
+//			System.out.println("1: Add Payment");
+//			System.out.println("2: Show todays Payments");
+//			System.out.println("4: quit");
+//			choice = sc.nextInt();
+//			switch (choice) {
+//			 case 1: 
+//				 payController.createPayment();
+//			 break;
+//			 
+//			 case 2: 
+//				 payController.printPayments();
+//				 break;
+//			 
+//			 case 3: 
+//				 break;
+//			 case 4: System.out.println("Program terminating ….");
+//			}
+//			} while (choice < 4);
+/*		do 
+		{
+>>>>>>> Stashed changes
 			System.out.println("Perform the following methods:");
 			System.out.println("1: Add Payment");
 			System.out.println("2: Show todays Payments");
@@ -115,6 +138,7 @@ public class HrpsSystem {
 			 
 			 case 3: 
 				 break;
+<<<<<<< Updated upstream
 			 case 4: System.out.println("Program terminating ….");
 			}
 			} while (choice < 4);
@@ -147,6 +171,11 @@ public class HrpsSystem {
 //				 break;
 //			} 	
 //		}while (choice < 5);
+
+=======
+			} 	
+		}while (choice < 5);
+*/
 
 //		do {
 //			System.out.println("Perform the following methods:");
@@ -197,57 +226,57 @@ public class HrpsSystem {
 //		 }
 //>>>>>>> adding classes for room service, will update further changes soon
 //=======
+/*
+		Room temp = new Room();
+		do {
+			System.out.println("Perform the following methods:");
+			System.out.println("1: Assign Room");
+			System.out.println("2: Update Room");
+			System.out.println("3: Check Availability");
+			System.out.println("4: Room Status Statistic Report");
+			System.out.println("5: Calculate Rate");
+			System.out.println("6: Print Room");
+			System.out.println("7. Check In");
+			System.out.println("8: Quit");
+			choice = sc.nextInt();
+			switch (choice) {
+			 case 1: 
+				 System.out.println("Please enter your NRIC: ");
+				 roomController.assignRoom(sc.next());
+			 break;
+			 
+			 case 2: 
+				 roomController.updateRoom();
+				 break;
+			 
+			 case 3: 
+				 roomController.checkAvailability();
+				 break;
+			 case 4:
+				 roomController.roomStatisticReport();
+				 break;
+				 
+			 case 5:
+				 String guestIc;
+				 System.out.println("Please enter guest IC: ");
+				guestIc = sc.nextLine();
+				 roomController.calculateRate(guestIc);
+				 break;
+				 
+			 case 6: 
+				 roomController.displayRoom(sc.nextLine());
+				 break;
+				 
+			 case 7:
+				 System.out.println("Please enter the room ID for checking in: ");
+				 roomController.checkIn(sc.nextLine());
+				 break;
+				 
+			 case 8: System.out.println("Program terminating ….");
+			}
+			} while (choice < 8); */
 
-//		Room temp = new Room();
-//		do {
-//			System.out.println("Perform the following methods:");
-//			System.out.println("1: Assign Room");
-//			System.out.println("2: Update Room");
-//			System.out.println("3: Check Availability");
-//			System.out.println("4: Room Status Statistic Report");
-//			System.out.println("5: Calculate Rate");
-//			System.out.println("6: Print Room");
-//			System.out.println("7. Check In");
-//			System.out.println("8: Quit");
-//			choice = sc.nextInt();
-//			switch (choice) {
-//			 case 1: 
-//				 System.out.println("Please enter your NRIC: ");
-//				 roomController.assignRoom(sc.next());
-//			 break;
-//			 
-//			 case 2: 
-//				 roomController.updateRoom();
-//				 break;
-//			 
-//			 case 3: 
-//				 roomController.checkAvailability();
-//				 break;
-//			 case 4:
-//				 roomController.roomStatisticReport();
-//				 break;
-//				 
-//			 case 5:
-//				 String guestIc;
-//				 System.out.println("Please enter guest IC: ");
-//				guestIc = sc.nextLine();
-//				 roomController.calculateRate(guestIc);
-//				 break;
-//				 
-//			 case 6: 
-//				 roomController.displayRoom(temp);
-//				 break;
-//				 
-//			 case 7:
-//				 System.out.println("Please enter the room ID for checking in: ");
-//				 roomController.checkIn(sc.nextLine());
-//				 break;
-//				 
-//			 case 8: System.out.println("Program terminating ….");
-//			}
-//			} while (choice < 8);
-//
-	}
+	} 
 
 
 
