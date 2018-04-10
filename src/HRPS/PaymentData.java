@@ -83,7 +83,7 @@ public class PaymentData extends StoreData
 			st.append(SEPARATOR);
 			st.append(df.format(temp.checkOutDate));
 			st.append(SEPARATOR);
-			st.append(df.format(temp.duration));
+			st.append(temp.duration);
 			st.append(SEPARATOR);
 			st.append(temp.roomcost);
 			st.append(SEPARATOR);

@@ -72,16 +72,20 @@ public class PaymentApp
 		pm.GuestName = guest.name;
 		pm.rDate = currentDate;
 		pm.paymentId = res.res_id;
-		pm.roomNumber = rm.roomNo;
-		pm.roomType = rm.roomType;
-		pm.bedType = rm.bedType;
+		pm.roomNumber = 1;
+		pm.roomType = "Deluxe";
+		pm.bedType = "King";
+//		pm.roomNumber = rm.roomNo;
+//		pm.roomType = rm.roomType;
+//		pm.bedType = rm.bedType;
 		pm.checkInDate = res.check_in;
 		pm.checkOutDate = res.check_out;
 		pm.adults = res.NoOfAdult;
 		pm.child = res.NoOfChild;		
-		pm.duration = timeDiff(pm.checkOutDate, pm.checkInDate);
-		pm.roomcost = rm.rate;
-		pm.roomtax = 1.17 * rm.rate;
+		pm.duration = timeDiff(pm.checkInDate, pm.checkOutDate);
+		pm.roomcost = 100.00;
+		pm.roomtax = 1.17 * pm.roomcost;
+		pm.roomsvc = 20.00;
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
 //		if(rs == null)
@@ -90,7 +94,7 @@ public class PaymentApp
 //		}
 //		else
 //		{
-//			//pm.rsvc = rs.totalcost;
+//			pm.rsvc = rs.totalcost;
 //		}
 		
 		
@@ -115,7 +119,7 @@ public class PaymentApp
 		System.out.println("Check In Date : " + pm.checkInDate);
 		System.out.println("Check Out Date : " + pm.checkOutDate);
 		System.out.println("Total Stay Duration : " + pm.duration + " Days");
-		System.out.println("Room Cost (w/o GST) : " + pm.roomcost);
+		System.out.println("Room Cost (w/o GST) : $" + pm.roomcost);
 		
 //		if(rs == null)
 //		{
@@ -126,9 +130,9 @@ public class PaymentApp
 //			System.out.println(rs);
 //		}
 		
-		System.out.println("Room Service Cost : " + pm.roomsvc);
-		System.out.println("Room Tax (10% Service Charge + 7% GST) : " + pm.roomtax);
-		System.out.println("Total Cost : " + pm.tcost);
+		System.out.println("Room Service Cost : $" + pm.roomsvc);
+		System.out.println("Room Tax (10% Service Charge + 7% GST) : $" + pm.roomtax);
+		System.out.println("Total Cost : $" + pm.tcost);
 		System.out.println("Payment By : " + pm.payType);
 		
 		System.out.println("Please Check if the above details are correct(Y/N)");
