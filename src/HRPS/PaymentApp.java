@@ -1,7 +1,10 @@
 package HRPS;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,7 +48,7 @@ public class PaymentApp
 		RoomApp r = new RoomApp();
 		//RoomServiceApp rsa = new RoomServiceApp();
 		
-		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		df.format(currentDate);
 		
 		System.out.println("Enter Guest IC");
@@ -72,7 +75,7 @@ public class PaymentApp
 		pm.GuestName = guest.name;
 		pm.rDate = currentDate;
 		pm.paymentId = res.res_id;
-		pm.roomNumber = 1;
+		pm.roomNumber = "1";
 		pm.roomType = "Deluxe";
 		pm.bedType = "King";
 //		pm.roomNumber = rm.roomNo;
@@ -192,12 +195,15 @@ public class PaymentApp
 	}
 	
 	public void printPayments()
-	{		
-		System.out.println("The Promo Codes below are valid as at " + currentDate);
+	{
+		Date date = new Date();
+		DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+		System.out.println("The Promo Codes below are valid as at " + sdf.format(date));
 		System.out.println("------------------------------------------------------------");
 		for(int i = 0;i<pay.size();i++)
 		{
-			boolean b = pay.get(i).rDate.equals(currentDate);
+			boolean b = sdf.format(pay.get(i).rDate).equals(sdf.format(date));
 			if(b)
 			{
 				System.out.println(pay.get(i).paymentId + "|" + pay.get(i).guestId + "\t|" + pay.get(i).GuestName + "\t|" + pay.get(i).checkInDate + "\t|" + pay.get(i).checkOutDate  + "\t|" + pay.get(i).duration  + "\t|" + pay.get(i).tcost  + "\t|" + pay.get(i).rDate);

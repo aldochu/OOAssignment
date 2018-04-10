@@ -26,12 +26,21 @@ public class PaymentData extends StoreData
 			temp.paymentId = star.nextToken().trim();
 			temp.guestId = star.nextToken().trim();
 			temp.GuestName = star.nextToken().trim();
-			temp.roomNumber = Integer.parseInt(star.nextToken().trim());
+			temp.roomNumber = star.nextToken().trim();
 			temp.roomType = star.nextToken().trim();
 			temp.bedType = star.nextToken().trim();
 			temp.adults = Integer.parseInt(star.nextToken().trim());
 			temp.child = Integer.parseInt(star.nextToken().trim());
-			temp.duration = Integer.parseInt(star.nextToken().trim());
+			try
+			{
+				temp.checkInDate = df.parse(star.nextToken().trim());
+				temp.checkOutDate = df.parse(star.nextToken().trim());
+			}
+			catch (Exception b)
+			{
+				 b.printStackTrace();
+			}
+			temp.duration = Long.parseLong(star.nextToken().trim());
 			temp.roomcost = Double.parseDouble((star.nextToken().trim()));
 			temp.roomsvc = Double.parseDouble((star.nextToken().trim()));
 			temp.roomtax = Double.parseDouble((star.nextToken().trim()));
@@ -40,8 +49,6 @@ public class PaymentData extends StoreData
 			try
 			{ 
 				temp.rDate = df.parse(star.nextToken().trim());
-				temp.checkInDate = df.parse(star.nextToken().trim());
-				temp.checkOutDate = df.parse(star.nextToken().trim());
 			}
 			catch (Exception b)
 			{
@@ -69,7 +76,7 @@ public class PaymentData extends StoreData
 			st.append(SEPARATOR);
 			st.append(temp.GuestName.trim());
 			st.append(SEPARATOR);
-			st.append(temp.roomNumber);
+			st.append(temp.roomNumber.trim());
 			st.append(SEPARATOR);
 			st.append(temp.roomType.trim());
 			st.append(SEPARATOR);

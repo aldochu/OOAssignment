@@ -8,7 +8,7 @@ public class Payment
 	public String paymentId;
 	public String guestId;
 	public String GuestName;
-	public int roomNumber;
+	public String roomNumber;
 	public String roomType,bedType;
 	public int adults,child;
 	public Date checkInDate;
