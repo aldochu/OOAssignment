@@ -267,9 +267,7 @@ public class RoomApp {
 				return result;
 			}
 		}
-		
 		return 0;
-		
 	}
 	
 	public void displayRoom(Room _hotelRoom)
@@ -373,10 +371,6 @@ public class RoomApp {
 		default: 
 			System.out.println("Invalid Choice");
 		}
-
-		
-		
-		
 	}
 	
 	private String checkInput(String input, int type)
