@@ -42,9 +42,11 @@ public class RoomApp {
 		//top floor: 2 VIP, 6 deluxe
 		//16 single rooms
 		//24 double rooms
-		//System.out.println(doubleCount);
+		
 		System.out.println("Please enter the room type:");
+		System.out.println("Single/Double/Deluxe/VIP");
 		roomType = sc.nextLine();
+		
 		//VIP
 		if(roomType.equals("VIP") && vipCount < 2) {
 			vipCount++;
