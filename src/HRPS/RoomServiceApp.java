@@ -294,12 +294,21 @@ public class RoomServiceApp
 		}
     	for(int i=0;i<temp.size();i++)
     	{
-    		if(temp.get(i).paid==false)
+    		if(temp.get(i).paid==true)
     			temp.remove(i);
     	}
     	return temp;
 	}
     
+    public double GetTotal(String roomA)
+    {
+    	ArrayList <RoomService> temp = GetRoomService(roomA);
+    	double total = 0;
+    	for(int i =0;i<temp.size();i++)
+    		for(int j = 0;j<temp.get(i).foodList.size();j++)
+    		    total = total + temp.get(i).foodList.get(j).price;	
+    	return total;
+    }
 	public void removeOrder()
 	{
 		sc.nextLine();
@@ -334,10 +343,6 @@ public class RoomServiceApp
 		System.out.println(hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
 	}
 }
-
-
-
-
 
 
 
