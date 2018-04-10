@@ -189,6 +189,7 @@ public class RoomApp {
 	}
 	
 	private void updateRoomDetails(Room _hotelRoom)
+
 	{
 		int choice;
 		do {
@@ -239,6 +240,23 @@ public class RoomApp {
 			}
 		} while (choice < 9);
 	}
+
+	//update status to reserved 
+	public void updateToReserved(String roomId)
+	{
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(roomId)) hotelRoom.get(i).status = "Reserved";
+		}
+	}
+	
+	//update status to vacant
+	public void updateToVacant(String roomId)
+	{
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(roomId)) hotelRoom.get(i).status = "Vacant";
+		}
+	}
+	
 	
 	public Room getRoomDetails(String guestIc)
 	{
