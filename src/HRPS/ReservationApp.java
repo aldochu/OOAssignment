@@ -6,7 +6,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -316,7 +318,7 @@ import HRPS.GuestData;
 				{
 					if(reserve.get(i).res_id.equals(Res_Number))
 					{
-						reserve.get(i).status= AppData.RES_STATUS_CHECKED_IN; //Search Successfully
+						reserve.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
 					}
 				}
 				
@@ -335,7 +337,7 @@ import HRPS.GuestData;
 				{
 					if(reserve.get(i).res_id.equals(Res_Number))
 					{
-						reserve.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
+						reserve.get(i).status= AppData.RES_STATUS_CHECKED_IN; //Search Successfully
 					}
 				}
 				
@@ -347,6 +349,8 @@ import HRPS.GuestData;
 				} //to read data from files
 
 			}
+			
+			
 
 
 
@@ -397,13 +401,48 @@ import HRPS.GuestData;
 			}*/
 
 
-			  /*public static Date getToday(Date today2){
-				 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			     Date today = new Date();
-			     
-			    // return new SimpleDateFormat(today).format(checkInDate);
-				return dateFormat.format(today);
-			 }*/
+			private long compareTime()
+			{
+				Calendar checkInTime = Calendar.getInstance();
+				Calendar today = Calendar.getInstance();
+				long diff,mil1,mil2,diffhr;
+				
+				Date now = new Date();
+				checkInTime.set(Calendar.HOUR_OF_DAY, 13);
+				checkInTime.set(Calendar.MINUTE, 00);
+				today.setTime(now);
+				
+				mil1 = checkInTime.getTimeInMillis();
+				mil2 = today.getTimeInMillis();
+				
+				diff = mil2 - mil1;
+				
+				diffhr = diff/(60*1000);
+				System.out.println(diffhr);
+				return diffhr;
+			}
+//			 public boolean compareTime()   
+//			    {   
+//			        Calendar calendar = Calendar.getInstance();   
+//			        String am_pm;   
+//			        boolean check = true;
+//			        int hour = calendar.get( Calendar.HOUR );   
+//			        int minute = calendar.get( Calendar.MINUTE );   
+//			        // int second = calendar.get(Calendar.SECOND);   
+//			        if( calendar.get( Calendar.AM_PM ) == 0 )
+//			        {   
+//			            am_pm = "PM";   
+//			            if(hour >=1 && hour<2)   //Within check in time 
+//			            {
+//			            	check = true;
+//			            }
+//			        }               
+//			        else if(hour >2)  //check in time expired
+//					{
+//			        	check = false;
+//					}
+//			        return check;
+//			    }
 	
 	
 			public int getRoomStatus()
@@ -418,46 +457,91 @@ import HRPS.GuestData;
 			}
 
 
-			public void statusOfReservation() {
+			public void getExpired() {
 				// TODO Auto-generated method stub
 				
 				Date today=  new Date();//("MM-dd-yyyy hh:mm:ss a");
-				
+				DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				System.out.println("Please enter the reservation number:");
 				String Res_Number = sc.nextLine();
 				System.out.println(Res_Number);
 				for(int i = 0;i<reserve.size();i++)
 				{
-					if(reserve.get(i).res_id.equals(Res_Number)) {
-						System.out.println(reserve.get(i).res_id);
-						System.out.println(getCHECK_IN_DATE(reserve.get(i).check_in));
-						if(today.before(reserve.get(i).check_in)) {//if (getCHECK_IN_DATE(reserve[i].check_in).compareTo(getToday(today)) <=0){
-							System.out.println("today is an earlier date than check_in date");
-							break;
+					if(reserve.get(i).res_id.equals(Res_Number)) 
+					{
+//						System.out.println(reserve.get(i).res_id);
+//						System.out.println(getCHECK_IN_DATE(reserve.get(i).check_in));
+//						if(today.before(reserve.get(i).check_in)) {//if (getCHECK_IN_DATE(reserve[i].check_in).compareTo(getToday(today)) <=0){
+//							System.out.println("today is an earlier date than check_in date");
+//							break;
+//						}
+						if(sdf.format(today).equals(sdf.format(reserve.get(i).check_in)))
+						{
+							System.out.println("Checked in date is equal to today");
+							if(compareTime()<=120 && compareTime() >=0)
+							{
+								System.out.println("Checked in within the set time");
+							}
+							
+							else {
+								reserve.get(i).status= AppData.RES_STATUS_EXPIRED;
+								System.out.println("Checked in time expired");
+								
+								try {
+									db.saveClass("reservation.txt", reserve);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} //to read data from files
+							}
 						}
-				
-						
-						if(today.after(reserve.get(i).check_in)&& (today.before(reserve.get(i).check_out))) {
-							System.out.println("Checked in");
-							break;
-					}
+						break;
+								
 				}
-					else {
-						System.out.println("Reservation number not valid");
-					}
-				
+					
+		
+					
 				
 				}
 
 			}
 			
+//			public int updateStatus()
+//			{
+//				
+//				System.out.println("Please enter the reservation number:");
+//				String Res_Number = sc.nextLine();
+//				
+//				for(int i = 0;i<reserve.size();i++)
+//				{
+//					if(reserve.get(i).res_id.equals(Res_Number))
+//					{
+//						Reservation temp = reserve.get(i);
+//						getExpired(Res_Number); //pass by reference
+//						reserve.remove(i); //delete from the searched index
+//						reserve.add(i, temp); //add the new updateed record into the deleted index
+//						return 1;
+//					}
+//					//error message for incorrect reservation id
+//					
+//				}
+//				return 0;
+//				
+//			}
+//			
 			
+
+
+
+
+
+
+
+
+
 			public Reservation SearchResByGuestId(String guestId)
 			{
-				
-			
-				
-				
+
 				
 				for(int i = 0;i<reserve.size();i++)
 				{
