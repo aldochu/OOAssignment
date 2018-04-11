@@ -78,13 +78,15 @@ public class HrpsSystem {
 //			 case 4: System.out.println("Program terminating ….");
 //			}
 //			} while (choice < 4);
-/*		do 
+		do 
 		{
->>>>>>> Stashed changes
 			System.out.println("Perform the following methods:");
 			System.out.println("1: Add Payment");
-			System.out.println("2: Show todays Payments");
-			System.out.println("4: quit");
+			System.out.println("2: Show Todays Payments");
+			System.out.println("3: Show Past Payments On Date");
+			System.out.println("4: Show All Payments");
+			System.out.println("5: Show Occupancy Report On Date");
+			System.out.println("7: quit");
 			choice = sc.nextInt();
 			switch (choice) {
 			 case 1: 
@@ -106,8 +108,6 @@ public class HrpsSystem {
 					 System.out.println("Reservation for " + guestId + " does not exist");
 					 break;
 				 }
-				 
-				 
 				 
 				 g = payController.checkRoom(roomController.getRoomDetails(guestId));
 				 if(g == false)
@@ -133,15 +133,21 @@ public class HrpsSystem {
 			 break;
 			 
 			 case 2: 
-				 payController.printPayments();
+				 payController.printTodayPayments();
 				 break;
-			 
+
 			 case 3: 
+				 payController.printPastPayments();
 				 break;
-<<<<<<< Updated upstream
-			 case 4: System.out.println("Program terminating ….");
+			 case 4: 
+				 payController.printAllPayments();
+				 break;
+			 case 5: 
+				 payController.printOccupancyReportByDate();
+				 break;
+			 case 7: System.out.println("Program terminating ….");
 			}
-			} while (choice < 4);
+			} while (choice < 7);
 //		do 
 //		{
 //			System.out.println("Perform the following methods:");
@@ -171,11 +177,6 @@ public class HrpsSystem {
 //				 break;
 //			} 	
 //		}while (choice < 5);
-
-=======
-			} 	
-		}while (choice < 5);
-*/
 
 //		do {
 //			System.out.println("Perform the following methods:");

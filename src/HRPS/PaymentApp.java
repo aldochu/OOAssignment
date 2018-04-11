@@ -2,9 +2,8 @@ package HRPS;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,6 +42,7 @@ public class PaymentApp
 		Double disc,promoCost = 0.00;
 
 		PromoApp pa = new PromoApp();
+		RoomServiceApp rsa = new RoomServiceApp();
 		
 		Payment pm= new Payment();
 		
@@ -66,14 +66,18 @@ public class PaymentApp
 		pm.roomsvc = 20.00;
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
-//		if(rs == null)
-//		{
-//			pm.rsvc = 0.00;	
-//		}
-//		else
-//		{
-//			pm.rsvc = rs.totalcost;
-//		}
+		rs = rsa.GetRoomService(pm.roomNumber);
+		
+		if(rs == null)
+		{
+			pm.onum = 0;
+			pm.roomsvc = 0.00;	
+		}
+		else
+		{
+			pm.onum = 0;
+			pm.roomsvc = rsa.GetTotal(pm.roomNumber);
+		}
 		
 		
 		if(guest.ccdetails.type == null)
@@ -97,48 +101,52 @@ public class PaymentApp
 		System.out.println("Check In Date : " + pm.checkInDate);
 		System.out.println("Check Out Date : " + pm.checkOutDate);
 		System.out.println("Total Stay Duration : " + pm.duration + " Days");
-		System.out.println("Room Cost (w/o GST) : $" + pm.roomcost);
+		System.out.println("Room Cost (w/o GST) : SGD " + pm.roomcost);
 		
-//		if(rs == null)
-//		{
-//			System.out.println("Room Service Breakdown : NONE" );
-//		}
-//		else
-//		{
-//			System.out.println(rs);
-//		}
+		if(rs.size() == 0)
+		{
+			System.out.println("Room Service Breakdown : NONE" );
+		}
+		else
+		{
+			System.out.println("Room Service Breakdown : " );
+			for(int i = 0; i < rs.size(); i++)
+			{
+				System.out.println(rs.get(i));
+			}
+		}
 		
-		System.out.println("Room Service Cost : $" + pm.roomsvc);
-		System.out.println("Room Tax (10% Service Charge + 7% GST) : $" + pm.roomtax);
-		System.out.println("Total Cost : $" + pm.tcost);
+		System.out.println("Room Service Cost : SGD " + pm.roomsvc);
+		System.out.println("Room Tax (10% Service Charge + 7% GST) : SGD " + pm.roomtax);
+		System.out.println("Total Cost : SGD " + pm.tcost);
 		System.out.println("Payment By : " + pm.payType);
 		
-		System.out.println("Please Check if the above details are correct(Y/N)");
+		System.out.println("Please Check if the above details are correct (Y/N)");
 		c = sc.next();
 		if(c.equals("y") || c.equals("Y"))
 		{
-			System.out.println("Do you have a promo code to use?");
+			System.out.println("Do you have a promo code to use? (Y/N)");
 			c = sc.next();
 			if(c.equals("y") || c.equals("Y"))
 			{
 				System.out.println("Please Enter The Promo Code");
 				c = sc.next();
-				Promo a = pa.SearchPromo(c);
-				if(a == null)
+				p = pa.SearchPromo(c);
+				if(p == null)
 				{
 					System.out.println("Promo Does Not Exist");
 				}
 				else
 				{
-					disc = a.discount;
+					disc = p.discount;
 					promoCost = pm.tcost - ((disc/100) * pm.tcost);
 					Double pc = (double) Math.round(promoCost * 100) / 100;
-					System.out.println("Your Final Cost is : " + pc);
+					System.out.println("Your Final Cost is : SGD " + pc);
 					pm.tcost = promoCost;
 				}
 			}
 			
-			System.out.println("Pay Now?");
+			System.out.println("Pay Now? (Y/N)");
 			c = sc.next();
 			if(c.equals("y") || c.equals("Y"))
 			{
@@ -169,12 +177,12 @@ public class PaymentApp
 		return successful;
 	}
 	
-	public void printPayments()
+	public void printTodayPayments()
 	{
 		Date date = new Date();
 		DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-		System.out.println("The Promo Codes below are valid as at " + sdf.format(date));
+		System.out.println("The Payments below were made today, " + sdf.format(date));
 		System.out.println("------------------------------------------------------------");
 		for(int i = 0;i<pay.size();i++)
 		{
@@ -184,6 +192,79 @@ public class PaymentApp
 				System.out.println(pay.get(i).paymentId + "|" + pay.get(i).guestId + "\t|" + pay.get(i).GuestName + "\t|" + pay.get(i).checkInDate + "\t|" + pay.get(i).checkOutDate  + "\t|" + pay.get(i).duration  + "\t|" + pay.get(i).tcost  + "\t|" + pay.get(i).rDate);
 			}
 		}
+	}
+	
+	public void printPastPayments()
+	{
+		try
+		{
+			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			System.out.println("Please Enter Date MM/DD/YYYY : " );
+			Date date;
+			date = sdf.parse(sc.nextLine());
+			
+			System.out.println("The Payments below were made on " + sdf.format(date));
+			System.out.println("------------------------------------------------------------");
+			for(int i = 0;i<pay.size();i++)
+			{
+				boolean b = sdf.format(pay.get(i).rDate).equals(sdf.format(date));
+				if(b)
+				{
+					System.out.println(pay.get(i).paymentId + "|" + pay.get(i).guestId + "\t|" + pay.get(i).GuestName + "\t|" + pay.get(i).checkInDate + "\t|" + pay.get(i).checkOutDate  + "\t|" + pay.get(i).duration  + "\t|" + pay.get(i).tcost  + "\t|" + pay.get(i).rDate);
+				}
+			}
+		}
+		catch (ParseException e)
+		{
+				// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void printAllPayments()
+	{
+		Date date = new Date();
+		DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+		System.out.println("The Payments below are made as at " + sdf.format(date));
+		System.out.println("------------------------------------------------------------");
+		for(int i = 0;i<pay.size();i++)
+		{
+			System.out.println(pay.get(i).paymentId + "|" + pay.get(i).guestId + "\t|" + pay.get(i).GuestName + "\t|" + pay.get(i).checkInDate + "\t|" + pay.get(i).checkOutDate  + "\t|" + pay.get(i).duration  + "\t|" + pay.get(i).tcost  + "\t|" + pay.get(i).rDate);
+		}
+	}
+	
+	public void printOccupancyReportByDate()
+	{
+		try
+		{
+			Validation v = new Validation();
+			Date date;
+			int o = 0;
+			int e = 48;
+			double opercent = 0.00;
+			double epercent = 100.00;
+			
+			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			System.out.println("Please Enter Date MM/DD/YYYY : " );
+			date = sdf.parse(sc.nextLine());
+			
+			o = v.CheckDateWithin(date, pay);
+			e -= o;
+			
+			opercent = 100*o/48;
+			epercent -= opercent;
+			System.out.println("Occupancy Report For : " + sdf.format(date));
+			System.out.println("Rooms Vacant : " + e + " Vacancy Percentage : " + epercent);
+			System.out.println("Rooms Occupied : " + o + " Occupation Percentage : " + opercent);
+		}
+		catch (ParseException e)
+		{
+				// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	private long timeDiff(Date d1, Date d2)
@@ -243,7 +324,7 @@ public class PaymentApp
 		}
 	}
 	
-	public boolean checkRes(Promo promo)
+	public boolean checkPromo(Promo promo)
 	{
 		if(promo == null)
 		{

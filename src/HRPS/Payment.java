@@ -20,4 +20,5 @@ public class Payment
 	public Double tcost;
 	public String payType;
 	public RoomService rsvc = new RoomService();
+	Integer onum;
 }

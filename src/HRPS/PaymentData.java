@@ -43,6 +43,7 @@ public class PaymentData extends StoreData
 
 			temp.duration = Long.parseLong(star.nextToken().trim());
 			temp.roomcost = Double.parseDouble((star.nextToken().trim()));
+			temp.onum = Integer.parseInt(star.nextToken().trim());
 			temp.roomsvc = Double.parseDouble((star.nextToken().trim()));
 			temp.roomtax = Double.parseDouble((star.nextToken().trim()));
 			temp.tcost = Double.parseDouble(star.nextToken().trim());
@@ -95,9 +96,11 @@ public class PaymentData extends StoreData
 			st.append(SEPARATOR);
 			st.append(temp.roomcost);
 			st.append(SEPARATOR);
-			st.append(temp.roomtax);
+			st.append(temp.onum);
 			st.append(SEPARATOR);
 			st.append(temp.roomsvc);
+			st.append(SEPARATOR);
+			st.append(temp.roomtax);
 			st.append(SEPARATOR);
 			st.append(temp.tcost);
 			st.append(SEPARATOR);
