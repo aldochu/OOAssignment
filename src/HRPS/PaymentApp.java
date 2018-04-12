@@ -19,6 +19,7 @@ public class PaymentApp
 	private Guest guest;
 	private Room rm;
 	private Reservation res;
+	private Registration reg;
 	private RoomService rs;
 	private Promo p;
 	
@@ -52,19 +53,30 @@ public class PaymentApp
 		pm.guestId = guestId;
 		pm.GuestName = guest.name;
 		pm.rDate = currentDate;
-		pm.paymentId = res.res_id;
+		if(reg == null)
+		{
+			pm.paymentId = res.res_id;
+			pm.checkInDate = res.check_in;
+			pm.checkOutDate = res.check_out;
+			pm.adults = res.NoOfAdult;
+			pm.child = res.NoOfChild;		
+		}
+		
+		else if(res == null)
+		{
+			pm.paymentId = reg.res_id;
+			pm.checkInDate = reg.check_in;
+			pm.checkOutDate = reg.check_out;
+			pm.adults = reg.NoOfAdult;
+			pm.child = reg.NoOfChild;		
+			
+		}
 		pm.roomNumber = rm.roomId;
 		pm.roomType = rm.roomType;
 		pm.bedType = rm.bedType;
-		pm.checkInDate = res.check_in;
-		pm.checkOutDate = res.check_out;
-		pm.adults = res.NoOfAdult;
-		pm.child = res.NoOfChild;		
 		pm.duration = timeDiff(pm.checkInDate, pm.checkOutDate);
 		pm.roomcost = rm.rate;
 		pm.roomtax = 1.17 * pm.roomcost;
-		pm.roomsvc = 20.00;
-		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
 		rs = rsa.GetRoomService(pm.roomNumber);
 		
@@ -78,7 +90,8 @@ public class PaymentApp
 			pm.onum = 0;
 			pm.roomsvc = rsa.GetTotal(pm.roomNumber);
 		}
-		
+
+		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
 		if(guest.ccdetails.type == null)
 		{
@@ -307,6 +320,19 @@ public class PaymentApp
 		else
 		{
 			res = resTemp;
+			return true;
+		}
+	}
+	
+	public boolean checkReg(Registration regTemp)
+	{
+		if(regTemp == null)
+		{
+			return false;
+		}
+		else
+		{
+			reg = regTemp;
 			return true;
 		}
 	}
