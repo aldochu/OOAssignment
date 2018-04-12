@@ -68,9 +68,14 @@ public class GuestApp {
 			_hotelGuest.gender = true;
 		break;
 		}
-		else 
+		else if(var.equals("F"))
+		{
 			_hotelGuest.gender = false;
-		}while(!var.equals("M") || !var.equals("M"));
+			break;
+		}
+		else
+			System.out.println("Invalid input, try again");
+		}while(!var.equals("M") && !var.equals("F"));
 		
 		do{
 			System.out.println("Does the guest have credit card? Y/N");
@@ -82,7 +87,7 @@ public class GuestApp {
 			}
 			else if(var.equals("N"))
 				_hotelGuest.ccdetails = null;
-			}while(!var.equals("Y") || !var.equals("N"));
+			}while(!var.equals("Y") && !var.equals("N"));
 		
 		hotelGuest.add(_hotelGuest);
 

@@ -39,10 +39,15 @@ public class GuestData extends StoreData {
 						temp.contactNo = star.nextToken().trim();	
 						temp.nationality = star.nextToken().trim();	
 						temp.gender = Boolean.parseBoolean(star.nextToken().trim());
-						temp.ccdetails.name = star.nextToken().trim();
+						String checknull = new String();
+						checknull = star.nextToken().trim();
+						if(!checknull.equals("null"))
+						{
+						temp.ccdetails.name = checknull;
 						temp.ccdetails.cardNo = star.nextToken().trim();
 						temp.ccdetails.cvv2 = star.nextToken().trim();
 						temp.ccdetails.type = star.nextToken().trim();
+						
 						
 						try {
 							temp.ccdetails.expiry = df.parse(star.nextToken().trim());
@@ -50,6 +55,7 @@ public class GuestData extends StoreData {
 						 catch (Exception b)
 						{
 						b.printStackTrace();
+						}
 						}
 
 						GuestArray.add(temp);
@@ -79,6 +85,10 @@ public class GuestData extends StoreData {
 				st.append(SEPARATOR);
 				st.append(temp.gender);
 				st.append(SEPARATOR);
+				if(temp.ccdetails == null)
+					st.append("null");
+				else
+				{
 				st.append(temp.ccdetails.name.trim());
 				st.append(SEPARATOR);
 				st.append(temp.ccdetails.cardNo.trim());
@@ -88,6 +98,7 @@ public class GuestData extends StoreData {
 				st.append(temp.ccdetails.type.trim());
 				st.append(SEPARATOR);
 				st.append(df.format(temp.ccdetails.expiry));
+				}
 				alw.add(st.toString()) ;
         }
 			write(filename,alw);
