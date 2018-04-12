@@ -227,7 +227,7 @@ public class HrpsSystem {
 //		 }
 //>>>>>>> adding classes for room service, will update further changes soon
 //=======
-/*
+
 		Room temp = new Room();
 		do {
 			System.out.println("Perform the following methods:");
@@ -275,7 +275,7 @@ public class HrpsSystem {
 				 
 			 case 8: System.out.println("Program terminating ….");
 			}
-			} while (choice < 8); */
+			} while (choice < 8); 
 
 	} 
 

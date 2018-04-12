@@ -53,11 +53,15 @@ public class RoomData extends StoreData {
 				temp = (Room) RoomArray.get(i);
 				st.append(temp.roomId.trim());
 				st.append(SEPARATOR);
+				st.append(temp.levelNo);
+				st.append(SEPARATOR);
+				st.append(temp.roomNo);
+				st.append(SEPARATOR);
+				st.append(temp.status.trim());
+				st.append(SEPARATOR);
 				st.append(temp.guestIc.trim());
 				st.append(SEPARATOR);
 				st.append(temp.roomType.trim());
-				st.append(SEPARATOR);
-				st.append(temp.status.trim());
 				st.append(SEPARATOR);
 				st.append(temp.bedType.trim());
 				st.append(SEPARATOR);
@@ -71,10 +75,7 @@ public class RoomData extends StoreData {
 				st.append(SEPARATOR);
 				st.append(temp.rate);
 				st.append(SEPARATOR);
-				st.append(temp.levelNo);
-				st.append(SEPARATOR);
-				st.append(temp.roomNo);
-				st.append(SEPARATOR);
+				
 				alw.add(st.toString());
 		}
 		write(filename, alw);
