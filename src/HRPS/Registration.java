@@ -9,5 +9,6 @@ public class Registration {
 	public Date check_out;
 	public int NoOfAdult;
 	public int NoOfChild;
-	public String roomType,bedType;
+	public String room_id;
+	public int status;
 }

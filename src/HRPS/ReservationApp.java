@@ -12,6 +12,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import HRPS.Guest;
 import HRPS.GuestApp;
@@ -19,9 +22,12 @@ import HRPS.GuestData;
 
 
 		public class ReservationApp {
+		private static final TimeUnit MILLISECONDS = null;
 		GuestApp guestController = new GuestApp();
-		private ArrayList<Reservation> reserve = new ArrayList<Reservation>();
-		private Reservationdb db = new Reservationdb();
+		RoomApp roomController = new RoomApp();
+		private static ArrayList<Reservation> reserve = new ArrayList<Reservation>();
+		private static Reservationdb db = new Reservationdb();
+		private Room rm;
 		Scanner sc = new Scanner(System.in);
 		
 		///////////////////////////////////Load data from file////////////////////////////////////////
@@ -46,7 +52,7 @@ import HRPS.GuestData;
 
 
 
-		public int createReservation()
+		/*public int createReservation()
 		{
 			
 			
@@ -70,37 +76,59 @@ import HRPS.GuestData;
 
 		}
 		
+		*/
+
 		
-
-
-		/*public void addguestic(Reservation reserve, String )
+		private String tem;
+		private String temRoom;
+		
+		public boolean getuser(Guest guest)
 		{
-		    myClassRoom.setTeacherName(TeacherName);
-		}*/
+			if(guest==null) {
+				return false;
+			}
+			else {
+			return true;
+			}
+		}
 		
-		public void createRes()//pass by reference
+		public boolean checkRoom(Room rmTemp)
+		{
+			if(rmTemp == null)
+			{
+				return false;
+			}
+			else
+			{
+				rm = rmTemp;
+				return true;
+			}
+		}
+		
+		
+		public void createRes(String guestId,String roomId)//pass by reference
 		{
 			
 			Reservation res = new Reservation();
-			Guest g = new Guest();
-			GuestApp ga= new GuestApp();
-			String var; //this var is for looping condition
+//			GuestApp ga= new GuestApp();
+//			Room rm = new Room();
+//			RoomApp r = new RoomApp();
+//			String var; //this var is for looping condition
 			
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			//guestController.createGuest();
 			
 			Date d;
-		
+			String temp;
 			
-			System.out.println("Please enter the guestid:");
-			res.guestId = sc.nextLine();
+			res.guestId=guestId;
+			
+			res.room_id=roomId;
+			System.out.println("Reservation room id"+res.room_id);
+			
 		
-			g = ga.SearchGuestByIc(res.guestId);
-			if(g==null) {
-				System.out.println("Please enter a valid guestid");
-				return;
-			}
-				
+			//new RoomApp().assignRoom(g.ic);
+
 			
 			//System.out.println("Please enter the room type(Single, Double, Deluxe, VIP Suite):");
 			//res.roomType = sc.nextLine();
@@ -137,6 +165,7 @@ import HRPS.GuestData;
 			}
 			//System.out.println("Please enter the room type");
 			//reserve.roomType = sc.nextLine();
+			
 			
 			res.status= AppData.RES_STATUS_CONFIRMED;
 			res.res_id=UUID.randomUUID().toString();
@@ -265,15 +294,13 @@ import HRPS.GuestData;
 					 break;
 					 case 5:
 						 System.out.println("Please enter the room type of your choice:");
-						 reserve.roomType = sc.nextLine();
+						 reserve.room_id = sc.nextLine();
 						
 					 break;
 					 case 6:
-						 System.out.println("Please enter the ed type of your choice");
-						 reserve.bedType = sc.nextLine();
+						 System.out.println("return to previous");
 						
-					 break;
-					 case 7: System.out.println("return to previous");
+					
 					}
 					} while (choice < 7);
 				
@@ -303,6 +330,7 @@ import HRPS.GuestData;
 				for(int i = 0; i < reserve.size(); i++)
 				{
 				System.out.println("Guest ID: " + reserve.get(i).guestId);
+				
 				System.out.println("Reservation ID: " + reserve.get(i).res_id);
 				System.out.println("Check in date: " + reserve.get(i).check_in);
 				System.out.println("Check out date: " + reserve.get(i).check_out);
@@ -310,13 +338,14 @@ import HRPS.GuestData;
 				System.out.println("NUmber of Children: " + reserve.get(i).NoOfChild + "\n");
 				}
 				
+				
 				}
 			
-			public void checkOut(String Res_Number)
+			public void checkOut(String guestId)
 			{				
 				for(int i = 0;i<reserve.size();i++)
 				{
-					if(reserve.get(i).res_id.equals(Res_Number))
+					if(reserve.get(i).res_id.equals(guestId))
 					{
 						reserve.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
 					}
@@ -350,6 +379,27 @@ import HRPS.GuestData;
 
 			}
 			
+			
+			public void waitlist()
+			{				
+				System.out.println("Please enter the guest number:");
+				String guest_id = sc.nextLine();
+				for(int i = 0;i<reserve.size();i++)
+				{
+					if(reserve.get(i).guestId.equals(guest_id))
+					{
+						reserve.get(i).status= AppData.RES_STATUS_WAITLIST; //Search Successfully
+					}
+				}
+				
+				try {
+					db.saveClass("reservation.txt", reserve);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
+
+			}
 			
 
 
@@ -401,7 +451,7 @@ import HRPS.GuestData;
 			}*/
 
 
-			private long compareTime()
+			private static long compareTime()
 			{
 				Calendar checkInTime = Calendar.getInstance();
 				Calendar today = Calendar.getInstance();
@@ -455,27 +505,30 @@ import HRPS.GuestData;
 			public Date getCHECK_IN_DATE(Date check_in) {
 				return check_in;
 			}
-
-
 			public void getExpired() {
 				// TODO Auto-generated method stub
 				
 				Date today=  new Date();//("MM-dd-yyyy hh:mm:ss a");
 				DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				System.out.println("Please enter the reservation number:");
-				String Res_Number = sc.nextLine();
-				System.out.println(Res_Number);
+				System.out.println("Checking for expired....");
+//				String Res_Number = sc.nextLine();
+//				System.out.println(Res_Number);
 				for(int i = 0;i<reserve.size();i++)
 				{
-					if(reserve.get(i).res_id.equals(Res_Number)) 
-					{
+					if(reserve.get(i)!=null) {
+//					if(reserve.get(i).res_id.equals(Res_Number)) 
+//					{
 //						System.out.println(reserve.get(i).res_id);
 //						System.out.println(getCHECK_IN_DATE(reserve.get(i).check_in));
 //						if(today.before(reserve.get(i).check_in)) {//if (getCHECK_IN_DATE(reserve[i].check_in).compareTo(getToday(today)) <=0){
 //							System.out.println("today is an earlier date than check_in date");
 //							break;
 //						}
-						if(sdf.format(today).equals(sdf.format(reserve.get(i).check_in)))
+						String todaydate=sdf.format(today);
+						String checkindate=sdf.format(reserve.get(i).check_in);
+						
+						
+						if(todaydate.equals(checkindate))
 						{
 							System.out.println("Checked in date is equal to today");
 							if(compareTime()<=120 && compareTime() >=0)
@@ -495,45 +548,54 @@ import HRPS.GuestData;
 								} //to read data from files
 							}
 						}
+					}	
+					else
 						break;
-								
+					}
+					
 				}
-					
-		
-					
+
+			
+
+			public static void compareCheckinWithToday() {
+				// TODO Auto-generated method stub
 				
+				Date today=  new Date();//("MM-dd-yyyy hh:mm:ss a");
+				DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+				System.out.println("Checking for expired....");
+
+				for(int i = 0;i<reserve.size();i++)
+				{
+					if(reserve.get(i)!=null) {
+
+						String todaydate=sdf.format(today);
+						String checkindate=sdf.format(reserve.get(i).check_in);
+						
+						
+						if(todaydate.equals(checkindate))
+						{
+							System.out.println("Checked in date is equal to today");
+							
+							
+					
+								
+								try {
+									db.saveClass("reservation.txt", reserve);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} //to read data from files
+							
+						}
+					}	
+					else
+						break;
+					}
+					
 				}
 
-			}
 			
-//			public int updateStatus()
-//			{
-//				
-//				System.out.println("Please enter the reservation number:");
-//				String Res_Number = sc.nextLine();
-//				
-//				for(int i = 0;i<reserve.size();i++)
-//				{
-//					if(reserve.get(i).res_id.equals(Res_Number))
-//					{
-//						Reservation temp = reserve.get(i);
-//						getExpired(Res_Number); //pass by reference
-//						reserve.remove(i); //delete from the searched index
-//						reserve.add(i, temp); //add the new updateed record into the deleted index
-//						return 1;
-//					}
-//					//error message for incorrect reservation id
-//					
-//				}
-//				return 0;
-//				
-//			}
-//			
 			
-
-
-
-
 
 
 
@@ -554,7 +616,69 @@ import HRPS.GuestData;
 				}
 				return null; //failed to create
 			}
+			
+			
+			public static void DemoScheduler() {
+				 
+				
+			        // Create a calendar instance
+			        Calendar calendar = Calendar.getInstance();
+			 
+			        // Set time of execution. Here, we have to run every day 3:00 AM; so,
+			        // setting all parameters.
+			        calendar.set(Calendar.HOUR, 6);
+			        calendar.set(Calendar.MINUTE, 48);
+			        calendar.set(Calendar.SECOND, 0);
+			        calendar.set(Calendar.AM_PM, Calendar.PM);
+			 
+			        Long currentTime = new Date().getTime();
+			 
+			        // Check if current time is greater than our calendar's time. If So,
+			        // then change date to one day plus. As the time already pass for
+			        // execution.
+			        if (calendar.getTime().getTime() < currentTime) {
+			            calendar.add(Calendar.DATE, 1);
+			        }
+			 
+			        // Calendar is scheduled for future; so, it's time is higher than
+			        // current time.
+			        long startScheduler = calendar.getTime().getTime() - currentTime;
+			 
+			        // Setting stop scheduler at 4:21 PM. Over here, we are using current
+			        // calendar's object; so, date and AM_PM is not needed to set
+			        calendar.set(Calendar.HOUR, 9);
+			        calendar.set(Calendar.MINUTE, 5);
+			        calendar.set(Calendar.AM_PM, Calendar.PM);
+			 
+			        // Calculation stop scheduler
+			        long stopScheduler = calendar.getTime().getTime() - currentTime;
+			 
+			        // Executor is Runnable. The code which you want to run periodically.
+			        Runnable task = new Runnable() {
+			 
+			            @Override
+			            public void run() {
+			            	 compareCheckinWithToday();
+			 
+			            }
+			        };
+			 
+			        // Get an instance of scheduler
+			        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+			        // execute scheduler at fixed time.
+			        scheduler.scheduleAtFixedRate(task, startScheduler, stopScheduler, TimeUnit.MILLISECONDS);
+			    
+			
 
+
+
+
+			}
+
+
+
+
+			
 
 
 			

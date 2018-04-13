@@ -19,15 +19,15 @@ public class Registrationdb extends StoreData{
 
 
 				for (int i = 0 ; i < stringArray.size() ; i++) {
-					Reservation temp = new Reservation();
+					Registration temp = new Registration();
 
 						String st = (String)stringArray.get(i);
 				
 						StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+						temp.status = Integer.parseInt(star.nextToken().trim());
 						temp.res_id = star.nextToken().trim();
 						temp.guestId = star.nextToken().trim();
-						//temp.roomType = star.nextToken().trim();
-						//temp.bedType = star.nextToken().trim();	
+						temp.room_id = star.nextToken().trim();
 						temp.NoOfAdult = Integer.parseInt(star.nextToken().trim());	
 						temp.NoOfChild = Integer.parseInt(star.nextToken().trim());	
 						
@@ -53,22 +53,20 @@ public class Registrationdb extends StoreData{
 
 		List alw = new ArrayList() ;// to store Professors data
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); //for date variable
-		Reservation temp = new Reservation();
+		Registration temp = new Registration();
 		
 		
 		 for (int i = 0 ; i < RegistrationArray.size(); i++) {
 		StringBuilder builder =  new StringBuilder();
-		temp = (Reservation) RegistrationArray.get(i);
+		temp = (Registration) RegistrationArray.get(i);
 		builder.append(String.valueOf(temp.status));
 		builder.append(SEPARATOR);
 		builder.append(temp.res_id.trim());
 		builder.append(SEPARATOR);
 		builder.append(temp.guestId.trim());
 		builder.append(SEPARATOR);
-		//builder.append(temp.roomType.trim());
-		//builder.append(SEPARATOR);
-		//builder.append(temp.bedType);
-		//builder.append(SEPARATOR);
+		builder.append(temp.room_id.trim());
+		builder.append(SEPARATOR);
 		builder.append(temp.NoOfAdult);
 		builder.append(SEPARATOR);
 		builder.append(temp.NoOfChild);

@@ -33,15 +33,20 @@ public class RoomApp {
 		}
 	}
 	
-	public int assignRoom(String guestIC)
+	public int assignRoom(String guestIC)// do method of overloading to get the roomid
 	{
 		int level, room;
 		String roomId, bedType, roomType;
 		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
+
 		//16 single rooms
 		//24 double rooms
+
+		//20 single rooms
+		//20 double rooms
+
 		
 		System.out.println("Please enter the room type:");
 		System.out.println("Single/Double/Deluxe/VIP");
@@ -78,8 +83,8 @@ public class RoomApp {
 					bedType = "2 Single Beds";
 				else 
 					bedType = "1 Double Bed";
-			level = doubleCount / 8 + 4;
-			room = doubleCount % 8;
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
 			if(room == 0) room = 8;
 			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
@@ -88,14 +93,14 @@ public class RoomApp {
 		else if(roomType.equals("Single") && singleCount < 20) {
 			singleCount++;
 			bedType = "1 Single Bed";
-			level = singleCount / 8 + 2;
-			room = singleCount % 8;
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
 			if(room == 0) room = 8;
 			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		else {
 			System.out.println("No room available. Sorry");
-			return 0; //no room available
+			return 0;
 		}
 		
 			for(int i = 0; i<hotelRoom.size(); i++) {
@@ -113,9 +118,11 @@ public class RoomApp {
 					if(sc.nextLine().equals("Y")) hotelRoom.get(i).wifi = true;
 					System.out.println("Do you wish to have smoking area? Y: Yes");
 					if(sc.nextLine().equals("Y")) hotelRoom.get(i).smoking = true;
-					
+					System.out.println("Your room is " + hotelRoom.get(i).roomId);
+		
 					hotelRoom.get(i).guestIc = guestIC;
 					hotelRoom.get(i).status = "Reserved";
+
 					
 					System.out.println("Your room is " + hotelRoom.get(i).roomId + "Thank you.");
 					
@@ -126,11 +133,127 @@ public class RoomApp {
 						e.printStackTrace();
 					} //to read data from files
 					
+					
+					
 					return 1; //assigned
+
+					return 1;
+					
 				}
 			}
-			return 0; //no room available
+			return 0;
 	}
+	
+	public Room assignRoomWithIdReturn(String guestIC)// do method of overloading to get the roomid
+	{
+		int level, room;
+		String roomId, bedType, roomType;
+		
+		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
+		//top floor: 2 VIP, 6 deluxe
+
+		//16 single rooms
+		//24 double rooms
+
+		//20 single rooms
+		//20 double rooms
+
+		
+		System.out.println("Please enter the room type:");
+		System.out.println("Single/Double/Deluxe/VIP");
+		roomType = sc.nextLine();
+		
+		//VIP
+		if(roomType.equals("VIP") && vipCount < 2) {
+			vipCount++;
+			bedType = "2 King Beds";
+			level = 7;
+			room = vipCount;
+			System.out.println("here");
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Deluxe
+		else if(roomType.equals("Deluxe") && deluxeCount < 6) {
+			deluxeCount++;
+				System.out.println("Would you rather 2 Double Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					bedType = "2 Double Beds";
+				else 
+					bedType = "1 King Bed";
+			level = 7;
+			room = deluxeCount + 2;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Double
+		else if(roomType.equals("Double") && doubleCount < 20) {
+			doubleCount++;
+				System.out.println("Would you rather 2 Single Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					bedType = "2 Single Beds";
+				else 
+					bedType = "1 Double Bed";
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
+			if(room == 0) room = 8;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Single
+		else if(roomType.equals("Single") && singleCount < 20) {
+			singleCount++;
+			bedType = "1 Single Bed";
+			level = (doubleCount + singleCount) / 8 + 2;
+			room = (doubleCount + singleCount) % 8;
+			if(room == 0) room = 8;
+			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		else {
+			System.out.println("No room available. Sorry");
+			return null;
+		}
+		
+			for(int i = 0; i<hotelRoom.size(); i++) {
+				if(hotelRoom.get(i).roomId.equals(roomId)) {
+					hotelRoom.get(i).levelNo = level;
+					hotelRoom.get(i).roomNo = room;
+					hotelRoom.get(i).bedType = bedType;
+					hotelRoom.get(i).roomType = roomType;
+					
+					System.out.println("Do you wish to have city view? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).cityView = true;
+					System.out.println("Do you wish to have breakfast included? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).breakfast = true;
+					System.out.println("Do you wish to have WiFi enabled? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).wifi = true;
+					System.out.println("Do you wish to have smoking area? Y: Yes");
+					if(sc.nextLine().equals("Y")) hotelRoom.get(i).smoking = true;
+					System.out.println("Your room is " + hotelRoom.get(i).roomId);
+		
+					hotelRoom.get(i).guestIc = guestIC;
+					hotelRoom.get(i).status = "Reserved";
+
+					
+					System.out.println("Your room is " + hotelRoom.get(i).roomId + "Thank you.");
+					
+					try {
+						db.saveClass("room.txt", hotelRoom);
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //to read data from files
+					
+					
+					
+					return hotelRoom.get(i); //Please return room
+					
+				}
+			}
+			return null;
+	}
+	
 	
 	public void checkIn(String roomId)
 	{
@@ -260,7 +383,7 @@ public class RoomApp {
 	
 	public Room getRoomDetails(String guestIc)
 	{
-		for(int i = 0; i<hotelRoom.size(); i++) {
+		for(int i = 0; i<hotelRoom.size(); i++ ) {
 			if(hotelRoom.get(i).guestIc.equals(guestIc)) return hotelRoom.get(i);
 		}
 		return null;
@@ -278,7 +401,7 @@ public class RoomApp {
 		
 		double result = 0;
 		
-		for(int i = 0; i<hotelRoom.size(); i++) {
+ 		for(int i = 0; i<hotelRoom.size(); i++) {
 			if(hotelRoom.get(i).guestIc.equals(guestIc)) {
 				if(hotelRoom.get(i).roomType.equals("Single")) result += 100;
 				else if(hotelRoom.get(i).roomType.equals("Double")) result += 150;
@@ -301,21 +424,16 @@ public class RoomApp {
 		return 0;
 	}
 	
-	public void displayRoom(String roomId)
+	public void displayRoom(Room _hotelRoom)
 	{
-		for(int i=0; i<hotelRoom.size(); i++) {
-			if(hotelRoom.get(i).roomId.equals(roomId)) {
-				System.out.println("Room Id: " + hotelRoom.get(i).roomId);
-				System.out.println("Guest IC: " + hotelRoom.get(i).guestIc);
-				System.out.println("Room Type: " + hotelRoom.get(i).roomType);
-				System.out.println("Bed Type: " + hotelRoom.get(i).bedType);
-				System.out.println("Smoking: " + hotelRoom.get(i).smoking);
-				System.out.println("City View: " + hotelRoom.get(i).cityView);
-				System.out.println("Wifi enabled: " + hotelRoom.get(i).wifi);
-				System.out.println("Breakfast Included: " + hotelRoom.get(i).breakfast);
-			}
-		}
-		
+		System.out.println("Room Id: " + _hotelRoom.roomId);
+		System.out.println("Guest IC: " + _hotelRoom.guestIc);
+		System.out.println("Room Type: " + _hotelRoom.roomType);
+		System.out.println("Bed Type: " + _hotelRoom.bedType);
+		System.out.println("Smoking: " + _hotelRoom.smoking);
+		System.out.println("City View: " + _hotelRoom.cityView);
+		System.out.println("Wifi enabled: " + _hotelRoom.wifi);
+		System.out.println("Breakfast Included: " + _hotelRoom.breakfast);
 	}
 	
 	public int checkAvailability()
