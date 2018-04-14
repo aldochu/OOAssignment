@@ -169,7 +169,7 @@
 				//System.out.println("Please enter the room type");
 				//register.roomType = sc.nextLine();
 				
-				reg.status= 1;
+				reg.status= AppData.RES_STATUS_CHECKED_IN;
 				reg.res_id=UUID.randomUUID().toString();
 				
 				register.add(reg);

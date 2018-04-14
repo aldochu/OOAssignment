@@ -1,10 +1,12 @@
 package HRPS;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Validation {
 	
@@ -58,27 +60,129 @@ public class Validation {
 
 	}
 	
-	public String CheckRoomVacancyFromReservation(Date D,ArrayList<Reservation> R, String type) //this will check D with the current date + k
+	public String CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k
 	{	
 		
+		int level, room;
+		String roomId, bedType, roomType, type;
+		int vipCount = 0, deluxeCount = 0, singleCount = 0, doubleCount = 0; 
+		Scanner sc = new Scanner(System.in);
+		Room hotelRoom =new Room();
+		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
+		//top floor: 2 VIP, 6 deluxe
+
+		//16 single rooms
+		//24 double rooms
+
+		//20 single rooms
+		//20 double rooms
+
+		
+		System.out.println("Please enter the room type:");
+		System.out.println("Single/Double/Deluxe/VIP");
+		roomType = sc.nextLine();
+		
+		//VIP
+		if(roomType.equals("VIP") && vipCount < 2) {
+			vipCount++;
+//			bedType = "2 King Beds";
+//			level = 7;
+//			room = vipCount;
+			type=Integer.toString(AppData.ROOM_TYPE_VIP);
+//			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Deluxe
+		else if(roomType.equals("Deluxe") && deluxeCount < 6) {
+			deluxeCount++;
+				System.out.println("Would you rather 2 Double Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					bedType = "2 Double Beds";
+				else 
+					bedType = "1 King Bed";
+//			level = 7;
+//			room = deluxeCount + 2;
+				type=Integer.toString(AppData.ROOM_TYPE_DELUXE);
+//			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Double
+		else if(roomType.equals("Double") && doubleCount < 20) {
+			doubleCount++;
+				System.out.println("Would you rather 2 Single Beds? Y:Yes");
+				if(sc.nextLine() == "Y") 
+					bedType = "2 Single Beds";
+				else 
+					bedType = "1 Double Bed";
+				type=Integer.toString(AppData.ROOM_TYPE_DOUBLE);
+//			level = (doubleCount + singleCount) / 8 + 2;
+//			room = (doubleCount + singleCount) % 8;
+//			if(room == 0) room = 8;
+//			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		
+		//Single
+		else if(roomType.equals("Single") && singleCount < 20) {
+			singleCount++;
+			type=Integer.toString(AppData.ROOM_TYPE_SINGLE);
+//			bedType = "1 Single Bed";
+//			level = (doubleCount + singleCount) / 8 + 2;
+//			room = (doubleCount + singleCount) % 8;
+//			if(room == 0) room = 8;
+//			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
+		}
+		else {
+			System.out.println("No room available. Sorry");
+			return null;
+		}
+		
+//			for(int i = 0; i<hotelRoom.size(); i++) {
+//				if(hotelRoom.get(i).roomId.equals(roomId)) {
+//					hotelRoom.get(i).levelNo = level;
+//					hotelRoom.get(i).roomNo = room;
+//					hotelRoom.get(i).bedType = bedType;
+//					hotelRoom.get(i).roomType = roomType;
+//					
+//					System.out.println("Do you wish to have city view? Y: Yes");
+//					if(sc.nextLine().equals("Y")) hotelRoom.get(i).cityView = true;
+//					System.out.println("Do you wish to have breakfast included? Y: Yes");
+//					if(sc.nextLine().equals("Y")) hotelRoom.get(i).breakfast = true;
+//					System.out.println("Do you wish to have WiFi enabled? Y: Yes");
+//					if(sc.nextLine().equals("Y")) hotelRoom.get(i).wifi = true;
+//					System.out.println("Do you wish to have smoking area? Y: Yes");
+//					if(sc.nextLine().equals("Y")) hotelRoom.get(i).smoking = true;
+//					System.out.println("Your room is " + hotelRoom.get(i).roomId);
+//		
+//					hotelRoom.get(i).guestIc = guestIC;
+//					hotelRoom.get(i).status = "Reserved";
+//
+//					
+//					System.out.println("Your room is " + hotelRoom.get(i).roomId + "Thank you.");
+//					
+//					
+//					
+//					
+//					return hotelRoom.get(i); //Please return room
+					
+			
 		
 		
 		switch(type)
 		{
 		case "1": //VIP room 07-01 - 07-02
 			
-			return SearchRoomFunction(D,R,7,1,1,2);
+			return SearchRoomFunction(CheckIn,CheckOut,R,7,1,1,2);
 		case "2":  //Deluxe| room 07-03 - 07-08
 			
-			return SearchRoomFunction(D,R,7,3,1,6);
+			return SearchRoomFunction(CheckIn,CheckOut,R,7,3,1,6);
 			
 		case "3":  //Single room 02-01 - 02-08 & 03-01 - 03-08 
 			
-			return SearchRoomFunction(D,R,2,1,2,8);
+			return SearchRoomFunction(CheckIn,CheckOut,R,2,1,2,8);
 			
 		case "4":  //Single room 04-01 - 04-08 & 05-01 - 05-08 & 06-01 - 06-08 
 			
-			return SearchRoomFunction(D,R,4,1,3,8);
+			return SearchRoomFunction(CheckIn,CheckOut,R,4,1,3,8);
 		}
 		
 
@@ -86,7 +190,7 @@ public class Validation {
 		return null;
 	}
 	
-	public String SearchRoomFunction(Date D,ArrayList<Reservation> R,int startingFloor,int startingRoom, int NoOfFloor, int NoOfRoomPerFloor)
+	public String SearchRoomFunction(Date checkIn,Date checkOut,ArrayList<Reservation> R,int startingFloor,int startingRoom, int NoOfFloor, int NoOfRoomPerFloor)
 	{
 		//1st check whether there's any reservation for this room
 		int floor = startingFloor;
@@ -105,9 +209,9 @@ public class Validation {
 					//1st check whether there's any reservation for this room
 					Reservation temp = R.get(k);
 					
-					if(temp.bedType!=null)
+					if(temp.room_id!=null)
 					{
-						if(temp.bedType.equals(roomNo))
+						if(temp.room_id.equals(roomNo))
 						{
 							roomBook=true; //this room exist
 						}
@@ -142,18 +246,47 @@ public class Validation {
 					//1st check whether there's any reservation for this room
 					Reservation temp = R.get(k);
 					
-					if(temp.bedType!=null) //to ensure that the roomtype is not null
+					if(temp.room_id!=null) //to ensure that the roomtype is not null
 					{
 						
-						if(temp.bedType.equals(roomNo))//if it's the same room
+						if(temp.room_id.equals(roomNo))//if it's the same room
 						{
-							if(!(D.compareTo(temp.check_in)>=0 && D.compareTo(temp.check_out)<0))
-							{
-								return roomNo;
 							
+							
+//							if( !(checkIn.equals(temp.check_in)) ||  !( (checkIn.after(temp.check_in)) && (checkIn.before(temp.check_out)) )
+//								|| !( (checkOut.after(temp.check_in)) && (checkOut.before(temp.check_in)) ))
+//							{
+//
+//								return roomNo;
+//						}
+//							
+//							if(   !( checkIn.after(temp.check_in) && checkOut.before(temp.check_out) )  || !( checkIn.equals(temp.check_in) )    
+//									|| !( checkIn.before(temp.check_in)  && checkOut.before(temp.check_out) )   ) {
+//								return roomNo;
+//							}
+//							
+							if( ( checkIn.equals(temp.check_in) )    ||       (  ( checkIn.before(temp.check_in)  && checkOut.after(temp.check_in))   ) 
+									||  (( checkIn.after(temp.check_in) && checkOut.before(temp.check_out) )  )      )
+									{
+								return null;
 							}
-						}
-			
+							
+							else {
+								return roomNo;
+							}
+//							if(  !checkIn.equals(temp.check_in) ) {
+//								System.out.println("check in date is same");
+//								  return roomNo;
+//							}
+//							
+//							else if( !( checkIn.after(temp.check_in) && checkOut.before(temp.check_out) ) ) {
+//								 return roomNo;
+//							}
+//							
+//							else if(!( checkIn.before(temp.check_in)  && checkOut.after(temp.check_in))){
+//								 return roomNo;
+//							}
+//			
 					}		
 				}
 				room++;
@@ -163,4 +296,7 @@ public class Validation {
 		
 		return null;
 	}
-}
+		return null;
+
+	}
+	}

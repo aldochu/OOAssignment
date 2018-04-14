@@ -23,6 +23,8 @@ import HRPS.GuestData;
 
 		public class ReservationApp {
 		private static final TimeUnit MILLISECONDS = null;
+		private static final int NoOfFloor = 0;
+		private static final int NoOfRoomPerFloor = 0;
 		GuestApp guestController = new GuestApp();
 		RoomApp roomController = new RoomApp();
 		private static ArrayList<Reservation> reserve = new ArrayList<Reservation>();
@@ -45,12 +47,6 @@ import HRPS.GuestData;
 		}
 		
 	
-
-
-
-
-
-
 
 		/*public int createReservation()
 		{
@@ -106,13 +102,12 @@ import HRPS.GuestData;
 		}
 		
 		
-		public void createRes(String guestId,String roomId)//pass by reference
+		public void createRes(String guestId)//pass by reference
 		{
 			
 			Reservation res = new Reservation();
-//			GuestApp ga= new GuestApp();
-//			Room rm = new Room();
-//			RoomApp r = new RoomApp();
+			Validation v =new Validation();
+
 //			String var; //this var is for looping condition
 			
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -120,31 +115,12 @@ import HRPS.GuestData;
 			
 			Date d;
 			String temp;
+	
 			
 			res.guestId=guestId;
 			
-			res.room_id=roomId;
-			System.out.println("Reservation room id"+res.room_id);
-			
-		
-			//new RoomApp().assignRoom(g.ic);
-
-			
-			//System.out.println("Please enter the room type(Single, Double, Deluxe, VIP Suite):");
-			//res.roomType = sc.nextLine();
-			//System.out.println("Please enter the bed type(single/double/master):");
-			//res.bedType = sc.nextLine();
-			System.out.println("Please enter the number of adults:");
-			res.NoOfAdult = sc.nextInt();
-			System.out.println("Please enter the number of children:");
-			res.NoOfChild = sc.nextInt();
 			System.out.println("Please enter the check in date MM/dd/yyyy");
-			/*try {
-				res.check_in = df.parse(sc.nextLine());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			
 			try {
 				d = df.parse(sc.next());
 				System.out.println("CHECK IN DATE PARSE : " + d);
@@ -163,11 +139,45 @@ import HRPS.GuestData;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			res.room_id = v.CheckRoomVacancyFromReservation(res.check_in,res.check_out, reserve);
+			
+			if( res.room_id!= null){
+				System.out.println("Reservation is confirmed");
+				
+			res.status= AppData.RES_STATUS_CONFIRMED;
+		
+			System.out.println(res.status);
+			}
+			else {
+				System.out.println("Your reservation is in waitlist");
+				res.status=AppData.RES_STATUS_WAITLIST;
+				System.out.println(res.status);
+				res.room_id="waitlist";
+			}
+			
+			
+			System.out.println("Reservation room id"+res.room_id);
+			
+//			res.room_id=roomId;
+//			System.out.println("Reservation room id"+res.room_id);
+			
+		
+			//new RoomApp().assignRoom(g.ic);
+
+			
+			System.out.println("Please enter the number of adults:");
+			res.NoOfAdult = sc.nextInt();
+			System.out.println("Please enter the number of children:");
+			res.NoOfChild = sc.nextInt();
+			
 			//System.out.println("Please enter the room type");
 			//reserve.roomType = sc.nextLine();
 			
 			
-			res.status= AppData.RES_STATUS_CONFIRMED;
+			
+			
+			
 			res.res_id=UUID.randomUUID().toString();
 			
 			reserve.add(res);
