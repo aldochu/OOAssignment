@@ -274,19 +274,8 @@ public class Validation {
 							else {
 								return roomNo;
 							}
-//							if(  !checkIn.equals(temp.check_in) ) {
-//								System.out.println("check in date is same");
-//								  return roomNo;
-//							}
-//							
-//							else if( !( checkIn.after(temp.check_in) && checkOut.before(temp.check_out) ) ) {
-//								 return roomNo;
-//							}
-//							
-//							else if(!( checkIn.before(temp.check_in)  && checkOut.after(temp.check_in))){
-//								 return roomNo;
-//							}
-//			
+
+		
 					}		
 				}
 				room++;
