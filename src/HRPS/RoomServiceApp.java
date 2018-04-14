@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import roomserviceapp.RoomService;
+
 import java.util.Date;
 import java.util.Scanner;
 public class RoomServiceApp 
@@ -284,34 +287,29 @@ public class RoomServiceApp
 		//return hotelService;
 	}
 	
-    public ArrayList<RoomService> GetRoomService(String roomA)
-	{
-    	ArrayList <RoomService> temp = new ArrayList <RoomService>();
-    	for(int i = 0;i<hotelService.size();i++)
+    public RoomService GetRoomService(String roomA)
 		{
-    		if(hotelService.get(i).RoomNo.equals(roomA))
-    			temp.add(hotelService.get(i));
+	    	for(int i = 0;i<hotelService.size();i++)
+			{
+	    		if(hotelService.get(i).RoomNo.equals(roomA))
+	    		         if(hotelService.get(i).paid == false)
+	    		         {
+	    		        	 hotelService.get(i).paid = true;
+	    		        	 return hotelService.get(i);
+	    		         }	             
+			}
+	    	return null;
 		}
-    	for(int i=0;i<temp.size();i++)
-    	{
-    		if(temp.get(i).paid==true)
-    			temp.remove(i);
-    		else
-    			temp.get(i).paid==true;
-    	}
-    	
-    	return temp;
-	}
-    
+	    
     public double GetTotal(String roomA)
-    {
-    	ArrayList <RoomService> temp = GetRoomService(roomA);
-    	double total = 0;
-    	for(int i =0;i<temp.size();i++)
-    		for(int j = 0;j<temp.get(i).foodList.size();j++)
-    		    total = total + temp.get(i).foodList.get(j).price;	
-    	return total;
-    }
+	    {
+	    	RoomService temp = GetRoomService(roomA);
+	    	double total = 0;
+	    		for(int j = 0;j<temp.foodList.size();j++)
+	    		    total = total + temp.foodList.get(j).price;	
+	    	return total;
+	    }
+	    
 	public void removeOrder()
 	{
 		sc.nextLine();
