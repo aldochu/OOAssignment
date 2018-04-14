@@ -343,24 +343,24 @@
 					
 					}
 				
-//				public void checkOut(String guestId)
-//				{				
-//					for(int i = 0;i<register.size();i++)
-//					{
-//						if(register.get(i).res_id.equals(guestId))
-//						{
-//							register.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
-//						}
-//					}
-//					
-//					try {
-//						db.saveClass("walkin.txt", register);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} //to read data from files
-//
-//				}
+				public void checkOut(String guestId)
+				{				
+					for(int i = 0;i<register.size();i++)
+					{
+						if(register.get(i).res_id.equals(guestId))
+						{
+							register.get(i).status= AppData.RES_STATUS_CHECKED_OUT; //Search Successfully
+						}
+					}
+					
+					try {
+						db.saveClass("walkin.txt", register);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //to read data from files
+
+				}
 //				
 //				public void checkIn(String Res_Number)
 //				{				
@@ -491,9 +491,8 @@
 					for(int i = 0;i<register.size();i++)
 					{
 						
-						if(register.get(i).guestId.equals(guestId))
+						if((register.get(i).guestId.equals(guestId)) && (register.get(i).status != AppData.RES_STATUS_CHECKED_OUT))
 						{
-						
 							return register.get(i); //Search Successfully
 						}
 					}

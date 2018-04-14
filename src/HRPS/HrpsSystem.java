@@ -157,6 +157,7 @@ public class HrpsSystem {
 					 switch (choice) {
 					 case 1: 
 					 	 boolean g;
+					 	 int flag = 0;
 					 	 String resId,roomId;
 					 	 System.out.println("Enter Guest IC");
 					 	 sc.nextLine();
@@ -183,11 +184,15 @@ public class HrpsSystem {
 							 else 
 							 {
 								 resId = RegistrationController.SearchRegByGuestId(guestId).res_id; 
+								 roomId = RegistrationController.SearchRegByGuestId(guestId).room_id;
+								 flag = 1;
 							 }
 						 }
 						 else
 						 {
 							 resId = ReservationController.SearchResByGuestId(guestId).res_id; 
+							 roomId = ReservationController.SearchResByGuestId(guestId).room_id; 
+							 flag = 0;
 						 }
 								 
 						 g = payController.checkRoom(roomController.getRoomDetails(guestId));
@@ -195,10 +200,6 @@ public class HrpsSystem {
 						 {
 							 System.out.println("Guest " + guestId + " is not assigned to any room");
 							 break;
-						 }
-						 else
-						 {
-							 roomId = ReservationController.SearchResByGuestId(guestId).room_id; 
 						 }
 						 
 						 g = payController.createPayment(guestId);
@@ -209,7 +210,14 @@ public class HrpsSystem {
 						 else
 						 {
 							 System.out.println("Payment Successful");
-							 ReservationController.checkOut(resId);
+							 if(flag == 1)
+							 {
+								 RegistrationController.checkOut(resId);
+							 }
+							 else if(flag == 0)
+							 {
+								 ReservationController.checkOut(resId);
+							 }
 							 roomController.checkOut(roomId);
 						 }
 						 break;
