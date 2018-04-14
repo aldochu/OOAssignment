@@ -135,10 +135,7 @@ public class RoomApp {
 					
 					
 					
-					return 1; //assigned
-
-					return 1;
-					
+					return 1; //assigned					
 				}
 			}
 			return 0;

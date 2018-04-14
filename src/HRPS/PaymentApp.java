@@ -78,7 +78,7 @@ public class PaymentApp
 		pm.roomcost = rm.rate;
 		pm.roomtax = 1.17 * pm.roomcost;
 		
-		//rs = rsa.GetRoomService(pm.roomNumber);
+		rs = rsa.GetRoomService(pm.roomNumber);
 		
 		if(rs == null)
 		{
@@ -116,18 +116,15 @@ public class PaymentApp
 		System.out.println("Total Stay Duration : " + pm.duration + " Days");
 		System.out.println("Room Cost (w/o GST) : SGD " + pm.roomcost);
 		
-//		if(rs.size() == 0)
-//		{
-//			System.out.println("Room Service Breakdown : NONE" );
-//		}
-//		else
-//		{
-//			System.out.println("Room Service Breakdown : " );
-//			for(int i = 0; i < rs.size(); i++)
-//			{
-//				System.out.println(rs.get(i));
-//			}
-//		}
+		if(rs == null)
+		{
+			System.out.println("Room Service Breakdown : NONE" );
+		}
+		else
+		{
+			System.out.println("Room Service Breakdown : " );
+			System.out.println(df.format(rs.date) + rs.orderNumber + rs.foodList);
+		}
 		
 		System.out.println("Room Service Cost : SGD " + pm.roomsvc);
 		System.out.println("Room Tax (10% Service Charge + 7% GST) : SGD " + pm.roomtax);
