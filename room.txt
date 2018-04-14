@@ -1,4 +1,4 @@
-02-01|2|1|Occupied|S1609483F|Single|1 Single Bed|true|true|true|false|0
+02-01|2|1|Occupied|s1609483f|Single|1 Single Bed|true|true|true|false|0
 02-02|2|2|Under Maintenance|null|Single|null|null|null|null|null|0
 02-03|2|3|Vacant|null|Single|null|null|null|null|null|0
 02-04|2|4|Vacant|null|Single|null|null|null|null|null|0

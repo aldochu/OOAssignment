@@ -50,6 +50,8 @@ public class PaymentApp
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		df.format(currentDate);
 		
+		pm.roomsvc = 0.00;
+		
 		pm.guestId = guestId;
 		pm.GuestName = guest.name;
 		pm.rDate = currentDate;
@@ -83,12 +85,14 @@ public class PaymentApp
 		if(rs == null)
 		{
 			pm.onum = 0;
-			pm.roomsvc = 0.00;	
 		}
 		else
 		{
 			pm.onum = 0;
-			pm.roomsvc = rsa.GetTotal(pm.roomNumber);
+			for(int i = 0; i < rs.foodList.size(); i++)
+			{
+				pm.roomsvc += rs.foodList.get(i).price;
+			}
 		}
 
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
@@ -123,7 +127,10 @@ public class PaymentApp
 		else
 		{
 			System.out.println("Room Service Breakdown : " );
-			System.out.println(df.format(rs.date) + rs.orderNumber + rs.foodList);
+			for(int i = 0; i < rs.foodList.size(); i++)
+			{
+				System.out.println(df.format(rs.date) + " " + rs.orderNumber + " " + rs.foodList.get(i).name + " " + rs.foodList.get(i).price);
+			}
 		}
 		
 		System.out.println("Room Service Cost : SGD " + pm.roomsvc);
