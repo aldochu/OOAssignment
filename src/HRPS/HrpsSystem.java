@@ -1,12 +1,9 @@
 package HRPS;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HrpsSystem {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		int choice;
 		RoomApp roomController = new RoomApp();
 		Scanner sc = new Scanner(System.in);
@@ -16,7 +13,7 @@ public class HrpsSystem {
 		ReservationApp ReservationController = new ReservationApp();
 		RegistrationApp RegistrationController = new RegistrationApp();
 		RoomServiceApp roomSvcController = new RoomServiceApp();
-		ReservationApp.DemoScheduler(roomController.updateToReserved(guestId));
+		//ReservationApp.DemoScheduler(roomController.updateToReserved(guestId));
 		
 		do {
 			System.out.println("Choose the following methods:");
@@ -26,7 +23,7 @@ public class HrpsSystem {
 				System.out.println("4: Rooms");
 				System.out.println("5: Room Service");
 				System.out.println("6: Promo Codes");
-				System.out.println("7: quit");
+				System.out.println("7: Exit");
 				choice = sc.nextInt();
 				switch (choice) {
 				 case 1:
@@ -35,7 +32,7 @@ public class HrpsSystem {
 							System.out.println("1: Add guest");
 							System.out.println("2: Update guest");
 							System.out.println("3: Show guest details");
-							System.out.println("4: quit");
+							System.out.println("4: Return");
 							choice = sc.nextInt();
 							switch (choice) {
 							 case 1: 
@@ -65,6 +62,7 @@ public class HrpsSystem {
 					 System.out.println("3: Update Reservation");
 					 System.out.println("4: Print Reservation");
 					 System.out.println("5: Check status");
+					 System.out.println("6: Return");
 					 choice = sc.nextInt();
 					 switch (choice) 
 					 {
@@ -123,15 +121,15 @@ public class HrpsSystem {
 								System.out.println("Guest does not exists");
 							Room waitlistRoom = roomController.assignRoomWithIdReturn(guestId);				 
 							boolean waitRoom=ReservationController.checkRoom(waitlistRoom);
-							if(vaidRoom==false) {
-								System.out.println("Room number in reservation");
-							}
-							else 
-							{
-									 
-							}
-							ReservationController.createRes(guestId,newRoom.roomId);
-							break;
+//							if(vaidRoom==false) {
+//								System.out.println("Room number in reservation");
+//							}
+//							else 
+//							{
+//									 
+//							}
+//							ReservationController.createRes(guestId,newRoom.roomId);
+//							break;
 							
 						case 6:
 							break;
@@ -148,7 +146,7 @@ public class HrpsSystem {
 					 System.out.println("3: Show Past Payments On Date");
 					 System.out.println("4: Show All Payments");
 					 System.out.println("5: Show Occupancy Report On Date");
-					 System.out.println("6: quit");
+					 System.out.println("6: Return");
 					 choice = sc.nextInt();
 					 switch (choice) {
 					 case 1: 
@@ -214,7 +212,6 @@ public class HrpsSystem {
 				 
 				 case 4:
 					 do {
-						 Room temp = new Room();
 						 System.out.println("Perform the following methods:");
 						 System.out.println("1: Assign Room");
 						 System.out.println("2: Update Room");
@@ -223,7 +220,7 @@ public class HrpsSystem {
 						 System.out.println("5: Calculate Rate");
 						 System.out.println("6: Print Room");
 						 System.out.println("7. Check In");
-						 System.out.println("8: Quit");
+						 System.out.println("8: Return");
 						 choice = sc.nextInt();
 						 switch (choice) {
 						 	 case 1: 
@@ -273,7 +270,7 @@ public class HrpsSystem {
 							System.out.println("4: Add order");
 							System.out.println("5: Update order status");
 							System.out.println("6: Remove Order ");
-							System.out.println("7: quit");
+							System.out.println("7: Return");
 							choice = sc.nextInt();
 							switch (choice) {
 								 case 1: 
@@ -307,7 +304,7 @@ public class HrpsSystem {
 									 break;
 								 }
 								 case 7:
-					                 System.out.println("Program terminating ….");
+									 break;
 								}
 							}while (choice < 7);
 					 
@@ -319,7 +316,7 @@ public class HrpsSystem {
 						 System.out.println("1: Add Promo");
 						 System.out.println("2: Delete Promo");
 						 System.out.println("3: Show Current Promos");
-						 System.out.println("4: quit");
+						 System.out.println("4: Return");
 						 choice = sc.nextInt();
 						 switch (choice) 
 						 {
@@ -342,6 +339,6 @@ public class HrpsSystem {
 				 case 7: System.out.println("Program terminating ….");
 				}
 			} while (choice < 7);
+		sc.close();
 	}
-
 }

@@ -1,0 +1,1 @@
+1|1|04/14/2018 18-38-36|beef*50.0*|medium|ordered|false

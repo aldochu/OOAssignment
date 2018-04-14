@@ -36,7 +36,6 @@ public class RoomServiceApp
 	public int createFoodData()
 	{
 	Food _hotelFood = new Food();
-	sc.nextLine();
 	System.out.println("Please enter food name:");
 	_hotelFood.name = sc.nextLine();
 	System.out.println("Please enter food description:");
@@ -56,7 +55,6 @@ public class RoomServiceApp
 	
 	public void updateFood()
 	{
-		sc.nextLine();
 		System.out.println("List of foods(name|description|price):");
 		printFoodList();
 		System.out.println("Please enter the name of the food:");
@@ -141,7 +139,6 @@ public class RoomServiceApp
 	
 	public int createOrder()
 	{
-		sc.nextLine();
 		RoomService _roomService = new RoomService();
 		System.out.println("Please enter room number:");
 		_roomService.RoomNo = sc.nextLine();
