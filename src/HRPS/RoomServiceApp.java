@@ -247,7 +247,7 @@ public class RoomServiceApp
 					System.out.println("Please enter the food you want to order:");
 					food = sc.nextLine();
 					hotelService.foodList.add(SearchFood(food));
-					//sc.nextLine();
+					sc.nextLine();
 					} while (SearchFood(food)==null);
 				break;
 			  }
@@ -265,7 +265,7 @@ public class RoomServiceApp
 							hotelService.foodList.remove(i);
 						break;
 						}
-					//sc.nextLine();
+					sc.nextLine();
 					} while (SearchFood(food)==null);
 				   break;
 			  }
@@ -296,7 +296,10 @@ public class RoomServiceApp
     	{
     		if(temp.get(i).paid==true)
     			temp.remove(i);
+    		else
+    			temp.get(i).paid==true;
     	}
+    	
     	return temp;
 	}
     
