@@ -157,7 +157,7 @@ public class HrpsSystem {
 					 switch (choice) {
 					 case 1: 
 					 	 boolean g;
-					 	 String resId;
+					 	 String resId,roomId;
 					 	 System.out.println("Enter Guest IC");
 					 	 sc.nextLine();
 					 	 String guestId = sc.nextLine();
@@ -171,8 +171,23 @@ public class HrpsSystem {
 						 g = payController.checkRes(ReservationController.SearchResByGuestId(guestId));
 						 if(g == false)
 						 {
-							 System.out.println("Reservation for " + guestId + " does not exist");
-							 break;
+							 System.out.println("Reservation for " + guestId + " does not exist or Guest status is not checked in");
+							 System.out.println("Checking Walk In for " + guestId);
+							 
+							 g = payController.checkReg(RegistrationController.SearchRegByGuestId(guestId));
+							 if(g == false)
+							 {
+								 System.out.println("Reservation for " + guestId + " does not exist or Guest status is not checked in");
+								 break;
+							 }
+							 else 
+							 {
+								 resId = RegistrationController.SearchRegByGuestId(guestId).res_id; 
+							 }
+						 }
+						 else
+						 {
+							 resId = ReservationController.SearchResByGuestId(guestId).res_id; 
 						 }
 								 
 						 g = payController.checkRoom(roomController.getRoomDetails(guestId));
@@ -183,7 +198,7 @@ public class HrpsSystem {
 						 }
 						 else
 						 {
-							 resId = ReservationController.SearchResByGuestId(guestId).res_id; 
+							 roomId = ReservationController.SearchResByGuestId(guestId).room_id; 
 						 }
 						 
 						 g = payController.createPayment(guestId);
@@ -195,6 +210,7 @@ public class HrpsSystem {
 						 {
 							 System.out.println("Payment Successful");
 							 ReservationController.checkOut(resId);
+							 roomController.checkOut(roomId);
 						 }
 						 break;
 							 

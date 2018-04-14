@@ -167,6 +167,7 @@ public class PaymentApp
 			c = sc.next();
 			if(c.equals("y") || c.equals("Y"))
 			{
+				rsa.paid(pm.onum);
 				pay.add(pm);
 			}
 			else if(c.equals("n") || c.equals("N"))
@@ -216,8 +217,9 @@ public class PaymentApp
 		try
 		{
 			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			System.out.println("Please Enter Date MM/DD/YYYY : " );
 			Date date;
+			System.out.println("Please Enter Date MM/DD/YYYY : " );
+			sc.nextLine();
 			date = sdf.parse(sc.nextLine());
 			
 			System.out.println("The Payments below were made on " + sdf.format(date));
@@ -323,9 +325,13 @@ public class PaymentApp
 		}
 		else
 		{
-			res = resTemp;
-			return true;
+			if(resTemp.status == AppData.RES_STATUS_CHECKED_IN)
+			{
+				res = resTemp;
+				return true;
+			}
 		}
+		return false;
 	}
 	
 	public boolean checkReg(Registration regTemp)
@@ -336,9 +342,13 @@ public class PaymentApp
 		}
 		else
 		{
-			reg = regTemp;
-			return true;
+			if(regTemp.status == AppData.RES_STATUS_CHECKED_IN)
+			{
+				reg = regTemp;
+				return true;
+			}
 		}
+		return false;
 	}
 	
 	public boolean checkRoom(Room rmTemp)

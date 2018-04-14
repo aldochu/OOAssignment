@@ -339,6 +339,25 @@ public class RoomServiceApp
 		}
 		System.out.println(hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
 	}
+	
+	public void paid(Integer orderid)
+	{				
+		for(int i = 0;i<hotelService.size();i++)
+		{
+			if(hotelService.get(i).orderNumber.equals(orderid))
+			{
+				hotelService.get(i).paid = true; //Search Successfully
+			}
+		}
+		
+		try {
+			dbSvc.saveClass("order.txt", hotelService);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //to read data from files
+
+	}
 }
 
 

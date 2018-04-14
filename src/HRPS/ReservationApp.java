@@ -618,15 +618,13 @@ import HRPS.GuestData;
 				for(int i = 0;i<reserve.size();i++)
 				{
 					
-					if(reserve.get(i).guestId.equals(guestId))
+					if((reserve.get(i).guestId.equals(guestId)) && (reserve.get(i).status != AppData.RES_STATUS_CHECKED_OUT))
 					{
-					
 						return reserve.get(i); //Search Successfully
 					}
 				}
 				return null; //failed to create
 			}
-			
 			
 			public static void DemoScheduler() {
 				 

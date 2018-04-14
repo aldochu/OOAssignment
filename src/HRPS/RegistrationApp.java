@@ -484,7 +484,7 @@
 		
 				
 
-				public Registration SearchResByGuestId(String guestId)
+				public Registration SearchRegByGuestId(String guestId)
 				{
 
 					
