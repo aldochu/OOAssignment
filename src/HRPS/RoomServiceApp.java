@@ -305,6 +305,7 @@ public class RoomServiceApp
 	    {
 	    	RoomService temp = GetRoomService(roomA);
 	    	double total = 0;
+	    	if (temp!=null)
 	    		for(int j = 0;j<temp.foodList.size();j++)
 	    		    total = total + temp.foodList.get(j).price;	
 	    	return total;
