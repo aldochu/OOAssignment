@@ -1,48 +1,49 @@
-02-01|2|1|Occupied|s1609483f|Single|1 Single Bed|true|true|true|false|0
-02-02|2|2|Under Maintenance|null|Single|null|null|null|null|null|0
-02-03|2|3|Vacant|null|Single|null|null|null|null|null|0
-02-04|2|4|Vacant|null|Single|null|null|null|null|null|0
-02-05|2|5|Vacant|null|Single|null|null|null|null|null|0
-02-06|2|6|Vacant|null|Single|null|null|null|null|null|0
-02-07|2|7|Vacant|null|Single|null|null|null|null|null|0
-02-08|2|8|Vacant|null|Single|null|null|null|null|null|0
-03-01|3|1|Vacant|null|Single|null|null|null|null|null|0
-03-02|3|2|Vacant|null|Single|null|null|null|null|null|0
-03-03|3|3|Vacant|null|Single|null|null|null|null|null|0
-03-04|3|4|Vacant|null|Single|null|null|null|null|null|0
-03-05|3|5|Vacant|null|Single|null|null|null|null|null|0
-03-06|3|6|Vacant|null|Single|null|null|null|null|null|0
-03-07|3|7|Vacant|null|Single|null|null|null|null|null|0
-03-08|3|8|Vacant|null|Single|null|null|null|null|null|0
-04-01|4|1|Vacant|null|Double|null|null|null|null|null|0
-04-02|4|2|Vacant|null|Double|null|null|null|null|null|0
-04-03|4|3|Vacant|null|Double|null|null|null|null|null|0
-04-04|4|4|Vacant|null|Double|null|null|null|null|null|0
-04-05|4|5|Vacant|null|Double|null|null|null|null|null|0
-04-06|4|6|Vacant|null|Double|null|null|null|null|null|0
-04-07|4|7|Vacant|null|Double|null|null|null|null|null|0
-04-08|4|8|Vacant|null|Double|null|null|null|null|null|0
-05-01|5|1|Vacant|null|Double|null|null|null|null|null|0
-05-02|5|2|Vacant|null|Double|null|null|null|null|null|0
-05-03|5|3|Vacant|null|Double|null|null|null|null|null|0
-05-04|5|4|Vacant|null|Double|null|null|null|null|null|0
-05-05|5|5|Vacant|null|Double|null|null|null|null|null|0
-05-06|5|6|Vacant|null|Double|null|null|null|null|null|0
-05-07|5|7|Vacant|null|Double|null|null|null|null|null|0
-05-08|5|8|Vacant|null|Double|null|null|null|null|null|0
-06-01|6|1|Vacant|null|Double|null|null|null|null|null|0
-06-02|6|2|Vacant|null|Double|null|null|null|null|null|0
-06-03|6|3|Vacant|null|Double|null|null|null|null|null|0
-06-04|6|4|Vacant|null|Double|null|null|null|null|null|0
-06-05|6|5|Vacant|null|Double|null|null|null|null|null|0
-06-06|6|6|Vacant|null|Double|null|null|null|null|null|0
-06-07|6|7|Vacant|null|Double|null|null|null|null|null|0
-06-08|6|8|Vacant|null|Double|null|null|null|null|null|0
-07-01|7|1|Reserved|f3434343f|VIP|2 King Beds|true|true|true|true|0
-07-02|7|2|Vacant|null|VIP|null|null|null|null|null|0
-07-03|7|3|Vacant|null|Deluxe|null|null|null|null|null|0
-07-04|7|4|Vacant|null|Deluxe|null|null|null|null|null|0
-07-05|7|5|Vacant|null|Deluxe|null|null|null|null|null|0
-07-06|7|6|Vacant|null|Deluxe|null|null|null|null|null|0
-07-07|7|7|Vacant|null|Deluxe|null|null|null|null|null|0
-07-08|7|8|Vacant|null|Deluxe|null|null|null|null|null|0
+02-01|2|1|Occupied|S1609483F|Single|1 Single Bed|true|true|true|false|0.0|
+02-02|2|2|Under Maintenance|null|Single|1 Single Bed|true|true|false|false|0.0|
+02-03|2|3|Vacant|null|Single|1 Single Bed|true|true|false|false|0.0|
+02-04|2|4|Vacant|null|Single|1 Single Bed|true|true|false|false|0.0|
+02-05|2|5|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
+02-06|2|6|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
+02-07|2|7|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
+02-08|2|8|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
+03-01|3|1|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
+03-02|3|2|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
+03-03|3|3|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
+03-04|3|4|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
+03-05|3|5|Reserved|abcdef|Single|1 Single Bed|false|false|true|true|150.0|
+03-06|3|6|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
+03-07|3|7|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
+03-08|3|8|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
+04-01|4|1|Vacant|null|Double|2 Single Beds|true|true|false|false|0.0|
+04-02|4|2|Vacant|null|Double|2 Single Beds|true|true|false|false|0.0|
+04-03|4|3|Vacant|null|Double|2 Single Beds|true|true|false|false|0.0|
+04-04|4|4|Vacant|null|Double|2 Single Beds|true|true|false|false|0.0|
+04-05|4|5|Vacant|null|Double|2 Single Beds|true|false|false|false|0.0|
+04-06|4|6|Vacant|null|Double|2 Single Beds|true|false|false|false|0.0|
+04-07|4|7|Vacant|null|Double|2 Single Beds|true|false|false|false|0.0|
+04-08|4|8|Vacant|null|Double|2 Single Beds|true|false|false|false|0.0|
+05-01|5|1|Vacant|null|Double|1 Double Bed|false|true|false|false|0.0|
+05-02|5|2|Vacant|null|Double|1 Double Bed|false|true|false|false|0.0|
+05-03|5|3|Vacant|null|Double|1 Double Bed|false|true|false|false|0.0|
+05-04|5|4|Vacant|null|Double|1 Double Bed|false|true|false|false|0.0|
+05-05|5|5|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
+05-06|5|6|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
+05-07|5|7|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
+05-08|5|8|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
+06-01|6|1|Vacant|null|Double|1 Double Bed|true|true|false|false|0.0|
+06-02|6|2|Vacant|null|Double|1 Double Bed|true|true|false|false|0.0|
+06-03|6|3|Vacant|null|Double|1 Double Bed|true|true|false|false|0.0|
+06-04|6|4|Vacant|null|Double|1 Double Bed|true|true|false|false|0.0|
+06-05|6|5|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
+06-06|6|6|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
+06-07|6|7|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
+06-08|6|8|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
+07-01|7|1|Reserved|f3434343f|VIP|2 King Beds|true|true|true|true|0.0|
+07-02|7|2|Vacant|null|VIP|2 King Beds|true|true|false|false|0.0|
+07-03|7|3|Reserved|eleven|Deluxe|1 King Bed|true|true|true|false|240.0|
+07-04|7|4|Vacant|null|Deluxe|1 King Bed|true|true|false|false|0.0|
+07-05|7|5|Vacant|null|Deluxe|1 King Bed|true|true|false|false|0.0|
+07-06|7|6|Vacant|null|Deluxe|2 Double Beds|true|true|false|false|0.0|
+07-07|7|7|Vacant|null|Deluxe|2 Double Beds|true|true|false|false|0.0|
+07-08|7|8|Vacant|null|Deluxe|2 Double Beds|true|true|false|false|0.0|
+>>>>>>> Stashed changes

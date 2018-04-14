@@ -28,13 +28,13 @@ public class RoomData extends StoreData {
 			temp.roomNo = Integer.parseInt(star.nextToken());
 			temp.status = star.nextToken().trim();	
 			temp.guestIc = star.nextToken().trim();	
+			temp.roomType = star.nextToken().trim();
+			temp.bedType = star.nextToken().trim();	
+			temp.smoking = Boolean.parseBoolean(star.nextToken().trim());
+			temp.cityView = Boolean.parseBoolean(star.nextToken().trim());
 			if(!temp.guestIc.equals(null)) {
-				temp.roomType = star.nextToken().trim();
-				temp.bedType = star.nextToken().trim();	
 				temp.breakfast = Boolean.parseBoolean(star.nextToken().trim());
 				temp.wifi = Boolean.parseBoolean(star.nextToken().trim());
-				temp.cityView = Boolean.parseBoolean(star.nextToken().trim());
-				temp.smoking = Boolean.parseBoolean(star.nextToken().trim());
 				temp.rate = Double.parseDouble(star.nextToken().trim());
 			}
 			else {
@@ -59,19 +59,19 @@ public class RoomData extends StoreData {
 				st.append(SEPARATOR);
 				st.append(temp.status.trim());
 				st.append(SEPARATOR);
-				st.append(temp.guestIc.trim());
+				st.append(temp.guestIc);
 				st.append(SEPARATOR);
 				st.append(temp.roomType.trim());
 				st.append(SEPARATOR);
 				st.append(temp.bedType.trim());
 				st.append(SEPARATOR);
-				st.append(temp.breakfast);
-				st.append(SEPARATOR);
-				st.append(temp.wifi);
+				st.append(temp.smoking);
 				st.append(SEPARATOR);
 				st.append(temp.cityView);
 				st.append(SEPARATOR);
-				st.append(temp.smoking);
+				st.append(temp.breakfast);
+				st.append(SEPARATOR);
+				st.append(temp.wifi);
 				st.append(SEPARATOR);
 				st.append(temp.rate);
 				st.append(SEPARATOR);

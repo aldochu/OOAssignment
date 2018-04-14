@@ -250,7 +250,8 @@ public class HrpsSystem {
 						 System.out.println("5: Calculate Rate");
 						 System.out.println("6: Print Room");
 						 System.out.println("7. Check In");
-						 System.out.println("8: Return");
+						 System.out.println("8. Check Out");
+						 System.out.println("9: Return");
 						 choice = sc.nextInt();
 						 switch (choice) {
 						 	 case 1: 
@@ -277,18 +278,23 @@ public class HrpsSystem {
 								 break;
 								 
 							 case 6: 
-								 //roomController.displayRoom(sc.nextLine());
+								 roomController.displayRoom();
 								 break;
 								 
 							 case 7:
 								 System.out.println("Please enter the room ID for checking in: ");
-								 roomController.checkIn(sc.nextLine());
+								 roomController.checkIn(sc.next());
 								 break;
 								 
 							 case 8:
+								 System.out.println("Please enter the room ID for checking out: ");
+								 roomController.checkOut(sc.next());
+								 break;
+								 
+							 case 9:
 								 break;
 						 }
-					 } while (choice < 8);
+					 } while (choice < 9);
 					 break;
 				 
 
