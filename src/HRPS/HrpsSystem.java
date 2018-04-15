@@ -90,7 +90,7 @@ public class HrpsSystem {
 					g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
 				 if(g==false)
 					 System.out.println("Guest does not exists");
-				 Room newRegRoom = roomController.assignRoomWithIdReturn(guestId);				 
+				 Room newRegRoom = roomController.assignRoom(guestId);				 
 				 RegistrationController.createRegistration(guestId, newRegRoom.roomId);
 			
 				 
@@ -105,8 +105,8 @@ public class HrpsSystem {
 				 if(g==false)
 					 System.out.println("Guest does not exists");
 				
-//				 Room newResRoom = roomController.assignRoomWithIdReturn(guestId);				 
-//				 RegistrationController.createRegistration(guestId, newResRoom.roomId);
+				 Room newResRoom = roomController.assignRoom(guestId);				 
+				 RegistrationController.createRegistration(guestId, newResRoom.roomId);
 				 
 				 ReservationController.createRes(guestId);
 				 
@@ -125,7 +125,7 @@ public class HrpsSystem {
 							g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
 								if(g==false)
 								System.out.println("Guest does not exists");
-							Room waitlistRoom = roomController.assignRoomWithIdReturn(guestId);				 
+							Room waitlistRoom = roomController.assignRoom(guestId);				 
 							boolean waitRoom=ReservationController.checkRoom(waitlistRoom);
 //							if(vaidRoom==false) {
 //								System.out.println("Room number in reservation");

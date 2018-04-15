@@ -47,7 +47,7 @@ public class RoomApp {
 		return null;
 	}
 	
-	public String assignRoom(String guestIC)// do method of overloading to get the roomid
+	public Room assignRoom(String guestIC)// do method of overloading to get the roomid
 	{
 		int choice;
 		String bedType, roomType, input;
@@ -94,7 +94,7 @@ public class RoomApp {
 				}
 					
 				else 
-					return printNoRoom();
+					return null;
 		}
 		
 		//Double
@@ -114,7 +114,7 @@ public class RoomApp {
 					bedType = "2 Single Beds";
 				}
 				else 
-					return printNoRoom();
+					return null;
 		}
 		
 		//Single
@@ -124,7 +124,7 @@ public class RoomApp {
 			}
 		
 		else 
-			return printNoRoom();
+			return null;
 		
 		if(roomType.equals("Double") || roomType.equals("Single")) {
 			System.out.println("Do you wish to have city view? Y: Yes");
@@ -159,10 +159,10 @@ public class RoomApp {
 						e.printStackTrace();
 					} //to read data from files
 					
-					return hotelRoom.get(i).roomId; //assigned					
+					return hotelRoom.get(i); //assigned					
 				}
 			}
-			return printNoRoom();
+			return null;
 	}
 	
 	

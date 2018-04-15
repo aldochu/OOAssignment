@@ -44,7 +44,6 @@ public class PaymentApp
 
 		PromoApp pa = new PromoApp();
 		RoomServiceApp rsa = new RoomServiceApp();
-		
 		Payment pm= new Payment();
 		
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
