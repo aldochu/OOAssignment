@@ -42,15 +42,10 @@ public class RoomApp {
 		}
 	}
 	
-	private String printNoRoom() {
-		System.out.println("Sorry, no room available.");
-		return null;
-	}
-	
 	public Room assignRoom(String guestIC)// do method of overloading to get the roomid
 	{
 		int choice;
-		String bedType, roomType, input;
+		String bedType, roomType;
 		boolean city = false, smoke = false;
 		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
