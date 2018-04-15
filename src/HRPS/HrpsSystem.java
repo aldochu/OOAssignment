@@ -1,4 +1,5 @@
 package HRPS;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class HrpsSystem {
@@ -91,7 +92,12 @@ public class HrpsSystem {
 				 if(g==false)
 					 System.out.println("Guest does not exists");
 				 Room newRegRoom = roomController.assignRoom(guestId);				 
-				 RegistrationController.createRegistration(guestId, newRegRoom.roomId);
+				 try {
+					RegistrationController.createRegistration(guestId, newRegRoom.roomId);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			
 				 
 			 break;
@@ -106,7 +112,12 @@ public class HrpsSystem {
 					 System.out.println("Guest does not exists");
 				
 				 Room newResRoom = roomController.assignRoom(guestId);				 
-				 RegistrationController.createRegistration(guestId, newResRoom.roomId);
+				 try {
+					RegistrationController.createRegistration(guestId, newResRoom.roomId);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				 
 				 ReservationController.createRes(guestId);
 				 

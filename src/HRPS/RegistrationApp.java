@@ -104,7 +104,7 @@
 				}
 			}
 			
-			public void createRegistration(String guestId,String roomId)//pass by reference
+			public void createRegistration(String guestId,String roomId) throws ParseException//pass by reference
 			{
 				
 				Registration reg = new Registration();
@@ -116,7 +116,7 @@
 				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 				//guestController.createGuest();
 				
-				Date d;
+				Date d = new Date();
 				String temp;
 				
 				
@@ -142,20 +142,8 @@
 				System.out.println("Please enter the number of children:");
 				reg.NoOfChild = sc.nextInt();
 				System.out.println("Please enter the check in date MM/dd/yyyy");
-				/*try {
-					reg.check_in = df.parse(sc.nextLine());
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				try {
-					d = df.parse(sc.next());
-					System.out.println("CHECK IN DATE PARSE : " + d);
-					reg.check_in = d;
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				System.out.println("CHECK IN DATE PARSE : " + d);
+				reg.check_in = d;
 				
 				System.out.println("Please enter the check out date MM/dd/yyyy");
 				try {
