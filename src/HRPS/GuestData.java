@@ -57,6 +57,8 @@ public class GuestData extends StoreData {
 						b.printStackTrace();
 						}
 						}
+						else
+							temp.ccdetails = null;
 
 						GuestArray.add(temp);
 		        }	

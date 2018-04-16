@@ -20,12 +20,12 @@ public class HrpsSystem {
 		do {
 			ReservationApp.DemoScheduler();
 			System.out.println("Choose the following methods:");
-				System.out.println("1: Guests");
-				System.out.println("2: Reservations/Walk In");
-				System.out.println("3: Payments");
-				System.out.println("4: Rooms");
-				System.out.println("5: Room Service");
-				System.out.println("6: Promo Codes");
+				System.out.println("1: Guests Management");
+				System.out.println("2: Reservations/Walk In Management");
+				System.out.println("3: Payments Management");
+				System.out.println("4: Rooms Management");
+				System.out.println("5: Room Service Management");
+				System.out.println("6: Promo Codes Management");
 				System.out.println("7: Exit");
 				choice = sc.nextInt();
 				switch (choice) {

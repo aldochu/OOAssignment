@@ -20,12 +20,7 @@ public class GuestApp {
 	{
 		try {
 			db.readClass("guest.txt", hotelGuest); //to read data from files
-			
-			for (int k = 0 ; k < hotelGuest.size() ; k++)
-				System.out.println(hotelGuest.get(k).name);
 
-
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,7 +147,7 @@ public class GuestApp {
 	public int updateGuest()
 	{
 		
-		System.out.println("Please enter the nric of the guest:");
+		System.out.println("Please enter the IC of the guest:");
 		String ic = sc.nextLine();
 		for(int i = 0;i<hotelGuest.size();i++)
 		{
@@ -165,6 +160,7 @@ public class GuestApp {
 				return 1;
 			}
 		}
+		System.out.println(ic+" does not exist");
 		return 0;
 	}
 	
@@ -176,46 +172,62 @@ public class GuestApp {
 		do {
 			System.out.println("Which information do you want to update:");
 			System.out.println("1: Name");
-			System.out.println("2: IC");
-			System.out.println("3: Nationality");
-			System.out.println("4: Contact number");
-			System.out.println("5: Address");
-			System.out.println("6: Gender");
-			System.out.println("7: Credit card details");
-			System.out.println("8: quit");
+			System.out.println("2: Nationality");
+			System.out.println("3: Contact number");
+			System.out.println("4: Address");
+			System.out.println("5: Gender");
+			System.out.println("6: Credit card details");
+			System.out.println("7: quit");
 			choice = sc.nextInt();
 			sc.nextLine();
 			switch (choice) {
 			 case 1: 
 				 System.out.println("Please enter the updated name");
 				 hotelguest.name = sc.nextLine();
+				 System.out.println("Information updated!");
 			 break;
 			 case 2: 
-				 System.out.println("Please enter the updated ic");
-				 hotelguest.ic = sc.nextLine();
-			 break;
-			 case 3: 
 				 System.out.println("Please enter the updated nationality");
 				 hotelguest.nationality = sc.nextLine();
+				 System.out.println("Information updated!");
 			 break;
-			 case 4:
+			 case 3:
 				 System.out.println("Please enter the updated contact number");
 				 hotelguest.contactNo = sc.nextLine();
+				 System.out.println("Information updated!");
 			 break;
-			 case 5: /* add position() call */
+			 case 4: /* add position() call */
 				 System.out.println("Please enter the updated address");
 				 hotelguest.address = sc.nextLine();
+				 System.out.println("Information updated!");
 			 break;
-			 case 6: 
-				 System.out.println("Please enter the  updated gender M/F");
+			 case 5: 
+				 System.out.println("Please enter the updated gender M/F");
 				 hotelguest.ic = sc.next();
+				 System.out.println("Information updated!");
 			 break; 
-			 case 7: 
+			 case 6: 
+				 if(hotelguest.ccdetails == null)
+				 {
+					 System.out.println("User do not have credit card, please add the information");
+					 hotelguest.ccdetails = new CreditCard();
+					 addCCDetail(hotelguest);
+				 }
+				 else
 				 updateCCDetails(hotelguest);
+				 System.out.println("Information updated!");
 			 break; 
-			 case 8: System.out.println("return to previous");
-			}
-			} while (choice < 8);
+			 case 7: System.out.println("return to previous");
+			 	try {
+							db.saveClass("guest.txt", hotelGuest);
+						} catch (IOException e) {
+								// TODO Auto-generated catch block
+							e.printStackTrace();
+						} //to read data from files
+					}
+			
+			
+			} while (choice < 7);
 		//return hotelguest;
 	}
 	
@@ -258,9 +270,15 @@ public class GuestApp {
 						e.printStackTrace();
 					}	 
 			 break; 
-			 case 6: System.out.println("return to previous");
+			 case 6: 
+				 System.out.println("return to previous");
+				
+				
 			}
-			} while (choice < 7);
+			
+			
+				
+			} while (choice < 6);
 	}
 	
 	
@@ -331,7 +349,11 @@ public class GuestApp {
 	private void printGuest(Guest hotelguest)
 	{
 		if(hotelguest == null)
+		{
+			System.out.println("No guest with this name exist");
 			return;
+		}
+			
 		System.out.println("Guest name: " + hotelguest.name);
 		System.out.println("Guest ic: " + hotelguest.ic);
 		System.out.println("Guest nationality: " + hotelguest.nationality);
@@ -342,6 +364,7 @@ public class GuestApp {
 			System.out.println("Guest gender: M");
 		else
 			System.out.println("Guest gender: F");
+		
 		
 		if(hotelguest.ccdetails != null)
 		{
