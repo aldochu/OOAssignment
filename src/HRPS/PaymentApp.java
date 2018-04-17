@@ -218,9 +218,13 @@ public class PaymentApp
 			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 			Date date;
 			System.out.println("Please Enter Date MM/DD/YYYY : " );
-			sc.nextLine();
 			date = sdf.parse(sc.nextLine());
 			
+			if(date.after(currentDate))
+			{
+				System.out.println("Date is not in allowable range. Please enter a date BEFORE today.");
+				return;
+			}
 			System.out.println("The Payments below were made on " + sdf.format(date));
 			System.out.println("------------------------------------------------------------");
 			for(int i = 0;i<pay.size();i++)
