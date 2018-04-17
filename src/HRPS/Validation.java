@@ -60,28 +60,26 @@ public class Validation {
 
 	}
 	
-	public boolean CheckValidCheckInDate(Date D) //this will check D with the current date + k
+	public boolean CheckValidCheckInDate(Date checkin) //this will check D with the current date + k
 	{
 		Date today = new Date();
 		
-		if(D.before(today))
+		if(checkin.after(today))
 		{
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
-	public boolean CheckValidCheckOutDate(Date D) //this will check D with the current date + k
-	{
-		Date today = new Date();
-		
-		if(D.before(today) && D.equals(today))
+	public boolean CheckValidCheckOutDate(Date checkin, Date checkout) //this will check D with the current date + k
+	{		
+		if(checkout.after(checkin))
 		{
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	public String CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k

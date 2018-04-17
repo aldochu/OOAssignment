@@ -103,24 +103,49 @@ public class HrpsSystem {
 			 break;
 			 
 			 case 2:
+				 do
+				 {
+					 System.out.println("Please enter the guest id");
+					 guestId = sc.next();
+					 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
+					 
+					 if(g == false)
+					 {
+						 System.out.println("Guest does not exist. Enter Again");
+					 }
+					 else
+					 {
+						 ReservationController.createRes(guestId);
+						 break;
+					 }
+				 }while(g == false);
+			break;
+//				 do{
+//						sc.nextLine();
+//					System.out.println("Please enter the guest id");
+//					guestId = sc.nextLine();
+//					
+//				 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
+//				if(g==true)	{
+//					ReservationController.createRes(guestId);
+//					break;
+//				 }
+//				 }
+//				while (g==false);
 				 
-				 System.out.println("Please enter the guest id");
-				 sc.nextLine();
-					guestId = sc.nextLine();
-				 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
-				 if(g==false)
-					 System.out.println("Guest does not exists");
 				
-				 Room newResRoom = roomController.assignRoom(guestId);				 
-				 try {
-					RegistrationController.createRegistration(guestId, newResRoom.roomId);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					// System.out.println("Guest does not exists");
+				
+//				 Room newResRoom = roomController.assignRoom(guestId);				 
+//				 try {
+//					RegistrationController.createRegistration(guestId, newResRoom.roomId);
+//				} catch (ParseException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				 
-				 ReservationController.createRes(guestId);
 				 
+			//	 ReservationController.createRes(guestId);
 							 
 						case 3: 
 							ReservationController.updateRes();
@@ -169,16 +194,22 @@ public class HrpsSystem {
 					 case 1: 
 					 	 boolean g;
 					 	 int flag = 0;
-					 	 String resId,roomId;
-					 	 System.out.println("Enter Guest IC");
-					 	 sc.nextLine();
-					 	 String guestId = sc.nextLine();
-					 	 g = payController.checkGuest(guestController.SearchGuestByIc(guestId));
-					 	 if(g == false)
-					 	 {
-					 		 System.out.println("Guest " + guestId + " does not exist");
-					  		 break;
-						 }
+					 	 String resId,roomId,guestId;
+					 	do
+						 {
+						 	 System.out.println("Enter Guest IC");
+						 	 guestId = sc.nextLine();
+						 	 g = payController.checkGuest(guestController.SearchGuestByIc(guestId));
+							 
+							 if(g == false)
+							 {
+								 System.out.println("Guest does not exist. Enter Again");
+							 }
+							 else
+							 {
+								 break;
+							 }
+						 }while(g == false);
 						 		 
 						 g = payController.checkRes(ReservationController.SearchResByGuestId(guestId));
 						 if(g == false)

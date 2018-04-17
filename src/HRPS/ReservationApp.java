@@ -116,24 +116,45 @@ import HRPS.GuestData;
 			Date d;
 			String temp;
 	
-			
+		
+				
 			res.guestId=guestId;
 			
-			System.out.println("Please enter the check in date MM/dd/yyyy");
+			
+			
 			
 			try {
-				d = df.parse(sc.next());
-				System.out.println("CHECK IN DATE PARSE : " + d);
-				res.check_in = d;
+				
+				do {
+					System.out.println("Please enter the check in date MM/dd/yyyy");
+					d = df.parse(sc.nextLine());
+					if(v.CheckValidCheckInDate(d)==false) {
+						System.out.println("Invalid checkin date,please enter again!");
+					}
+				}
+				while(v.CheckValidCheckInDate(d)==false);
+					
+				res.check_in = d;	
+				
+				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			System.out.println("Please enter the check out date MM/dd/yyyy");
+			
 			try {
-				d = df.parse(sc.next());
-				System.out.println("CHECK OUT DATE PARSE : " + d);
+				
+				do {
+					System.out.println("Please enter the check out date MM/dd/yyyy");
+					d = df.parse(sc.next());
+					if(v.CheckValidCheckOutDate(res.check_in,d)==false) {
+						System.out.println("Invalid checkout date,please enter again!");
+					}
+				}
+				while(v.CheckValidCheckOutDate(res.check_in,d)==false);
+				
+				
 				res.check_out = d;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
