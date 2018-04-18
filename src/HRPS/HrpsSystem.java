@@ -51,6 +51,7 @@ public class HrpsSystem {
 							 break;
 							 case 4:
 								 break;
+								 default: System.out.println("invalid input");
 							}
 						} while (choice != 4);
 					 break;
@@ -175,6 +176,7 @@ public class HrpsSystem {
 							
 						 case 6:
 							 break;
+						 default: System.out.println("invalid input");
 					}
 				 } while (choice != 6);
 				 break;
@@ -278,6 +280,7 @@ public class HrpsSystem {
 								 break;
 						 case 6:
 							 break;
+						 default: System.out.println("invalid input");
 					}
 				 } while (choice != 6);
 				 break;
@@ -335,6 +338,7 @@ public class HrpsSystem {
 								 
 							 case 9:
 								 break;
+							 default: System.out.println("invalid input");
 						 }
 					 } while (choice != 9);
 					 break;
@@ -384,7 +388,9 @@ public class HrpsSystem {
 								 }
 								 case 7:
 									 break;
+								 default: System.out.println("invalid input");
 								}
+							
 							}while (choice != 7);
 					 
 				 break; 
@@ -411,6 +417,7 @@ public class HrpsSystem {
 								 break;
 							 case 4:
 								 break;
+							 default: System.out.println("invalid input");
 						}
 					 } while (choice != 4);
 				 break; 
@@ -418,6 +425,8 @@ public class HrpsSystem {
 
 				 
 				 case 7: System.out.println("Exit program ….");
+				 break;
+				 default: System.out.println("invalid input");
 				}
 			} while (choice != 7);
 		sc.close();
