@@ -133,6 +133,33 @@ public class RoomServiceApp
 			} while (choice > 3);
 	}
 	
+	public void removeFood()
+	{
+		sc.nextLine();
+		System.out.println("List of foods(name|description|price):");
+		printFoodList();
+		System.out.println("Please enter the name of the food:");
+		String foodname = sc.nextLine();
+		int foodexistance = 0;
+		for(int i = 0;i<hotelFood.size();i++)
+		{
+			if(hotelFood.get(i).name.equals(foodname))
+			{
+				Food temp = hotelFood.get(i);
+				hotelFood.remove(i); //delete from the searched index
+				foodexistance = 1;
+			}
+		}	
+		if(foodexistance == 0)
+			System.out.println("No such food name, try again!!");
+		try {
+			dbFood.saveClass("food.txt", hotelFood);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //to read data from files
+	}
+	
 	public Food SearchFood(String name)
 	{
 		for(int i = 0;i<hotelFood.size();i++)
