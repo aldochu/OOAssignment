@@ -42,8 +42,12 @@ public class RoomApp {
 		}
 	}
 	
-	public Room assignRoom(String guestIC)
+	public Room assignRoom(String guestIC)// do method of overloading to get the roomid
 	{
+		int choice;
+		String bedType, roomType;
+		boolean city = false, smoke = false;
+		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
 
@@ -52,10 +56,6 @@ public class RoomApp {
 
 		//smoking floors: 2, 4, 6, 7
 		//city view: room 1-4 of every floor except floor 7
-		
-		int choice;
-		String bedType, roomType;
-		boolean city = false, smoke = false;
 		
 		System.out.println("Please enter the room type:");
 		System.out.println("Single/Double/Deluxe/VIP");
@@ -160,64 +160,6 @@ public class RoomApp {
 			return null;
 	}
 	
-	private void assignBed(Room room, String bed) {
-		boolean assign = false;
-		for(int i = 0; i<hotelRoom.size(); i++) {
-			if(hotelRoom.get(i).status.equals("Vacant") && hotelRoom.get(i).bedType.equals(bed) 
-					&& hotelRoom.get(i).cityView == room.cityView && hotelRoom.get(i).smoking == room.smoking) {
-				hotelRoom.get(i).guestIc = room.guestIc;
-				hotelRoom.get(i).status = "Reserved";
-				hotelRoom.get(i).breakfast = room.breakfast;
-				hotelRoom.get(i).wifi = room.wifi;
-				assign = true;
-				System.out.println("Your new room is : " + hotelRoom.get(i).roomId);
-			}
-		}
-		
-		try {
-			db.saveClass("room.txt", hotelRoom);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} //to read data from files
-		
-		if(assign == false) System.out.println("Sorry, no rooms available");
-	}
-	
-	private boolean unassignRoom(String roomid) {
-		boolean checked = false;
-		for(int i = 0; i<hotelRoom.size(); i++) {
-			if(hotelRoom.get(i).roomId.equals(roomid)) {
-				hotelRoom.get(i).status = "Vacant";
-				hotelRoom.get(i).guestIc = null;
-				hotelRoom.get(i).rate = 0.0;
-				hotelRoom.get(i).breakfast = false;
-				hotelRoom.get(i).wifi = false;
-				if(hotelRoom.get(i).roomType.equals("Single")) singleCount--;
-				else if(hotelRoom.get(i).roomType.equals("Double")) {
-					doubleCount--;
-					if(hotelRoom.get(i).bedType.equals("1 Double Bed")) oneDouble--;
-					else twoSingle--;
-				}
-				else if(hotelRoom.get(i).roomType.equals("Deluxe")) {
-					deluxeCount--;
-					if(hotelRoom.get(i).bedType.equals("1 King Bed")) oneKing--;
-					else twoDouble--;
-				}
-				else if(hotelRoom.get(i).roomType.equals("VIP")) vipCount--;
-				checked = true;
-			}
-		}
-		
-		try {
-			db.saveClass("room.txt", hotelRoom);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} //to read data from files
-		
-		return checked;
-	}
 	
 	public void checkIn(String roomId)
 	{
@@ -241,11 +183,38 @@ public class RoomApp {
 	
 	public void checkOut(String roomId)
 	{
-		boolean check;
-		check = unassignRoom(roomId);
-		if(check == false) System.out.println("Failed to check out");	
-		else	
-		System.out.println("Successfully checked out");
+		boolean checked = false;
+		for(int i = 0; i<hotelRoom.size(); i++) {
+			if(hotelRoom.get(i).roomId.equals(roomId)) {
+				hotelRoom.get(i).status = "Vacant";
+				hotelRoom.get(i).guestIc = null;
+				hotelRoom.get(i).rate = 0.0;
+				hotelRoom.get(i).breakfast = false;
+				hotelRoom.get(i).wifi = false;
+				if(hotelRoom.get(i).roomType.equals("Single")) singleCount--;
+				else if(hotelRoom.get(i).roomType.equals("Double")) {
+					doubleCount--;
+					if(hotelRoom.get(i).bedType.equals("1 Double Bed")) oneDouble--;
+					else twoSingle--;
+				}
+				else if(hotelRoom.get(i).roomType.equals("Deluxe")) {
+					deluxeCount--;
+					if(hotelRoom.get(i).bedType.equals("1 King Bed")) oneKing--;
+					else twoDouble--;
+				}
+				else if(hotelRoom.get(i).roomType.equals("VIP")) vipCount--;
+				checked = true;
+				System.out.println("Successfully checked out");
+				
+				try {
+					db.saveClass("room.txt", hotelRoom);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
+			}
+		}
+		if(checked == false) System.out.println("Failed to check out");
 	}
 	
 	public int updateRoom()
@@ -276,64 +245,66 @@ public class RoomApp {
 			System.out.println("2. Status");
 			System.out.println("3. Room Type");
 			System.out.println("4. Bed Type");
-			System.out.println("5. Wifi Enabled");
-			System.out.println("6. Breakfast");
-			System.out.println("7. Quit");
+			System.out.println("5. Smoking");
+			System.out.println("6. Wifi Enabled");
+			System.out.println("7. City View");
+			System.out.println("8. Breakfast");
+			System.out.println("9. Quit");
 			choice = sc.nextInt();
 			sc.nextLine();
 			switch (choice) {
 				case 1: System.out.println("Please enter the updated Guest IC: ");
 						_hotelRoom.guestIc = sc.nextLine();
 						break;
-						
 				case 2: System.out.println("Please enter the updated Status: ");
-						_hotelRoom.status = sc.nextLine();
+						_hotelRoom.status = checkInput(sc.nextLine(), 3);
 						break;
-						
-				case 3: Room temp = new Room();
-						temp = assignRoom(_hotelRoom.guestIc);
-						if(temp != null) unassignRoom(temp.roomId);
-						else System.out.println("Sorry, no rooms available");
+				case 3: System.out.println("Please enter the updated Room Type: ");
+						_hotelRoom.roomType = checkInput(sc.nextLine(), 1);
 						break;
-						
-				case 4: System.out.println("Your current Bed Type: " + _hotelRoom.bedType);
-						String bed = null;
-						if(_hotelRoom.roomType.equals("Deluxe")) {
-							if(_hotelRoom.bedType.equals("1 King Bed") && (twoDouble < 3)) bed = "2 Double Beds";
-							else if(_hotelRoom.bedType.equals("2 Double Beds") && (oneKing < 3)) bed = "1 King Bed";
-						}
-						else if(_hotelRoom.roomType.equals("Double")) {
-							if(_hotelRoom.bedType.equals("1 Double Bed") && (twoSingle < 16)) bed = "2 Single Beds";
-							else if(_hotelRoom.bedType.equals("2 Single Beds") && (oneDouble < 8)) bed = "1 Double Bed";
-						}
-						assignBed(_hotelRoom, bed);
-						unassignRoom(_hotelRoom.roomId);
+				case 4: System.out.println("Please enter the updated Bed Type: ");
+						_hotelRoom.bedType = checkInput(sc.nextLine(), 2);
 						break;
-						
-				case 5: System.out.println("Change WiFi option from " + _hotelRoom.wifi + " to " + !_hotelRoom.wifi + "?");
+				case 5: System.out.println("Change smoking option from " + _hotelRoom.smoking + " to " + !_hotelRoom.smoking + "?");
+						System.out.println("Y: Yes, N: No");
+						if(sc.nextLine().equals("Y")) _hotelRoom.smoking = !_hotelRoom.smoking;
+						break;
+				case 6: System.out.println("Change WiFi option from " + _hotelRoom.wifi + " to " + !_hotelRoom.wifi + "?");
 						System.out.println("Y: Yes, N: No");
 						if(sc.nextLine().equals("Y")) _hotelRoom.wifi = !_hotelRoom.wifi;
 						break;
-						
-				case 6: System.out.println("Change breakfast option from " + _hotelRoom.breakfast + " to " + !_hotelRoom.breakfast + "?");
+				case 7: System.out.println("Change city view option from " + _hotelRoom.cityView + " to " + !_hotelRoom.cityView + "?");
+						System.out.println("Y: Yes, N: No");
+						if(sc.nextLine().equals("Y")) _hotelRoom.cityView = !_hotelRoom.cityView;
+						break;
+				case 8: System.out.println("Change breakfast option from " + _hotelRoom.breakfast + " to " + !_hotelRoom.breakfast + "?");
 						System.out.println("Y: Yes, N: No");
 						if(sc.nextLine().equals("Y")) _hotelRoom.breakfast = !_hotelRoom.breakfast;
 						break;
-						
-				case 7: System.out.println("Bye");
+				case 9: System.out.println("Bye");
 						break;
-						
 				default: System.out.println("Invalid option. Please try again.");
 			}
-		} while (choice < 7);
+		} while (choice < 9);
 	}
 
 	//update status to reserved 
-	public void updateToReserved(String roomId)
+	public void updateToReserved(String roomId,String guestId)
 	{
 		for(int i = 0; i<hotelRoom.size(); i++) {
-			if(hotelRoom.get(i).roomId.equals(roomId)) hotelRoom.get(i).status = "Reserved";
+			if(hotelRoom.get(i).roomId.equals(roomId)) 
+				{
+					hotelRoom.get(i).status = "Reserved";
+					hotelRoom.get(i).guestIc = guestId;
+				}
 		}
+		
+		try {
+			db.saveClass("room.txt", hotelRoom);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //to read data from files
 	}
 	
 	//update status to vacant
@@ -499,5 +470,22 @@ public class RoomApp {
 		}
 	}
 	
+	private String checkInput(String input, int type)
+	{
+		boolean result = false;
+		switch (type) {
+			case 1: if(input.equals("Single") || input.equals("Double") || input.equals("Deluxe") || input.equals("VIP")) result = true;
+					break;
+			case 2: if(input.equals("1 Single Bed") || input.equals("2 Single Beds") || input.equals("1 Double Bed") || input.equals("2 Double Beds") || input.equals("1 King Bed") || input.equals("2 King Beds")) result = true;
+					break;
+			case 3: if(input.equals("Vacant") || input.equals("Occupied" ) || input.equals("Reserved") || input.equals("Under Maintenance")) result = true;
+					break;
+		}
+		if(result == false) {
+			System.out.println("Invalid input. Please try again.");
+			return null;
+		}
+		else return input;
+	}
 
 }

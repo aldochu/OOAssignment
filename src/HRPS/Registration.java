@@ -10,5 +10,6 @@ public class Registration {
 	public int NoOfAdult;
 	public int NoOfChild;
 	public String room_id;
+	public String roomType;
 	public int status;
 }

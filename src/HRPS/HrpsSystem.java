@@ -67,7 +67,7 @@ public class HrpsSystem {
 			System.out.println("3: Update Reservation");
 			System.out.println("4: Print Reservation");
 			System.out.println("5: Check status");
-			System.out.println("6: Return to menu")
+			System.out.println("6: Return to menu");
 			choice = sc.nextInt();
 			switch (choice) 
 			{

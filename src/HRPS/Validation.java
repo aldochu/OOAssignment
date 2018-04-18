@@ -82,11 +82,9 @@ public class Validation {
 		return false;
 	}
 	
-	public String CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k
-	{	
-		
+	public Room CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k
+	{
 		int level, room;
-		String roomId, bedType, roomType, type;
 		int vipCount = 0, deluxeCount = 0, singleCount = 0, doubleCount = 0; 
 		Scanner sc = new Scanner(System.in);
 		Room hotelRoom =new Room();
@@ -100,43 +98,45 @@ public class Validation {
 		//20 double rooms
 
 		
-		System.out.println("Please enter the room type:");
-		System.out.println("Single/Double/Deluxe/VIP");
-		roomType = sc.nextLine();
+//
+		hotelRoom.roomType = sc.nextLine();
 		
 		//VIP
-		if(roomType.equals("VIP") && vipCount < 2) {
+		if(hotelRoom.roomType.equals("VIP") && vipCount < 2) {
 			vipCount++;
-//			bedType = "2 King Beds";
+			hotelRoom.bedType = "2 King Beds";
 //			level = 7;
 //			room = vipCount;
-			type=Integer.toString(AppData.ROOM_TYPE_VIP);
+			hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_VIP);
+			
 //			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Deluxe
-		else if(roomType.equals("Deluxe") && deluxeCount < 6) {
+		else if(hotelRoom.roomType.equals("Deluxe") && deluxeCount < 6) {
 			deluxeCount++;
 				System.out.println("Would you rather 2 Double Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
-					bedType = "2 Double Beds";
+					hotelRoom.bedType = "2 Double Beds";
 				else 
-					bedType = "1 King Bed";
+					hotelRoom.bedType = "1 King Bed";
 //			level = 7;
 //			room = deluxeCount + 2;
-				type=Integer.toString(AppData.ROOM_TYPE_DELUXE);
+				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DELUXE);
+				
 //			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Double
-		else if(roomType.equals("Double") && doubleCount < 20) {
+		else if(hotelRoom.roomType.equals("Double") && doubleCount < 20) {
 			doubleCount++;
 				System.out.println("Would you rather 2 Single Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
-					bedType = "2 Single Beds";
+					hotelRoom.bedType = "2 Single Beds";
 				else 
-					bedType = "1 Double Bed";
-				type=Integer.toString(AppData.ROOM_TYPE_DOUBLE);
+					hotelRoom.bedType = "1 Double Bed";
+				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DOUBLE);
+			
 //			level = (doubleCount + singleCount) / 8 + 2;
 //			room = (doubleCount + singleCount) % 8;
 //			if(room == 0) room = 8;
@@ -144,9 +144,10 @@ public class Validation {
 		}
 		
 		//Single
-		else if(roomType.equals("Single") && singleCount < 20) {
+		else if(hotelRoom.roomType.equals("Single") && singleCount < 20) {
 			singleCount++;
-			type=Integer.toString(AppData.ROOM_TYPE_SINGLE);
+			hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_SINGLE);
+			
 //			bedType = "1 Single Bed";
 //			level = (doubleCount + singleCount) / 8 + 2;
 //			room = (doubleCount + singleCount) % 8;
@@ -186,25 +187,28 @@ public class Validation {
 //					
 //					return hotelRoom.get(i); //Please return room
 					
-			
+//			return hotelRoom;
 		
 		
-		switch(type)
+		switch(hotelRoom.roomType)
 		{
 		case "1": //VIP room 07-01 - 07-02
-			
-			return SearchRoomFunction(CheckIn,CheckOut,R,7,1,1,2);
+			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,7,1,1,2);
+			return hotelRoom;
 		case "2":  //Deluxe| room 07-03 - 07-08
 			
-			return SearchRoomFunction(CheckIn,CheckOut,R,7,3,1,6);
+			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,7,3,1,6);
+			return hotelRoom;
 			
 		case "3":  //Single room 02-01 - 02-08 & 03-01 - 03-08 
 			
-			return SearchRoomFunction(CheckIn,CheckOut,R,2,1,2,8);
+			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,2,1,2,8);
+			return hotelRoom;
 			
 		case "4":  //Single room 04-01 - 04-08 & 05-01 - 05-08 & 06-01 - 06-08 
 			
-			return SearchRoomFunction(CheckIn,CheckOut,R,4,1,3,8);
+			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,4,1,3,8);
+			return hotelRoom;
 		}
 		
 
