@@ -49,11 +49,10 @@ public class HrpsSystem {
 							 case 3: 
 								 guestController.printGuestDetail();
 							 break;
-							 
 							 case 4:
 								 break;
 							}
-						} while (choice < 4);
+						} while (choice != 4);
 					 break;
 
 		//RoomServiceApp roomSvcController = new RoomServiceApp();			 
@@ -68,6 +67,7 @@ public class HrpsSystem {
 			System.out.println("3: Update Reservation");
 			System.out.println("4: Print Reservation");
 			System.out.println("5: Check status");
+			System.out.println("6: Return to menu")
 			choice = sc.nextInt();
 			switch (choice) 
 			{
@@ -176,7 +176,7 @@ public class HrpsSystem {
 						 case 6:
 							 break;
 					}
-				 } while (choice < 6);
+				 } while (choice != 6);
 				 break;
 				 
 				 case 3: 
@@ -279,7 +279,7 @@ public class HrpsSystem {
 						 case 6:
 							 break;
 					}
-				 } while (choice < 6);
+				 } while (choice != 6);
 				 break;
 				 
 				 case 4:
@@ -336,7 +336,7 @@ public class HrpsSystem {
 							 case 9:
 								 break;
 						 }
-					 } while (choice < 9);
+					 } while (choice != 9);
 					 break;
 				 
 
@@ -385,7 +385,7 @@ public class HrpsSystem {
 								 case 7:
 									 break;
 								}
-							}while (choice < 7);
+							}while (choice != 7);
 					 
 				 break; 
 				 case 6:
@@ -412,14 +412,14 @@ public class HrpsSystem {
 							 case 4:
 								 break;
 						}
-					 } while (choice < 4);
+					 } while (choice != 4);
 				 break; 
 
 
 				 
-				 case 7: System.out.println("Program terminating ….");
+				 case 7: System.out.println("Exit program ….");
 				}
-			} while (choice < 7);
+			} while (choice != 7);
 		sc.close();
 	}
 
