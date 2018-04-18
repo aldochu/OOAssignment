@@ -357,7 +357,6 @@ public class RoomServiceApp
     		if(hotelService.get(i).RoomNo.equals(roomA))
     		         if(hotelService.get(i).paid == false)
     		         {
-    		        	 hotelService.get(i).paid = true;
     		        	 return hotelService.get(i);
     		         }	             
 		}
