@@ -64,12 +64,6 @@ public class PromoData extends StoreData
 		write(filename,alw);
 	}
 
-	@Override
-	public void startup() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

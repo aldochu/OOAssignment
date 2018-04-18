@@ -88,10 +88,5 @@ public class Registrationdb extends StoreData{
 		
 	
 
-	@Override
-	public void startup() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -90,10 +90,5 @@ public class Reservationdb extends StoreData {
 		
 	
 
-	@Override
-	public void startup() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
