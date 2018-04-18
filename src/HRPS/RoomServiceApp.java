@@ -184,9 +184,24 @@ public class RoomServiceApp
 	{
 		sc.nextLine();
 		RoomService _roomService = new RoomService();
+		_roomService.orderNumber = 1;
+		boolean newroom;
+		do {
+		newroom = true;
 		System.out.println("Please enter room number:");
 		_roomService.RoomNo = sc.nextLine();
-		_roomService.orderNumber = 1;
+		for(int i = 0;i<hotelService.size();i++)
+		{
+			if (hotelService.get(i).RoomNo.equals(_roomService.RoomNo))
+			      if (hotelService.get(i).paid == false)
+			      {
+			    	  System.out.println("Previous service has not been paid");
+			    	  newroom = false;
+			    	  break;
+			      }
+			
+		}
+		}while(newroom == false);
 		for(int i = 0;i<hotelService.size();i++)
 		{
 	      	_roomService.orderNumber = hotelService.get(i).orderNumber +1 ;
@@ -239,21 +254,20 @@ public class RoomServiceApp
 		printRoomServiceList();
 		System.out.println("Please enter order number:");
 		Integer order =(Integer) sc.nextInt();
-		int foodexistance = 0;
+		int orderexistance = 0;
 		for(int i = 0;i<hotelService.size();i++)
 		{
 			if(hotelService.get(i).orderNumber.equals(order))
 			{
 				RoomService temp = hotelService.get(i);
-				foodexistance = 1;
 				updateOrderDetails(temp); //pass by reference
 				hotelService.remove(i); //delete from the searched index
 				hotelService.add(i, temp); //add the new updated record into the deleted index
-			}
+				orderexistance = 1;
+			}	
 		}
-		if (foodexistance==0)
-				System.out.println("Order number not found, try again!!");
-		}
+		if (orderexistance ==0)
+			System.out.println("Order number not found, try again!!");
 		try {
 			dbSvc.saveClass("order.txt", hotelService);
 		} catch (IOException e) {
@@ -355,6 +369,7 @@ public class RoomServiceApp
     		if(hotelService.get(i).RoomNo.equals(roomA))
     		         if(hotelService.get(i).paid == false)
     		         {
+    		        	 hotelService.get(i).paid = true;
     		        	 return hotelService.get(i);
     		         }	             
 		}
