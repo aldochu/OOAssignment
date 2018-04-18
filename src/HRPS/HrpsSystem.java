@@ -343,9 +343,9 @@ public class HrpsSystem {
 				 case 5: 
 					 do {
 							System.out.println("Perform the following methods:");
-							System.out.println("1: Add food catalogue");
-							System.out.println("2: Update food catalogue");
-							System.out.println("3: Show list of foods(name,description,price)");
+							System.out.println("1: Add food to catalogue");
+							System.out.println("2: Update food in catalogue");
+							System.out.println("3: Remove food from catalogue");
 							System.out.println("4: Add order");
 							System.out.println("5: Update order status");
 							System.out.println("6: Remove Order ");
@@ -364,7 +364,7 @@ public class HrpsSystem {
 								 }
 								 case 3:
 								 {
-									 roomSvcController.printFoodList();
+									 roomSvcController.removeFood();
 								     break;
 								 }
 								 case 4:
