@@ -6,16 +6,30 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
+/**
+ * 
+This class is the manager class of Guest, it contains all the functional logic required by the system
+ @author Aldo Chu
+ @version 1.0
+ @since 2018-04-18
+ *
+ */
 public class GuestApp {
 	
 
 	//private Guest[] hotelGuest = new Guest[30]; //created 20 array
+	
+	/**
+	 * An arraylist of guest data type to store and manipulate data
+	 */
 	private ArrayList<Guest> hotelGuest = new ArrayList<Guest>();
 	private GuestData db = new GuestData();
 	Scanner sc = new Scanner(System.in);
 	
 	///////////////////////////////////Load data from file////////////////////////////////////////
+	/**
+	 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+	 */
 	protected GuestApp()
 	{
 		try {
@@ -29,6 +43,12 @@ public class GuestApp {
 	
 	///////////////////////////////////Create Guest//////////////////////////////////////////////
 
+	/**
+	 * This function is to create a new guest, it will ask for user input for name, ic, 
+	 * nationality, contact, address and gender and call the
+	 * data access class function upon creation to update the text file
+	 * @return 1 if function executed successfully
+	 */
 	public int createGuest()//pass by reference
 	{
 		
@@ -100,6 +120,10 @@ public class GuestApp {
 		
 	}
 	
+	/**
+	 * this function is to add credit card detail to the referenced guest
+	 * @param hotelGuest the reference of the updating guest
+	 */
 	private void addCCDetail(Guest hotelGuest)//pass by reference
 	{
 		boolean checkcvv2=false;
@@ -144,6 +168,13 @@ public class GuestApp {
 	
 	
 ///////////////////////////////////Update Guest//////////////////////////////////////////////
+	/**
+	 * This function is to update guest, it will ask for user IC and traverse the arraylist to look
+	 * for the same insert IC, once found it will call the updateGuestDetails function and pass
+	 * in the found guest and waiting for the return of the edited guest. The new edited guest will
+	 * then replace it's own place in the arraylist 
+	 * @return 1 if execute successfully
+	 */
 	public int updateGuest()
 	{
 		
@@ -164,6 +195,13 @@ public class GuestApp {
 		return 0;
 	}
 	
+	/**
+	 * This function is called by the function updateGuest after it has traversed the arraylist
+	 * to get the guest from the arraylist to update. This function will ask which parameter the user
+	 * would like the update and proceed to edit based on the choices and return back to the function
+	 * updateGuest
+	 * @param hotelguest the reference guest to update
+	 */
 	private void updateGuestDetails(Guest hotelguest)
 	{
 		printGuest(hotelguest);
@@ -220,17 +258,22 @@ public class GuestApp {
 			 case 7: System.out.println("return to previous");
 			 	try {
 							db.saveClass("guest.txt", hotelGuest);
-						} catch (IOException e) {
+					} catch (IOException e) 
+			 		{
 								// TODO Auto-generated catch block
 							e.printStackTrace();
-						} //to read data from files
-					}
-			
-			
-			} while (choice < 7);
+					} //to read data from files
+			 	break;
+			 default: System.out.println("invalid input");	
+					}		
+			} while (choice != 7);
 		//return hotelguest;
 	}
 	
+	/**
+	 * a function that is called by function updateGuestDetails if user choose to update the credit card details
+	 * @param hotelguest the reference guest to update the credit card details
+	 */
 	private void updateCCDetails(Guest hotelguest)
 	{
 		int choice;
@@ -272,13 +315,15 @@ public class GuestApp {
 			 break; 
 			 case 6: 
 				 System.out.println("return to previous");
+			 break;
+			 default: System.out.println("invalid input");
 				
 				
 			}
 			
 			
 				
-			} while (choice < 6);
+			} while (choice != 6);
 	}
 	
 	
@@ -287,6 +332,12 @@ public class GuestApp {
 	
 ///////////////////////////////////Start of Search Guest//////////////////////////////////////////////
 	
+	/**
+	 * This is a searching function that traverse the arraylist with the give argument and return
+	 * the found guest 
+	 * @param name the name of the guest that user want to search
+	 * @return searched guest if there's any
+	 */
 	public Guest SearchGuest(String name) //search by name
 	{
 		for(int i = 0;i<hotelGuest.size();i++)
@@ -300,6 +351,10 @@ public class GuestApp {
 		return null; //failed to create
 	}
 	
+	/**
+	 * A function to search whether guest is in the arraylist with the argument of the guest IC
+	 * @return the guest IC if the guest exist else return null
+	 */
 	public String SearchGuestExistAndReturnUserId() //search by name
 	{
 		
@@ -317,6 +372,11 @@ public class GuestApp {
 		return null;
 	}
 	
+	/**
+	 * A function to search guest in the arraylist with the argument of the guest IC
+	 * @param IC the IC of the guest
+	 * @return the guest if found else return null
+	 */
 	public Guest SearchGuestByIc(String IC) //search by ic
 	{
 		for(int i = 0;i<hotelGuest.size();i++)
@@ -330,6 +390,13 @@ public class GuestApp {
 		return null; //failed to create
 	}
 	
+	
+	
+	/**
+	 * A function to search whether guest is in the arraylist with the argument of the guest IC
+	 * @param IC the guest IC
+	 * @return boolean, true represent exist and false represent non-exist
+	 */
 	public boolean SearchGuestExist(String IC) //search by ic to check existence
 	{
 		for(int i = 0;i<hotelGuest.size();i++)
@@ -346,6 +413,10 @@ public class GuestApp {
 	
 ///////////////////////////////////END of Search Guest//////////////////////////////////////////////
 	
+	/**
+	 * A function to print the guest detail
+	 * @param hotelguest the reference of the guest to print
+	 */
 	private void printGuest(Guest hotelguest)
 	{
 		if(hotelguest == null)
@@ -375,6 +446,10 @@ public class GuestApp {
 		
 	}
 	
+	/**
+	 * A function to print the guest credit card details
+	 * @param hotelguest the reference of the guest to print
+	 */
 	private void printGuestCC(Guest hotelguest)
 	{
 		System.out.println("Guest credit card name: " + hotelguest.ccdetails.name);
@@ -384,6 +459,9 @@ public class GuestApp {
 		System.out.println("Expiry date of the credit card: " + new SimpleDateFormat("dd-MM-yyyy").format(hotelguest.ccdetails.expiry));
 	}
 	
+	/**
+	 * A function that ask the name of the guest to print their details
+	 */
 	public void printGuestDetail()
 	{
 		System.out.println("Please enter the name of the guest:");

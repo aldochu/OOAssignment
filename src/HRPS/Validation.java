@@ -8,8 +8,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * 
+This class contains functions that is used frequently by other class and provide method to validate
+the data
+ *
+ */
 public class Validation {
 	
+	/**
+	 * A method to convert string to date
+	 * @param s the date in string data type
+	 * @return the date in Date data type
+	 */
 	public Date CovertToDate(String s)//this function take in string and return date
 	{
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -22,11 +33,23 @@ public class Validation {
 			}
 	}
 
+	/**
+	 * a function to compare the number of char in string with the given integer
+	 * @param s the string
+	 * @param k the integer
+	 * @return true if the number of char is the same as the given integer, else false
+	 */
 	public boolean CompareNoOfChar(String s,int k)
 	{
 		return (s.length()==k);
 	}
 	
+	/**
+	 * This function compare the given date with the current date to check whether the given date
+	 * had already passed
+	 * @param D the given date to check
+	 * @return true or false
+	 */
 	public boolean CheckExpiry(Date D) //this will check with the current date
 	{
 		Date CurrentDate = new Date();		
@@ -34,6 +57,14 @@ public class Validation {
 
 	}
 	
+	/**
+	 * This function compare the given date with the current date in addition to a integer
+	 * to add the current date ahead, it is to check whether the given date is it before the newly
+	 * calculated date after the addition of days
+	 * @param D the given date to check 
+	 * @param k the number of days to add into the current date
+	 * @return true or false
+	 */
 	public boolean CheckExpiryAfterNoOfDays(Date D,int k) //this will check D with the current date + k
 	{
 		Calendar c = Calendar.getInstance();
@@ -45,6 +76,12 @@ public class Validation {
 
 	}
 	
+	/**
+	 * this function will check for the number of occupancy rate of the hotel in the past
+	 * @param D the date of the past 
+	 * @param p the arraylist of payment
+	 * @return the occupancy rate
+	 */
 	public int CheckDateWithin(Date D,ArrayList<Payment> p) //this will check D with the current date + k
 	{
 		int number = 0;
@@ -60,6 +97,12 @@ public class Validation {
 
 	}
 	
+	
+	/**
+	 * This function will compare the whether the date had already pass the current date
+	 * @param checkin the date to check
+	 * @return true or false
+	 */
 	public boolean CheckValidCheckInDate(Date checkin) //this will check D with the current date + k
 	{
 		Date today = new Date();
@@ -72,6 +115,12 @@ public class Validation {
 		return false;
 	}
 	
+	/**
+	 * This function will compare two dates and check user input
+	 * @param checkin the date that the guest checkin
+	 * @param checkout the date that the guest checkout
+	 * @return true or false
+	 */
 	public boolean CheckValidCheckOutDate(Date checkin, Date checkout) //this will check D with the current date + k
 	{		
 		if(checkout.after(checkin))
@@ -82,6 +131,13 @@ public class Validation {
 		return false;
 	}
 	
+	/**
+	 * This function check whether there's room vacancy from the reservation list
+	 * @param CheckIn the check in date of the guest
+	 * @param CheckOut the check out date of the guest
+	 * @param R the reference arraylist of reservation
+	 * @return the room number of the vacant room
+	 */
 	public Room CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k
 	{
 		int level, room;
@@ -216,6 +272,17 @@ public class Validation {
 		return null;
 	}
 	
+	/**
+	 * This function is used by CheckRoomVacancyFromReservation, to separate the task of searching vacant room
+	 * @param checkIn the check in date of guest
+	 * @param checkOut the check out date of guest
+	 * @param R the reference to the reservation arraylist
+	 * @param startingFloor the starting floor of the unique room
+	 * @param startingRoom the starting room number of the unique room
+	 * @param NoOfFloor the number of floor there is for the unique room
+	 * @param NoOfRoomPerFloor the number of room there is per floor for the unique room
+	 * @return the vacant room number
+	 */
 	public String SearchRoomFunction(Date checkIn,Date checkOut,ArrayList<Reservation> R,int startingFloor,int startingRoom, int NoOfFloor, int NoOfRoomPerFloor)
 	{
 		//1st check whether there's any reservation for this room
