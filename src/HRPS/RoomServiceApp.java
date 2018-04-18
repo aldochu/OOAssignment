@@ -6,14 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import roomserviceapp.Food;
-import roomserviceapp.FoodData;
-import roomserviceapp.RoomService;
-import roomserviceapp.RoomServiceData;
-
 import java.util.Date;
 import java.util.Scanner;
+
 public class RoomServiceApp 
 {
 	private ArrayList<Food> hotelFood = new ArrayList<Food>();
