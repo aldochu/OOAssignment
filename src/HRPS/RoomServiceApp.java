@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import roomserviceapp.Food;
+import roomserviceapp.FoodData;
+import roomserviceapp.RoomService;
+import roomserviceapp.RoomServiceData;
+
 import java.util.Date;
 import java.util.Scanner;
 public class RoomServiceApp 
@@ -36,8 +41,18 @@ public class RoomServiceApp
 	public int createFoodData()
 	{
 	Food _hotelFood = new Food();
+	sc.nextLine();
+	boolean foodexistance = false;
+	do
+	{
 	System.out.println("Please enter food name:");
 	_hotelFood.name = sc.nextLine();
+	if(SearchFood(_hotelFood.name)!=null)
+	{
+		foodexistance = true;
+		System.out.println("The food name has already been used, try again!!");
+	}
+	} while (foodexistance == true);
 	System.out.println("Please enter food description:");
 	_hotelFood.description = sc.nextLine();
 	System.out.println("Please enter food price (in SGD):");
@@ -55,6 +70,7 @@ public class RoomServiceApp
 	
 	public void updateFood()
 	{
+		sc.nextLine();
 		System.out.println("List of foods(name|description|price):");
 		printFoodList();
 		System.out.println("Please enter the name of the food:");
@@ -68,6 +84,8 @@ public class RoomServiceApp
 				hotelFood.remove(i); //delete from the searched index
 				hotelFood.add(i, temp); //add the new updated record into the deleted index
 			}
+			else
+				System.out.println("No such food name, try again!!");
 		}	
 		try {
 			dbFood.saveClass("food.txt", hotelFood);
@@ -139,6 +157,7 @@ public class RoomServiceApp
 	
 	public int createOrder()
 	{
+		sc.nextLine();
 		RoomService _roomService = new RoomService();
 		System.out.println("Please enter room number:");
 		_roomService.RoomNo = sc.nextLine();
@@ -158,12 +177,14 @@ public class RoomServiceApp
 		String food;
 		do 
 		{
-		sc.nextLine();
-		System.out.println("Please enter food you want to order:");
-		food = sc.nextLine();
+			sc.nextLine();
+			System.out.println("Please enter the food you want to order:");
+			food = sc.nextLine();
+			if(SearchFood(food)==null)
+				System.out.println("No such food, try again!!");
+		} while (SearchFood(food)==null);
 		_roomService.foodList.add(SearchFood(food));
 		//sc.nextLine();
-		} while (SearchFood(food)==null);
 		System.out.println("Do you want to order another food(yes=1/no=0):");
 		orderagain=sc.nextInt();
 		i++;
@@ -189,6 +210,8 @@ public class RoomServiceApp
 	public void updateOrder()
 	{
 		sc.nextLine();
+		System.out.println("List of orders:");
+		printRoomServiceList();
 		System.out.println("Please enter order number:");
 		Integer order =(Integer) sc.nextInt();
 		for(int i = 0;i<hotelService.size();i++)
@@ -199,8 +222,9 @@ public class RoomServiceApp
 				updateOrderDetails(temp); //pass by reference
 				hotelService.remove(i); //delete from the searched index
 				hotelService.add(i, temp); //add the new updated record into the deleted index
-				System.out.println(hotelService.get(i).foodList);
 			}
+			else
+				System.out.println("Order number not found, try again!!");
 		}
 		try {
 			dbSvc.saveClass("order.txt", hotelService);
@@ -226,12 +250,14 @@ public class RoomServiceApp
 			  {
 			  case 1: 
 			  {
+				 sc.nextLine();
 				 System.out.println("Please enter the updated remarks");
 			 	 hotelService.remark = sc.nextLine();
 			     break;
 			  }
 			  case 2:
 			  {
+				 sc.nextLine();
 				 System.out.println("Please enter the updated status");
 				 hotelService.status = sc.nextLine();
 			     break;
@@ -239,11 +265,17 @@ public class RoomServiceApp
 			  case 3:
 			  {
 				  String food;
+				  System.out.println("List of foods(name|description|price):");
+				  printFoodList();
 					do 
 					{
 					sc.nextLine();
+					do {
 					System.out.println("Please enter the food you want to order:");
 					food = sc.nextLine();
+					if(SearchFood(food)==null)
+						System.out.println("No such food, try again!!");
+					} while (SearchFood(food)==null);
 					hotelService.foodList.add(SearchFood(food));
 					sc.nextLine();
 					} while (SearchFood(food)==null);
@@ -261,6 +293,8 @@ public class RoomServiceApp
 						{
 						if(hotelService.foodList.get(i).name.equals(food))
 							hotelService.foodList.remove(i);
+						else
+							System.out.println("You did not order that food, try again!!");
 						break;
 						}
 					sc.nextLine();
@@ -283,29 +317,27 @@ public class RoomServiceApp
 	}
 	
     public RoomService GetRoomService(String roomA)
+	{
+    	for(int i = 0;i<hotelService.size();i++)
 		{
-	    	for(int i = 0;i<hotelService.size();i++)
-			{
-	    		if(hotelService.get(i).RoomNo.equals(roomA))
-	    		         if(hotelService.get(i).paid == false)
-	    		         {
-	    		        	 hotelService.get(i).paid = true;
-	    		        	 return hotelService.get(i);
-	    		         }	             
-			}
-	    	return null;
+    		if(hotelService.get(i).RoomNo.equals(roomA))
+    		         if(hotelService.get(i).paid == false)
+    		         {
+    		        	 hotelService.get(i).paid = true;
+    		        	 return hotelService.get(i);
+    		         }	             
 		}
-	    
+    	return null;
+	}
+    
     public double GetTotal(String roomA)
-	    {
-	    	RoomService temp = GetRoomService(roomA);
-	    	double total = 0;
-	    	if (temp!=null)
-	    		for(int j = 0;j<temp.foodList.size();j++)
-	    		    total = total + temp.foodList.get(j).price;	
-	    	return total;
-	    }
-	    
+    {
+    	RoomService temp = GetRoomService(roomA);
+    	double total = 0;
+    		for(int j = 0;j<temp.foodList.size();j++)
+    		    total = total + temp.foodList.get(j).price;	
+    	return total;
+    }
 	public void removeOrder()
 	{
 		sc.nextLine();
@@ -326,10 +358,8 @@ public class RoomServiceApp
 		} //to read data from files
 	}
 	
-	private void printRoomService(Food hotelfood,RoomService hotelService)
+	private void printRoomService(RoomService hotelService)
 	{
-		if(hotelfood == null)
-			return;
 		if(hotelService == null)
 			return;
 		System.out.print(hotelService.RoomNo +"|"+hotelService.orderNumber + "|"+hotelService.date + "|");	
@@ -337,7 +367,13 @@ public class RoomServiceApp
 		{
 			System.out.print(hotelService.foodList.get(i).name+"*"+hotelService.foodList.get(i).price);
 		}
-		System.out.println(hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
+		System.out.println("|"+hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
+	}
+	
+	private void printRoomServiceList()
+	{
+		for(int i = 0;i<hotelService.size();i++)
+			printRoomService(hotelService.get(i));
 	}
 	
 	public void paid(Integer orderid)
