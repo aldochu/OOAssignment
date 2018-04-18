@@ -42,7 +42,7 @@ public class RoomApp {
 		}
 	}
 	
-	public Room assignRoom(String guestIC)// do method of overloading to get the roomid
+	public Room assignRoom(String guestIC)
 	{
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
@@ -160,7 +160,7 @@ public class RoomApp {
 			return null;
 	}
 	
-	public void assignBed(Room room, String bed) {
+	private void assignBed(Room room, String bed) {
 		boolean assign = false;
 		for(int i = 0; i<hotelRoom.size(); i++) {
 			if(hotelRoom.get(i).status.equals("Vacant") && hotelRoom.get(i).bedType.equals(bed) 
@@ -184,7 +184,7 @@ public class RoomApp {
 		if(assign == false) System.out.println("Sorry, no rooms available");
 	}
 	
-	public boolean unassignRoom(String roomid) {
+	private boolean unassignRoom(String roomid) {
 		boolean checked = false;
 		for(int i = 0; i<hotelRoom.size(); i++) {
 			if(hotelRoom.get(i).roomId.equals(roomid)) {
@@ -287,7 +287,7 @@ public class RoomApp {
 						break;
 						
 				case 2: System.out.println("Please enter the updated Status: ");
-						_hotelRoom.status = checkInput(sc.nextLine(), 3);
+						_hotelRoom.status = sc.nextLine();
 						break;
 						
 				case 3: Room temp = new Room();
@@ -499,22 +499,5 @@ public class RoomApp {
 		}
 	}
 	
-	private String checkInput(String input, int type)
-	{
-		boolean result = false;
-		switch (type) {
-			case 1: if(input.equals("Single") || input.equals("Double") || input.equals("Deluxe") || input.equals("VIP")) result = true;
-					break;
-			case 2: if(input.equals("1 Single Bed") || input.equals("2 Single Beds") || input.equals("1 Double Bed") || input.equals("2 Double Beds") || input.equals("1 King Bed") || input.equals("2 King Beds")) result = true;
-					break;
-			case 3: if(input.equals("Vacant") || input.equals("Occupied" ) || input.equals("Reserved") || input.equals("Under Maintenance")) result = true;
-					break;
-		}
-		if(result == false) {
-			System.out.println("Invalid input. Please try again.");
-			return null;
-		}
-		else return input;
-	}
 
 }
