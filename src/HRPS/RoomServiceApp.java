@@ -42,9 +42,10 @@ public class RoomServiceApp
 	{
 	Food _hotelFood = new Food();
 	sc.nextLine();
-	boolean foodexistance = false;
+	boolean foodexistance;
 	do
 	{
+	foodexistance = false;
 	System.out.println("Please enter food name:");
 	_hotelFood.name = sc.nextLine();
 	if(SearchFood(_hotelFood.name)!=null)
@@ -75,6 +76,7 @@ public class RoomServiceApp
 		printFoodList();
 		System.out.println("Please enter the name of the food:");
 		String foodname = sc.nextLine();
+		int foodexistance = 0;
 		for(int i = 0;i<hotelFood.size();i++)
 		{
 			if(hotelFood.get(i).name.equals(foodname))
@@ -83,10 +85,11 @@ public class RoomServiceApp
 				updateFoodDetails(temp); //pass by reference
 				hotelFood.remove(i); //delete from the searched index
 				hotelFood.add(i, temp); //add the new updated record into the deleted index
+				foodexistance = 1;
 			}
-			else
-				System.out.println("No such food name, try again!!");
 		}	
+		if(foodexistance == 0)
+			System.out.println("No such food name, try again!!");
 		try {
 			dbFood.saveClass("food.txt", hotelFood);
 		} catch (IOException e) {
@@ -289,14 +292,18 @@ public class RoomServiceApp
 					sc.nextLine();
 					System.out.println("Please enter food you want to remove:");
 					food = sc.nextLine();
+					int foodexistance = 0;
 					for(int i= 0;i<hotelService.foodList.size();i++)
-						{
+					{
 						if(hotelService.foodList.get(i).name.equals(food))
+						{
 							hotelService.foodList.remove(i);
-						else
-							System.out.println("You did not order that food, try again!!");
-						break;
+							foodexistance = 1;
+							break;	
 						}
+					}
+				   if(foodexistance == 0)
+							System.out.println("You did not order that food, try again!!");
 					sc.nextLine();
 					} while (SearchFood(food)==null);
 				   break;
@@ -341,15 +348,21 @@ public class RoomServiceApp
 	public void removeOrder()
 	{
 		sc.nextLine();
+		System.out.println("List of orders:");
+		printRoomServiceList();
 		System.out.println("Please enter order number:");
 		Integer order = (Integer) sc.nextInt();
+		int foodexistance = 0;
 		for(int i = 0;i<hotelService.size();i++)
 		{
 			if(hotelService.get(i).orderNumber.equals(order))
 			{
 				hotelService.remove(i); //delete from the searched index
+				foodexistance = 1;
 			}
 		}
+		if(foodexistance == 0)
+			System.out.println("No such order, try again!!");
 		try {
 			dbSvc.saveClass("order.txt", hotelService);
 		} catch (IOException e) {
