@@ -239,16 +239,19 @@ public class RoomServiceApp
 		printRoomServiceList();
 		System.out.println("Please enter order number:");
 		Integer order =(Integer) sc.nextInt();
+		int foodexistance = 0;
 		for(int i = 0;i<hotelService.size();i++)
 		{
 			if(hotelService.get(i).orderNumber.equals(order))
 			{
 				RoomService temp = hotelService.get(i);
+				foodexistance = 1;
 				updateOrderDetails(temp); //pass by reference
 				hotelService.remove(i); //delete from the searched index
 				hotelService.add(i, temp); //add the new updated record into the deleted index
 			}
-			else
+		}
+		if (foodexistance==0)
 				System.out.println("Order number not found, try again!!");
 		}
 		try {
