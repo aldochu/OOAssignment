@@ -369,7 +369,6 @@ public class RoomServiceApp
     		if(hotelService.get(i).RoomNo.equals(roomA))
     		         if(hotelService.get(i).paid == false)
     		         {
-    		        	 hotelService.get(i).paid = true;
     		        	 return hotelService.get(i);
     		         }	             
 		}
@@ -417,7 +416,7 @@ public class RoomServiceApp
 		System.out.print(hotelService.RoomNo +"|"+hotelService.orderNumber + "|"+hotelService.date + "|");	
 		for(int i= 0;i<hotelService.foodList.size();i++)
 		{
-			System.out.print(hotelService.foodList.get(i).name+"*"+hotelService.foodList.get(i).price);
+			System.out.print(hotelService.foodList.get(i).name+"*"+hotelService.foodList.get(i).price+"*");
 		}
 		System.out.println("|"+hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
 	}
