@@ -76,14 +76,9 @@ public class Reservationdb extends StoreData {
 		builder.append(SEPARATOR);
 		builder.append(temp.NoOfChild);
 		builder.append(SEPARATOR);
-		
-		System.out.println("CHECK IN IS IT SAVE AS : " + temp.check_in);
-		System.out.println("CHECK IN IS IT FORMAT AS : " + df.format(temp.check_in));
 		builder.append(df.format(temp.check_in));
 		builder.append(SEPARATOR);
-		
-		System.out.println("CHECK OUT IS IT SAVE AS : " + temp.check_out);
-		System.out.println("CHECK OUT IS IT FORMAT AS : " + df.format(temp.check_out));
+
 		builder.append(df.format(temp.check_out));
 		alw.add(builder.toString()) ;
 		

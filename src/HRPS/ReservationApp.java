@@ -158,7 +158,7 @@ import HRPS.GuestData;
 			reserve.add(res);
 			
 			System.out.println("Reservation created successfully!");
-			
+			printResByResId(res.res_id);
 			
 			try {
 				db.saveClass("reservation.txt", reserve);
@@ -293,6 +293,25 @@ import HRPS.GuestData;
 				}
 				
 				}
+			
+			public void printResByResId(String res_id) {
+				if(reserve == null)
+					return;
+				
+				for(int i = 0; i < reserve.size(); i++)
+				{
+					if(res_id.equals(reserve.get(i).res_id)){
+				System.out.println("Guest ID: " + reserve.get(i).guestId);
+				System.out.println("Reservation ID: " + reserve.get(i).res_id);
+				System.out.println("Check in date: " + reserve.get(i).check_in);
+				System.out.println("Check out date: " + reserve.get(i).check_out);
+				System.out.println("Number of Adult: " + reserve.get(i).NoOfAdult);
+				System.out.println("NUmber of Children: " + reserve.get(i).NoOfChild + "\n");
+					}
+				}
+				
+				}
+			
 			
 			
 			public void deleteRes()
