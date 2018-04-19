@@ -272,6 +272,12 @@ public class PaymentApp
 			System.out.println("Please Enter Date MM/DD/YYYY : " );
 			date = sdf.parse(sc.nextLine());
 			
+			if(date.after(currentDate))
+			{
+				System.out.println("Date is not in allowable range. Please enter a date BEFORE today.");
+				return;
+			}
+			
 			o = v.CheckDateWithin(date, pay);
 			e -= o;
 			
