@@ -17,15 +17,30 @@
 	import HRPS.GuestApp;
 	import HRPS.GuestData;
 
+	/**
+	 * 
+	This class is the manager class of Registration, it contains all the functional logic required by the system
+	 @author Li Feng
+	 @version 1.0
+	 @since 2018-04-18
+	 *
+	 */
 
 	public class RegistrationApp {
 			GuestApp guestController = new GuestApp();
 			RoomApp roomController = new RoomApp();
+			
+			/**
+			 * An arraylist of guest data type to store and manipulate data
+			 */
 			private ArrayList<Registration> register = new ArrayList<Registration>();
 			private Reservationdb db = new Reservationdb();
 			Scanner sc = new Scanner(System.in);
 			
 			///////////////////////////////////Load data from file////////////////////////////////////////
+			/**
+			 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+			 */
 			public RegistrationApp()
 			{
 			try {
@@ -39,18 +54,16 @@
 			}
 			}
 			
-		
-
-
-
-
-
-			
 			private String tem;
 			private String temRoom;
 			private Room rm;
 			private Guest g;
 			
+			/**
+			 * This function checks if the guest is null
+			 * @param guest to check if null
+			 * @return true if guest exists
+			 */
 			public boolean getuser(Guest guest)
 			{
 				if(guest==null) {
@@ -61,9 +74,15 @@
 				}
 			}
 			
-			public boolean getRoomId(int i)
+			/**
+			 * This function checks if the roomNo is valid
+			 * @param roomNo to check if room number is not 0
+			 * @return true if room number is valid,
+			 * false if roomNo is 0
+			 */
+			public boolean getRoomId(int roomNo)
 			{
-				if(i==0) {
+				if(roomNo==0) {
 					return false;
 				}
 				else {
@@ -71,6 +90,15 @@
 				}
 			}
 			
+			/**
+			 * This function creates a new walk in, it will ask for user input for number of adults,children ,
+			 * check out date. As this is a walk in, the check in date will be the current date. It will then call the
+			 * data access class function upon creation to update the text file. 
+			 * @param guestId to set the guest ID
+			 * @param roomId to set the room ID
+			 * @param roomType to set the room type
+			 * @throws ParseException to catch exceptions
+			 */
 			public void createRegistration(String guestId,String roomId, String roomType) throws ParseException//pass by reference
 			{
 				
@@ -137,40 +165,14 @@
 				} //to read data from files
 				
 				System.out.println("Reservation created successfully!");
-
-
-			}
-			
-			
-
-			
-			/*public int validateguestId(Reservation register,Guest hotelGuest) {
-				for(int i = 0;i<register.length;i++)
-				{
-			
-					if(register.guestId.equals(hotelGuest.guestId))
-					{
-						updatereservation(register[i]); //pass by reference
-						return 1;
-					}
 				}
-			}*/
 			
-				/*public void getResStatus(String[] res_status) {
-				String todayDate="15-03-2018";
-				if(todayDate.compareTo(check_in)>0 && rm_status="occupied"){
-		            System.out.println("Today day is after Checkin");
-		            System.out.println("Checked_in");
-		        }else if(check_in.compareTo(todayDate)<0){
-		            System.out.println("Check in is before Today date");
-		        }
-				
-		        else{
-		            System.out.println("Date1 is equal to Date2");
-		        }
-				
-			}*/
-			
+				/**
+				 * This function updates an existing walk in. It prompts the user to
+				 * input reservation number. When found, it will call updateReservation to update the details 
+				 * and call the data access class function upon updating the reservation to update the text file
+				 * @return 1 on success, 0 on failure
+				 */
 				public int updateRes()
 				{
 					
@@ -184,20 +186,19 @@
 							Registration temp = register.get(i);
 							updatereservation(temp); //pass by reference
 							register.remove(i); //delete from the searched index
-							register.add(i, temp); //add the new updateed record into the deleted index
+							register.add(i, temp); //add the new updated record into the deleted index
 							return 1;
-						}
-						//error message for incorrect reservation id
-						
+						}						
 					}
-					
-					
 					return 0;
 				}	
 				
-				
-				
-				
+				/**
+				 * This function updates an existing reservation. It prompts the user to
+				 * input the number that corresponds to the field to update. 
+				 * Then, it will return the updated value back to updateRes()
+				 * @param register the walk in details of the guest
+				 */
 				private void updatereservation(Registration register)
 				{
 					DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -257,11 +258,13 @@
 						
 						}
 						} while (choice < 7);
-					
-					
 				}
 			
-
+				/**
+				 * This function searches the arraylist for a valid walk in. It prompts the user for 
+				 * reservation number input and uses it to check for validity.
+				 * @return the walk in data of the reservation ID if found, else returns null
+				 */
 				public Registration SearchRes()
 				{
 					System.out.println("Please enter the reservation number:");
@@ -276,8 +279,10 @@
 					}
 					return null; //failed to create
 				}
-				
 			
+				/**
+				 * This function prints details of all the walk ins
+				 */
 				public void printResOnly() {
 					if(register == null)
 						return;
@@ -291,10 +296,14 @@
 					System.out.println("Number of Adult: " + register.get(i).NoOfAdult);
 					System.out.println("NUmber of Children: " + register.get(i).NoOfChild + "\n");
 					}
-					
-					
-					}
+				}
 				
+				/**
+				 * This function sets the status of a walk in to checked out upon successful checkout
+				 * It will call the data access class function upon successful updating of the reservation 
+				 * to update the text file
+				 * @param guestId the guest IC
+				 */
 				public void checkOut(String guestId)
 				{				
 					for(int i = 0;i<register.size();i++)
@@ -313,133 +322,15 @@
 					} //to read data from files
 
 				}
-//				
-//				public void checkIn(String Res_Number)
-//				{				
-//					for(int i = 0;i<register.size();i++)
-//					{
-//						if(register.get(i).res_id.equals(Res_Number))
-//						{
-//							register.get(i).status= AppData.RES_STATUS_CHECKED_IN; //Search Successfully
-//						}
-//					}
-//					
-//					try {
-//						db.saveClass("walkin.txt", register);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} //to read data from files
-//
-//				}
-				
-				
-			
 
-
-				/*public int reservationStatus() {
-					
-					Date now = new Date();
-				      System.out.println(now.toString());
-					if(now.equals(register.check_in) ) {
-						System.out.println("Check in date is today");
-					}
-					return 0;
-					
-				}*/
-				
-				
-				/*public boolean isExpire(String checkInDate){
-				    if(checkInDate.isEmpty() || checkInDate.trim().equals("")){
-				        return false;
-				    }else{
-				            SimpleDateFormat sdf =  new SimpleDateFormat("MM/DD/YYYY");//("MM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
-				               Date d=null;
-				               Date d1=null;
-				            Date today=   getToday("MM/DD/YYYY");//("MM-dd-yyyy hh:mm:ss a");
-				            try {
-				                System.out.println("checkindate>> "+checkInDate);
-				                System.out.println("today>> "+today+"\n\n");
-				                d = sdf.parse(checkInDate);
-				                d1 = sdf.parse(today);
-				                if(d1.compareTo(d) <0){// not expired
-				                    return false;
-				                }else if(d.compareTo(d1)==0){// both date are same
-				                            if(d.getTime() < d1.getTime()){// not expired
-				                                return false;
-				                            }else if(d.getTime() == d1.getTime()){//expired
-				                                return true;
-				                            }else{//expired
-				                                return true;
-				                            }
-				                }else{//expired
-				                    return true;
-				                }
-				            } catch (ParseException e) {
-				                e.printStackTrace();                    
-				                return false;
-				            }
-				    }
-				}*/
-
-
-				private long compareTime()
-				{
-					Calendar checkInTime = Calendar.getInstance();
-					Calendar today = Calendar.getInstance();
-					long diff,mil1,mil2,diffhr;
-					
-					Date now = new Date();
-					checkInTime.set(Calendar.HOUR_OF_DAY, 13);
-					checkInTime.set(Calendar.MINUTE, 00);
-					today.setTime(now);
-					
-					mil1 = checkInTime.getTimeInMillis();
-					mil2 = today.getTimeInMillis();
-					
-					diff = mil2 - mil1;
-					
-					diffhr = diff/(60*1000);
-					System.out.println(diffhr);
-					return diffhr;
-				}
-//				 public boolean compareTime()   
-//				    {   
-//				        Calendar calendar = Calendar.getInstance();   
-//				        String am_pm;   
-//				        boolean check = true;
-//				        int hour = calendar.get( Calendar.HOUR );   
-//				        int minute = calendar.get( Calendar.MINUTE );   
-//				        // int second = calendar.get(Calendar.SECOND);   
-//				        if( calendar.get( Calendar.AM_PM ) == 0 )
-//				        {   
-//				            am_pm = "PM";   
-//				            if(hour >=1 && hour<2)   //Within check in time 
-//				            {
-//				            	check = true;
-//				            }
-//				        }               
-//				        else if(hour >2)  //check in time expired
-//						{
-//				        	check = false;
-//						}
-//				        return check;
-//				    }
-		
-		
-				public int getRoomStatus()
-				{
-				
-					return 0 ;
-				}
-
-		
-				
-
+				/**
+				 * This function searches the arraylist for a valid walk in. Instead of searching by
+				 * reservation ID, this function searches by guest IC
+				 * @param guestId the IC of the guest
+				 * @return the walk in data of the reservation ID if found, else returns null
+				 */
 				public Registration SearchRegByGuestId(String guestId)
 				{
-
-					
 					for(int i = 0;i<register.size();i++)
 					{
 						
@@ -450,21 +341,7 @@
 					}
 					return null; //failed to create
 				}
-
-			
-
-
-
-
-
-
-
-
-				
-
-
-				
-	}
+			}
 
 
 

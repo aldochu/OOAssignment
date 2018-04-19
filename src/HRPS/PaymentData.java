@@ -7,9 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-
+/**
+ * 
+A data access class extends from the StoreData abstract class
+ @author Daniel
+ @version 1.0
+ @since 2018-04-18
+ *
+ */
 public class PaymentData extends StoreData
 {
+	
+	/**
+	 * Override function from StoreData abstact function. Format the data read from
+	 * text file and store into the arraylist
+	 * @param filename The name of the text file to save to
+	 * @param PaymentArray The arraylist reference 
+	 * @throws IOException
+	 */
 	public void readClass(String filename, ArrayList PaymentArray) throws IOException
 	{
 		// TODO Auto-generated method stub
@@ -61,6 +76,13 @@ public class PaymentData extends StoreData
 	}
 
 	@Override
+	/**
+	 * Override function from StoreData abstact function. Format the data from arraylist
+	 * and store into the text file
+	 * @param filename The name of the text file to save to
+	 * @param paymentArray The arraylist reference 
+	 * @throws IOException
+	 */
 	public void saveClass(String filename, ArrayList paymentArray) throws IOException 
 	{
 		// TODO Auto-generated method stub

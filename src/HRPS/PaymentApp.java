@@ -9,8 +9,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * 
+This class is the manager class of Payment, it contains all the functional logic required by the system
+ @author Daniel
+ @version 1.0
+ @since 2018-04-18
+ *
+ */
 public class PaymentApp
 {
+	/**
+	 * An arraylist of guest data type to store and manipulate data
+	 */
 	private ArrayList<Payment> pay = new ArrayList<Payment>();
 	private PaymentData db = new PaymentData();
 	Scanner sc = new Scanner(System.in);
@@ -23,6 +34,9 @@ public class PaymentApp
 	private RoomService rs;
 	private Promo p;
 	
+	/**
+	 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+	 */
 	protected PaymentApp()
 	{
 		try 
@@ -36,6 +50,12 @@ public class PaymentApp
 		}
 	}
 	
+	/**
+	 * This function creates a new payment, it will ask for user input for guest IC and call the
+	 * data access class function upon creation to update the text file
+	 * @param guestId
+	 * @return true on successful payment, false on unsuccessful payment
+	 */
 	public boolean createPayment(String guestId)//pass by reference
 	{
 		boolean successful = true;
@@ -77,7 +97,7 @@ public class PaymentApp
 		pm.bedType = rm.bedType;
 		pm.duration = timeDiff(pm.checkInDate, pm.checkOutDate);
 		pm.roomcost = rm.rate;
-		pm.roomtax = 1.17 * pm.roomcost;
+		pm.roomtax = 0.17 * pm.roomcost;
 		
 		rs = rsa.GetRoomService(pm.roomNumber);
 		
@@ -194,6 +214,9 @@ public class PaymentApp
 		return successful;
 	}
 	
+	/**
+	 * This function prints all payments that are made on the current date
+	 */
 	public void printTodayPayments()
 	{
 		Date date = new Date();
@@ -211,6 +234,10 @@ public class PaymentApp
 		}
 	}
 	
+	/**
+	 * This function prints payments made on previous dates.it will ask for user input for the date and print all
+	 * payments found
+	 */
 	public void printPastPayments()
 	{
 		try
@@ -244,6 +271,9 @@ public class PaymentApp
 
 	}
 	
+	/**
+	 * This function prints all payments made as of current date
+	 */
 	public void printAllPayments()
 	{
 		Date date = new Date();
@@ -257,6 +287,10 @@ public class PaymentApp
 		}
 	}
 	
+	/**
+	 * This function prints the occupancy on a previous dates.it will ask for user input for the date and print the occupancy report
+	 * based on the payments on the date.
+	 */
 	public void printOccupancyReportByDate()
 	{
 		try
@@ -295,6 +329,13 @@ public class PaymentApp
 
 	}
 	
+	/**
+	 * This function takes the difference of the check in and check out date provided by the reservation and converts the time into
+	 * the duration of stay in days
+	 * @param d1 the check in date
+	 * @param d2 the check out date
+	 * @return the time of stay in days
+	 */
 	private long timeDiff(Date d1, Date d2)
 	{
 		Calendar c1 = Calendar.getInstance();
@@ -313,6 +354,11 @@ public class PaymentApp
 		return diffdays;
 	}
 	
+	/**
+	 * This function checks the validity of the Guest
+	 * @param gTemp
+	 * @return false if the guest does not exist. True and Sets guest to gTemp if guest is valid
+	 */
 	public boolean checkGuest(Guest gTemp)
 	{
 		if(gTemp == null)
@@ -326,6 +372,11 @@ public class PaymentApp
 		}
 	}
 
+	/**
+	 * This function checks the validity of the Reservation
+	 * @param resTemp
+	 * @return false if the reservation does not exist. True and Sets res to resTemp if reservation is valid
+	 */
 	public boolean checkRes(Reservation resTemp)
 	{
 		if(resTemp == null)
@@ -343,6 +394,11 @@ public class PaymentApp
 		return false;
 	}
 	
+	/**
+	 * This function checks the validity of the Walk In
+	 * @param regTemp
+	 * @return false if the Walk In does not exist. True and Sets reg to reTemp if walk in is valid
+	 */
 	public boolean checkReg(Registration regTemp)
 	{
 		if(regTemp == null)
@@ -360,6 +416,11 @@ public class PaymentApp
 		return false;
 	}
 	
+	/**
+	 * This function checks the validity of the Room
+	 * @param rmTemp
+	 * @return false if the room does not exist. True and Sets rm to rmTemp if room is valid
+	 */
 	public boolean checkRoom(Room rmTemp)
 	{
 		if(rmTemp == null)
@@ -373,6 +434,11 @@ public class PaymentApp
 		}
 	}
 	
+	/**
+	 * This function checks the validity of the Promo
+	 * @param promo
+	 * @return false if the promo does not exist. True and Sets p to promo if promo is valid
+	 */
 	public boolean checkPromo(Promo promo)
 	{
 		if(promo == null)

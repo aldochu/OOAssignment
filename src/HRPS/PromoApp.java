@@ -7,14 +7,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * 
+This class is the manager class of Promo, it contains all the functional logic required by the system
+ @author Daniel
+ @version 1.0
+ @since 2018-04-18
+ *
+ */
 public class PromoApp
 {
+	/**
+	 * An arraylist of guest data type to store and manipulate data
+	 */
 	private ArrayList<Promo> promo = new ArrayList<Promo>();
 	private PromoData db = new PromoData();
 	Scanner sc = new Scanner(System.in);
 	Date currentDate = new Date();
 	Date expDate = new Date();
 	
+	/**
+	 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+	 */
 	protected PromoApp()
 	{
 		try 
@@ -28,6 +42,10 @@ public class PromoApp
 		}
 	}
 	
+	/**
+	 * This function creates a new promo, it will ask for user input for promoname and discount and call the
+	 * data access class function upon creation to update the text file
+	 */
 	public void createPromo()//pass by reference
 	{
 		Calendar exp = Calendar.getInstance();
@@ -71,6 +89,9 @@ public class PromoApp
 		} //to read data from files
 	}
 	
+	/**
+	 * This function prints all promocodes that are not expired
+	 */
 	public void printPromo()
 	{		
 		System.out.println("The Promo Codes below are valid as at " + currentDate);
@@ -85,6 +106,11 @@ public class PromoApp
 		}
 	}
 	
+	/**
+	 * This function searches for a promo
+	 * @param promoname to search promo array
+	 * @return promo if promoname exists and is valid, null if promoname is invalid or expired
+	 */
 	@SuppressWarnings("unused")
 	public Promo SearchPromo(String promoname) //search by name
 	{
@@ -105,6 +131,10 @@ public class PromoApp
 		return null; //failed to create
 	}
 	
+	/**
+	 * This function is to delete a promo, it will ask for user input for promoname and call the
+	 * data access class function upon deletion to update the text file
+	 */
 	public void deletePromo()
 	{
 		String pname;

@@ -18,19 +18,33 @@ import HRPS.Guest;
 import HRPS.GuestApp;
 import HRPS.GuestData;
 
-
+/**
+ * 
+This class is the manager class of Reservation, it contains all the functional logic required by the system
+ @author Li Feng
+ @version 1.0
+ @since 2018-04-18
+ *
+ */
 		public class ReservationApp {
 		private static final TimeUnit MILLISECONDS = null;
 		private static final int NoOfFloor = 0;
 		private static final int NoOfRoomPerFloor = 0;
 		GuestApp guestController = new GuestApp();
 		RoomApp roomController = new RoomApp();
+		
+		/**
+		 * An arraylist of guest data type to store and manipulate data
+		 */
 		private static ArrayList<Reservation> reserve = new ArrayList<Reservation>(); 
 		private static Reservationdb db = new Reservationdb();
 		private Room rm;
 		Scanner sc = new Scanner(System.in);
 		
 		///////////////////////////////////Load data from file////////////////////////////////////////
+		/**
+		 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+		 */
 		public ReservationApp()
 		{
 		try {
@@ -44,6 +58,11 @@ import HRPS.GuestData;
 		private String tem;
 		private String temRoom;
 		
+		/**
+		 * This function checks if the guest is null
+		 * @param guest to check if null
+		 * @return true if guest exists
+		 */
 		public boolean getuser(Guest guest)
 		{
 			if(guest==null) {
@@ -54,6 +73,12 @@ import HRPS.GuestData;
 			}
 		}
 		
+		/**
+		 * This function checks if the roomNo is valid
+		 * @param rmTemp to check if room is null
+		 * @return true and updates rm to rmTemp if room is valid,
+		 * false is room is null 
+		 */
 		public boolean checkRoom(Room rmTemp)
 		{
 			if(rmTemp == null)
@@ -67,7 +92,12 @@ import HRPS.GuestData;
 			}
 		}
 		
-		
+		/**
+		 * This function creates a new reservation. It will ask for user input for
+		 * check in and check out date. It will then call the
+		 * data access class function upon creation to update the text file.
+		 * @param guestId the guest IC
+		 */
 		public void createRes(String guestId)//pass by reference
 		{
 			Room rm = new Room();
@@ -78,13 +108,8 @@ import HRPS.GuestData;
 			
 			Date d;
 			String temp;
-	
 		
-				
 			res.guestId=guestId;
-			
-			
-			
 			
 			try {
 				
@@ -172,6 +197,12 @@ import HRPS.GuestData;
 
 		}
 		
+		/**
+		 * This function updates an existing reservation. It prompts the user to
+		 * input reservation number. When found, it will call updateReservation to update the details 
+		 * and call the data access class function upon updating the reservation to update the text file
+		 * @return 1 on success, 0 on failure
+		 */
 			public int updateRes()
 			{
 				
@@ -198,7 +229,12 @@ import HRPS.GuestData;
 			
 			
 			
-			
+			/**
+			 * This function updates an existing reservation. It prompts the user to
+			 * input the number that corresponds to the field to update. 
+			 * Then, it will return the updated value back to updateRes()
+			 * @param reserve the reservation details of the guest
+			 */
 			private void updatereservation(Reservation reserve)
 			{
 				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -261,7 +297,11 @@ import HRPS.GuestData;
 				
 			}
 		
-
+			/**
+			 * This function searches the arraylist for a valid reservation. It prompts the user for 
+			 * reservation number input and uses it to check for validity.
+			 * @return the reservation data of the reservation ID if found, else returns null
+			 */
 			public Reservation SearchRes()
 			{
 				System.out.println("Please enter the reservation number:");
@@ -277,7 +317,9 @@ import HRPS.GuestData;
 				return null; //failed to create
 			}
 			
-		
+			/**
+			 * This function prints details of all the reservations
+			 */
 			public void printResOnly() {
 				if(reserve == null)
 					return;
@@ -294,6 +336,10 @@ import HRPS.GuestData;
 				
 				}
 			
+			/**
+			 * This function prints the reservation according to reservation ID
+			 * @param res_id the reservation number
+			 */
 			public void printResByResId(String res_id) {
 				if(reserve == null)
 					return;
@@ -313,7 +359,11 @@ import HRPS.GuestData;
 				}
 			
 			
-			
+			/**
+			 * This function deletes the reservation based on the user input 
+			 * reservation ID. It will then call the
+			 * data access class function upon deletion to update the text file. 
+			 */
 			public void deleteRes()
 			{
 				RoomApp rm = new RoomApp();
@@ -369,6 +419,12 @@ import HRPS.GuestData;
 				} //to read data from files
 			}
 			
+			/**
+			 * This function updates the reservation ID status to reserved
+			 * It will then call the data access class function upon updating
+			 * to update the text file.
+			 * @param resId the reservation ID 
+			 */
 			public static void updateToReserved(String resId)
 			{				
 				for(int i = 0;i<reserve.size();i++)
@@ -388,6 +444,11 @@ import HRPS.GuestData;
 
 			}
 			
+			/**
+			 * This function updates the reservation ID status to checked out
+			 * It will then call the data access class function upon updating
+			 * to update the text file.
+			 */
 			public void checkOut(String guestId)
 			{				
 				for(int i = 0;i<reserve.size();i++)
@@ -407,6 +468,12 @@ import HRPS.GuestData;
 
 			}
 			
+			/**
+			 * This function updates the reservation ID status to checked in
+			 * It will then call the data access class function upon updating
+			 * to update the text file.
+			 * @param Res_Number the reservation ID
+			 */
 			public void checkIn(String Res_Number)
 			{				
 				for(int i = 0;i<reserve.size();i++)
@@ -450,6 +517,12 @@ import HRPS.GuestData;
 
 			}
 			
+			/**
+			 * This function takes the difference of the check in time and current time
+			 * to validate expiry.
+			 * the duration of stay in days
+			 * @return the time difference in hours
+			 */
 			private static long compareTime()
 			{
 				Calendar checkInTime = Calendar.getInstance();
@@ -470,17 +543,21 @@ import HRPS.GuestData;
 				System.out.println(diffhr);
 				return diffhr;
 			}
-	
-			public int getRoomStatus()
-			{
-			
-				return 0 ;
-			}
 
-			  
+			/**
+			 * This function returns the check in date
+			 * @param check_in the check in date
+			 * @return the check in date
+			 */
 			public Date getCHECK_IN_DATE(Date check_in) {
 				return check_in;
 			}
+			
+			/**
+			 * This function sets reservations that are past the chec in time
+			 * to expired. it will call updateReservation to update the details 
+			 * and call the data access class function upon updating the reservation to update the text file
+			 */
 			public static void getExpired() {
 				// TODO Auto-generated method stub
 				
@@ -520,9 +597,11 @@ import HRPS.GuestData;
 					}
 					
 				}
-
 			
-
+			/**
+			 * This function updates the room for reservations on the current day
+			 * to reserved status.
+			 */
 			public static void compareCheckinWithToday() {
 				// TODO Auto-generated method stub
 				RoomApp rm = new RoomApp();
@@ -552,6 +631,11 @@ import HRPS.GuestData;
 					
 				}
 			
+			/**
+			 * This function searches the arraylist for a valid reservation by guest IC
+			 * @param guestId the IC of the guest
+			 * @return the reservation data of the guest IC if found, else returns null
+			 */
 			public Reservation SearchResByGuestId(String guestId)
 			{				
 				for(int i = 0;i<reserve.size();i++)
@@ -565,6 +649,12 @@ import HRPS.GuestData;
 				return null; //failed to create
 			}
 			
+			/**
+			 * This function automatically updates the room status of
+			 * current day reservations to reserved, and also checks the expiry of any reservations past
+			 * the specified timing. The timings are hardcoded to 1-2PM for check in time and 
+			 * midnight for room status updates for purposes to resemble an actual hotel service
+			 */
 			public static void DemoScheduler() {
 				 
 			        // Create a calendar instance
@@ -613,21 +703,7 @@ import HRPS.GuestData;
 			        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 			        // execute scheduler at fixed time.
 			        scheduler.scheduleAtFixedRate(task, startScheduler, stopScheduler, TimeUnit.MILLISECONDS);
-			    
-			
-
-
-
-
-			}
-
-
-
-
-			
-
-
-			
+			}	
 }
 
 
