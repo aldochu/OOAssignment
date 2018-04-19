@@ -42,7 +42,13 @@ public class RoomApp {
 		}
 	}
 	
-	public Room assignRoom(String guestIC)// do method of overloading to get the roomid
+
+	/**
+	 * 
+	 * @param guestIC
+	 * @return Room
+	 */
+	public Room assignRoom(String guestIC)
 	{
 		int choice;
 		String bedType, roomType;
