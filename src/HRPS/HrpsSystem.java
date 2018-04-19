@@ -55,7 +55,7 @@ public class HrpsSystem {
 							}
 						} while (choice != 4);
 					 break;
-		 case 2 : 
+		 case 2 :
 			do 
 			{
 			ReservationApp.DemoScheduler();
@@ -71,14 +71,17 @@ public class HrpsSystem {
 			{
 			 case 1:
 				 boolean g;
+				 String guestId;
 				 System.out.println("Please enter the guest id");
-				 sc.nextLine();
-					String guestId = sc.nextLine();
+					guestId = sc.next();
 					g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
 				 if(g==false)
 					 System.out.println("Guest does not exists");
-				 Room newRegRoom = roomController.assignRoom(guestId);				 
+				 Room newRegRoom = roomController.assignRoom(guestId);
 				 try {
+					 System.out.println(guestId);
+					 System.out.println(newRegRoom.roomId);
+					 System.out.println(newRegRoom.roomType);
 					RegistrationController.createRegistration(guestId, newRegRoom.roomId, newRegRoom.roomType);
 					
 				} catch (ParseException e) {

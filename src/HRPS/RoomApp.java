@@ -59,7 +59,7 @@ public class RoomApp {
 		
 		System.out.println("Please enter the room type:");
 		System.out.println("Single/Double/Deluxe/VIP");
-		roomType = sc.nextLine();
+		roomType = sc.next();
 		
 		//VIP
 		if(roomType.equals("VIP") && vipCount < 2) {
@@ -137,7 +137,7 @@ public class RoomApp {
 						&& hotelRoom.get(i).cityView == city && hotelRoom.get(i).smoking == smoke) {
 					//assign room
 					hotelRoom.get(i).guestIc = guestIC;
-					hotelRoom.get(i).status = "Reserved";
+					hotelRoom.get(i).status = "Occupied";
 					
 					System.out.println("Do you wish to have breakfast included? Y: Yes");
 					if(sc.next().equals("Y")) hotelRoom.get(i).breakfast = true;

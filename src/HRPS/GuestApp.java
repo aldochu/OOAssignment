@@ -290,22 +290,27 @@ public class GuestApp {
 			switch (choice) {
 			 case 1: 
 				 System.out.println("Please enter the updated credit card name");
+				 sc.nextLine();
 				 hotelguest.ccdetails.name = sc.nextLine();
 			 break;
 			 case 2: 
 				 System.out.println("Please enter the updated credit card number");
+				 sc.nextLine();
 				 hotelguest.ccdetails.cardNo = sc.next();
 			 break;
 			 case 3: 
 				 System.out.println("Please enter the updated credit card cvv2 number");
+				 sc.nextLine();
 				 hotelguest.ccdetails.cvv2 = sc.next();
 			 break;
 			 case 4:
 				 System.out.println("Please enter the updated credit card type");
+				 sc.nextLine();
 				 hotelguest.ccdetails.type = sc.next();
 			 break;
 			 case 5: /* add position() call */
 				 System.out.println("Please enter the updated credit card Expiry date mm/dd/yyyy");
+				 sc.nextLine();
 				 try {
 					 hotelguest.ccdetails.expiry = df.parse(sc.next());
 					} catch (ParseException e) {

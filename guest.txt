@@ -4,7 +4,7 @@ charlie|c1234567|america ave|1234512|USA|true|charlie puth|12341231123|345|maste
 delta|d1234512|long drive|123412312|Canada|false|null
 qwerty|l12345123|short circle|12341234|Laos|false|null
 asdf|o1234123|brazil drive|12354123|Brazil|true|null
-l|12340123|l drive|1230123|Japan|true|null
+l|12340123|l drive|1230123|Japan|true|l|123412341234|234|visa|10/04/2020
 light|t1234123|far drive|9494994|England|false|null
 zxc|z12312123|z drive|123123123|Zambia|true|null
 poi|p1231023|p drive|0234123|Panama|false|null
