@@ -161,7 +161,7 @@ public class HrpsSystem {
 							 g = payController.checkReg(RegistrationController.SearchRegByGuestId(guestId));
 							 if(g == false)
 							 {
-								 System.out.println("Reservation for " + guestId + " does not exist or Guest status is not checked in");
+								 System.out.println("Walk In for " + guestId + " does not exist or Guest status is not checked in");
 								 break;
 							 }
 							 else 
