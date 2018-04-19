@@ -9,8 +9,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+/**
+ * A data access class which extends from the StoreData abstract class
+ * @author Rou Shan
+ * @version 1.0
+ * @since 2018-04-19
+ *
+ */
 public class RoomData extends StoreData {
 	
+	/**
+	 * Override function from StoreData abstract function. Format the data read from
+	 * text file and store into the arraylist
+	 * @param filename The name of the text file to save to
+	 * @param GuestArray The arraylist reference 
+	 * @throws IOException
+	 */
 	public void readClass(String filename, ArrayList RoomArray) throws IOException{
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -44,6 +58,14 @@ public class RoomData extends StoreData {
 		}
 	}
 	
+	@Override
+	/**
+	 * Override function from StoreData abstract function. Format the data from arraylist
+	 * and store into the text file
+	 * @param filename The name of the text file to save to
+	 * @param GuestArray The arraylist reference 
+	 * @throws IOException
+	 */
 	public void saveClass(String filename, ArrayList RoomArray) throws IOException{
 		List alw = new ArrayList();
 		Room temp = new Room();

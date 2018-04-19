@@ -4,15 +4,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class is the manager class of Room, it contains all the functional logic required by the system
+ * @author Rou Shan
+ * @version 1.0
+ * @since 2018-04-19
+ */
 public class RoomApp {
 	
+	/**
+	 * An arraylist of room data type to store and manipulate data
+	 */
 	private ArrayList<Room> hotelRoom = new ArrayList<Room>(); 
 	private RoomData db = new RoomData();
 	private float occupancyPercentage;
+	
+	/**
+	 * variables to keep track of the various room types and bed types occupied by guests in the hotel
+	 */
 	private int vipCount = 0, deluxeCount = 0, singleCount = 0, doubleCount = 0;
 	private int twoDouble = 0, oneKing = 0, oneDouble = 0, twoSingle = 0;
 	Scanner sc = new Scanner(System.in);
 	
+	/**
+	 * Default constructor, using the data access class to store data from text file to the Room arraylist
+	 */
 	protected RoomApp()
 	{
 		try {
@@ -44,7 +60,10 @@ public class RoomApp {
 	
 
 	/**
-	 * 
+	 * This function will assign a room with respects to the guest's preferences (user inputs)
+	 * It will return the assigned room if a vacant room which met the requests is assigned
+	 * And it returns a null if there are no room with the guest's preferences are available 
+	 * or there is invalid input
 	 * @param guestIC
 	 * @return Room
 	 */
@@ -166,7 +185,48 @@ public class RoomApp {
 			return null;
 	}
 	
+	/**
+	 * This function unassigns a room and resets it to the default settings
+	 * @param _hotelRoom
+	 * @return true if unassign is successful
+	 */
+	public boolean unassignRoom(Room _hotelRoom) {
+		boolean checked = false;
+		
+		_hotelRoom.status = "Vacant";
+		_hotelRoom.breakfast = false;
+		_hotelRoom.guestIc = null;
+		_hotelRoom.rate = 0;
+		_hotelRoom.wifi = false;
+		
+		if(_hotelRoom.roomType.equals("Single")) singleCount--;
+		else if(_hotelRoom.roomType.equals("Double")) {
+			doubleCount--;
+			if(_hotelRoom.bedType.equals("1 Double Bed")) oneDouble--;
+			else twoSingle--;
+		}
+		else if(_hotelRoom.roomType.equals("Deluxe")) {
+			deluxeCount--;
+			if(_hotelRoom.bedType.equals("1 King Bed")) oneKing--;
+			else twoDouble--;
+		}
+		else if(_hotelRoom.roomType.equals("VIP")) vipCount--;
+		checked = true;
+		
+		try {
+			db.saveClass("room.txt", hotelRoom);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //to read data from files
+		
+		return checked;
+	}
 	
+	/**
+	 * This function takes in the roomId and changes the status of the room to Occupied
+	 * @param roomId
+	 */
 	public void checkIn(String roomId)
 	{
 		boolean checked = false;
@@ -187,29 +247,18 @@ public class RoomApp {
 		if(checked == false) System.out.println("Failed to check in");
 	}
 	
+	/**
+	 * This function takes in the roomId and changes the status of the room to Vacant and resets the 
+	 * parameters of the room back to default using the unassignRoom function
+	 * @param roomId
+	 */
 	public void checkOut(String roomId)
 	{
 		boolean checked = false;
 		for(int i = 0; i<hotelRoom.size(); i++) {
 			if(hotelRoom.get(i).roomId.equals(roomId)) {
-				hotelRoom.get(i).status = "Vacant";
-				hotelRoom.get(i).guestIc = null;
-				hotelRoom.get(i).rate = 0.0;
-				hotelRoom.get(i).breakfast = false;
-				hotelRoom.get(i).wifi = false;
-				if(hotelRoom.get(i).roomType.equals("Single")) singleCount--;
-				else if(hotelRoom.get(i).roomType.equals("Double")) {
-					doubleCount--;
-					if(hotelRoom.get(i).bedType.equals("1 Double Bed")) oneDouble--;
-					else twoSingle--;
-				}
-				else if(hotelRoom.get(i).roomType.equals("Deluxe")) {
-					deluxeCount--;
-					if(hotelRoom.get(i).bedType.equals("1 King Bed")) oneKing--;
-					else twoDouble--;
-				}
-				else if(hotelRoom.get(i).roomType.equals("VIP")) vipCount--;
-				checked = true;
+				
+				checked = unassignRoom(hotelRoom.get(i));
 				System.out.println("Successfully checked out");
 				
 				try {
@@ -223,6 +272,13 @@ public class RoomApp {
 		if(checked == false) System.out.println("Failed to check out");
 	}
 	
+	/**
+	 * This function is to update room details, it will ask for room ID and traverse the arraylist to look
+	 * for the same insert ID, once found it will call the updateRoomDetails function and pass
+	 * in the found room and waiting for the return of the updated room. The new updated room will
+	 * then replace it's own place in the arraylist 
+	 * @return 1 if update is successful
+	 */
 	public int updateRoom()
 	{
 		System.out.println("Please enter the room ID(eg. 02-08):");
@@ -241,12 +297,22 @@ public class RoomApp {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} //to read data from files
+				System.out.println("Successfully updated");
 				return 1;
 			}
 		}
+		System.out.println("Room not found");
 		return 0;
 	}
 	
+	/**
+	 * This function is called by the function updateRoom after it has traversed the arraylist
+	 * to get the requested room from the arraylist to update. This function will ask which parameter the 
+	 * user would like the update and proceed to edit based on the choices and return back to the 
+	 * function updateRoom
+	 * @param _hotelRoom
+	 * @return the updated Room
+	 */
 	private Room updateRoomDetails(Room _hotelRoom)
 
 	{
@@ -256,12 +322,9 @@ public class RoomApp {
 			System.out.println("1. Guest IC");
 			System.out.println("2. Status");
 			System.out.println("3. Room Type");
-			System.out.println("4. Bed Type");
-			System.out.println("5. Smoking");
-			System.out.println("6. Wifi Enabled");
-			System.out.println("7. City View");
-			System.out.println("8. Breakfast");
-			System.out.println("9. Quit");
+			System.out.println("4. Wifi Enabled");
+			System.out.println("5. Breakfast");
+			System.out.println("6. Quit");
 			choice = sc.nextInt();
 			sc.nextLine();
 			switch (choice) {
@@ -269,40 +332,34 @@ public class RoomApp {
 						_hotelRoom.guestIc = sc.nextLine();
 						break;
 				case 2: System.out.println("Please enter the updated Status: ");
-						_hotelRoom.status = checkInput(sc.nextLine(), 3);
+						_hotelRoom.status = sc.nextLine();
 						break;
-				case 3: System.out.println("Please enter the updated Room Type: ");
-						_hotelRoom.roomType = checkInput(sc.nextLine(), 1);
+				case 3: Room temp = new Room();
+						temp = assignRoom(_hotelRoom.guestIc);
+						unassignRoom(_hotelRoom);
 						break;
-				case 4: System.out.println("Please enter the updated Bed Type: ");
-						_hotelRoom.bedType = checkInput(sc.nextLine(), 2);
-						break;
-				case 5: System.out.println("Change smoking option from " + _hotelRoom.smoking + " to " + !_hotelRoom.smoking + "?");
-						System.out.println("Y: Yes, N: No");
-						if(sc.nextLine().equals("Y")) _hotelRoom.smoking = !_hotelRoom.smoking;
-						break;
-				case 6: System.out.println("Change WiFi option from " + _hotelRoom.wifi + " to " + !_hotelRoom.wifi + "?");
+				case 4: System.out.println("Change WiFi option from " + _hotelRoom.wifi + " to " + !_hotelRoom.wifi + "?");
 						System.out.println("Y: Yes, N: No");
 						if(sc.nextLine().equals("Y")) _hotelRoom.wifi = !_hotelRoom.wifi;
 						break;
-				case 7: System.out.println("Change city view option from " + _hotelRoom.cityView + " to " + !_hotelRoom.cityView + "?");
-						System.out.println("Y: Yes, N: No");
-						if(sc.nextLine().equals("Y")) _hotelRoom.cityView = !_hotelRoom.cityView;
-						break;
-				case 8: System.out.println("Change breakfast option from " + _hotelRoom.breakfast + " to " + !_hotelRoom.breakfast + "?");
+				case 5: System.out.println("Change breakfast option from " + _hotelRoom.breakfast + " to " + !_hotelRoom.breakfast + "?");
 						System.out.println("Y: Yes, N: No");
 						if(sc.nextLine().equals("Y")) _hotelRoom.breakfast = !_hotelRoom.breakfast;
 						break;
-				case 9: System.out.println("Bye");
+				case 6: System.out.println("Bye");
 						break;
 				default: System.out.println("Invalid option. Please try again.");
 			}
-		} while (choice < 9);
+		} while (choice < 6);
 		
 		return _hotelRoom;
 	}
 
-	//update status to reserved 
+	/**
+	 * This function updates the status of a room to Reserved
+	 * @param roomId
+	 * @param guestId
+	 */
 	public void updateToReserved(String roomId,String guestId)
 	{
 		for(int i = 0; i<hotelRoom.size(); i++) {
@@ -321,15 +378,29 @@ public class RoomApp {
 		} //to read data from files
 	}
 	
-	//update status to vacant
+	/**
+	 * This function updates the status of a room to Vacant
+	 * @param roomId
+	 */
 	public void updateToVacant(String roomId)
 	{
 		for(int i = 0; i<hotelRoom.size(); i++) {
 			if(hotelRoom.get(i).roomId.equals(roomId)) hotelRoom.get(i).status = "Vacant";
 		}
+		try {
+			db.saveClass("room.txt", hotelRoom);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //to read data from files
 	}
 	
-	
+	/**
+	 * This function traverse the arraylist for room with the given guest ic and returns the 
+	 * corresponding room
+	 * @param guestIc
+	 * @return room
+	 */
 	public Room getRoomDetails(String guestIc)
 	{
 		for(int i = 0; i<hotelRoom.size(); i++ ) {
@@ -338,6 +409,11 @@ public class RoomApp {
 		return null;
 	}
 	
+	/**
+	 * This function calculates the rate of the room per night
+	 * @param guestIc
+	 * @return rate per night
+	 */
 	public double calculateRate(String guestIc)
 	{
 		//per night
@@ -373,6 +449,9 @@ public class RoomApp {
 		return 0;
 	}
 	
+	/**
+	 * This function will print the details of the room 
+	 */
 	public void displayRoom()
 	{
 		String roomid;
@@ -392,6 +471,11 @@ public class RoomApp {
 		}
 	}
 	
+	/**
+	 * This function traverse the arraylist for the room with the given room ID or guest IC
+	 * and prints the availability of the room
+	 * @return 1 if room is found
+	 */
 	public int checkAvailability()
 	{
 		String check;
@@ -407,10 +491,13 @@ public class RoomApp {
 				return 1;
 			}
 		}
-		System.out.println("Invalid Entry. Please try again.");
+		System.out.println("Room not found");
 		return 0;
 	}
 	
+	/**
+	 * this function will generate the room occupancy report
+	 */
 	public void roomOccupancyReport()
 	{
 		float count=0;
@@ -421,6 +508,10 @@ public class RoomApp {
 		System.out.println("Occupancy Percentage: " + occupancyPercentage + "%");
 	}
 	
+	/**
+	 * this function will generate two types of room statistic report: Room type occupancy rate (Single,
+	 * Double etc.) and room status (Vacant, Reserved etc.)
+	 */
 	public void roomStatisticReport()
 	{
 		int choice;
@@ -484,22 +575,5 @@ public class RoomApp {
 		}
 	}
 	
-	private String checkInput(String input, int type)
-	{
-		boolean result = false;
-		switch (type) {
-			case 1: if(input.equals("Single") || input.equals("Double") || input.equals("Deluxe") || input.equals("VIP")) result = true;
-					break;
-			case 2: if(input.equals("1 Single Bed") || input.equals("2 Single Beds") || input.equals("1 Double Bed") || input.equals("2 Double Beds") || input.equals("1 King Bed") || input.equals("2 King Beds")) result = true;
-					break;
-			case 3: if(input.equals("Vacant") || input.equals("Occupied" ) || input.equals("Reserved") || input.equals("Under Maintenance")) result = true;
-					break;
-		}
-		if(result == false) {
-			System.out.println("Invalid input. Please try again.");
-			return null;
-		}
-		else return input;
-	}
 
 }
