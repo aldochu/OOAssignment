@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.StringTokenizer;
-
 public class RoomServiceData extends StoreData{
 	SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH-mm-ss"); //for date variable
     public void readClass(String filename, ArrayList ServiceArray) throws IOException {
@@ -84,6 +83,13 @@ public class RoomServiceData extends StoreData{
 			alw.add(st.toString()) ;
     }
 		write(filename,alw);
+	
+}
+
+@Override
+public void startup() 
+{
+	// TODO Auto-generated method stub
 	
 }
 
