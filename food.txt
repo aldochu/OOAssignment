@@ -1,5 +1,4 @@
 chicken rice|served with condiments|2.5
-chocolate milk|served cold|1.2
-coconut water|served with its meat|3.0
-pudding|served with chocolate sauce|1.0
-braised pork with egg|served on top of a hotplate|5.0
+jelly|served cold|0.75
+strawberry cake|served per slice|5.0
+banana milkshake|served cold|2.0

@@ -1,0 +1,2 @@
+02-01|1|04/19/2018 22-01-27|jelly*0.75*strawberry cake*5.0*banana milkshake*2.0*|none|confirmed|false
+02-02|2|04/19/2018 22-03-57|chicken rice*2.5*|less oil|confirmed|false

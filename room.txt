@@ -26,7 +26,7 @@
 05-02|5|2|Occupied|d1234512|Double|1 Double Bed|false|true|true|false|215.0|
 05-03|5|3|Under Maintenance|null|Double|1 Double Bed|false|true|false|false|0.0|
 05-04|5|4|Under Maintenance|null|Double|1 Double Bed|false|true|false|false|0.0|
-05-05|5|5|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
+05-05|5|5|Under Maintenance|null|Double|1 Double Bed|false|false|false|false|0.0|
 05-06|5|6|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
 05-07|5|7|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|
 05-08|5|8|Vacant|null|Double|1 Double Bed|false|false|false|false|0.0|

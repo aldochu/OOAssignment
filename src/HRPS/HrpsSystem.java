@@ -286,6 +286,7 @@ public class HrpsSystem {
 					 break;
 					 
 				 case 5: 
+					 int choice1 = 0;
 					 do
 					 {
 						System.out.println("Perform the following methods:");
@@ -296,8 +297,8 @@ public class HrpsSystem {
 						System.out.println("5: Update order status");
 						System.out.println("6: Remove Order ");
 						System.out.println("7: Return");
-						choice = sc.nextInt();
-						switch (choice) 
+						choice1 = sc.nextInt();
+						switch (choice1) 
 						{
 							 case 1: 
 								 roomSvcController.createFoodData();
@@ -323,7 +324,7 @@ public class HrpsSystem {
 								 break;
 							 default: System.out.println("invalid input");
 						}
-					}while (choice != 7); 
+					}while (choice1 != 7); 
 				 break;
 				 
 				 case 6:
