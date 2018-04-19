@@ -1,6 +1,6 @@
-02-01|2|1|Occupied|S1609483F|Single|1 Single Bed|true|true|true|false|0.0|
-02-02|2|2|Under Maintenance|null|Single|1 Single Bed|true|true|false|false|0.0|
-02-03|2|3|Vacant|null|Single|1 Single Bed|true|true|false|false|0.0|
+02-01|2|1|Reserved|112345123|Single|1 Single Bed|true|true|true|true|150.0|
+02-02|2|2|Reserved|r1231231|Single|1 Single Bed|true|true|true|true|150.0|
+02-03|2|3|Reserved|r1231231|Single|1 Single Bed|true|true|true|true|150.0|
 02-04|2|4|Vacant|null|Single|1 Single Bed|true|true|false|false|0.0|
 02-05|2|5|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
 02-06|2|6|Vacant|null|Single|1 Single Bed|true|false|false|false|0.0|
@@ -10,7 +10,7 @@
 03-02|3|2|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
 03-03|3|3|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
 03-04|3|4|Vacant|null|Single|1 Single Bed|false|true|false|false|0.0|
-03-05|3|5|Reserved|abcdef|Single|1 Single Bed|false|false|true|true|150.0|
+03-05|3|5|Vacant|null|Single|1 Single Bed|false|false|true|true|0.0|
 03-06|3|6|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
 03-07|3|7|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
 03-08|3|8|Vacant|null|Single|1 Single Bed|false|false|false|false|0.0|
@@ -38,9 +38,9 @@
 06-06|6|6|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
 06-07|6|7|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
 06-08|6|8|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
-07-01|7|1|Reserved|f343434f|VIP|2 King Beds|true|true|true|true|0.0|
+07-01|7|1|Vacant|null|VIP|2 King Beds|true|true|true|true|0.0|
 07-02|7|2|Vacant|null|VIP|2 King Beds|true|true|false|false|0.0|
-07-03|7|3|Reserved|eleven|Deluxe|1 King Bed|true|true|true|false|240.0|
+07-03|7|3|Vacant|null|Deluxe|1 King Bed|true|true|true|false|0.0|
 07-04|7|4|Vacant|null|Deluxe|1 King Bed|true|true|false|false|0.0|
 07-05|7|5|Vacant|null|Deluxe|1 King Bed|true|true|false|false|0.0|
 07-06|7|6|Vacant|null|Deluxe|2 Double Beds|true|true|false|false|0.0|

@@ -79,7 +79,8 @@ public class HrpsSystem {
 					 System.out.println("Guest does not exists");
 				 Room newRegRoom = roomController.assignRoom(guestId);				 
 				 try {
-					RegistrationController.createRegistration(guestId, newRegRoom.roomId);
+					RegistrationController.createRegistration(guestId, newRegRoom.roomId, newRegRoom.roomType);
+					
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

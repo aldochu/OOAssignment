@@ -45,39 +45,6 @@
 
 
 
-
-
-			/*public int createReservation()
-			{
-				
-				
-				try {
-					db.readClass("reservation.txt", register); //to read data from files
-					
-					for(int i = 0;i<register.size();i++)
-					{
-						
-							createRes(); //pass by reference
-										
-						}
-					
-					return 0;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return 0;
-			
-
-			}
-			
-			*/
-
-
-			/*public void addguestic(Reservation register, String )
-			{
-			    myClassRoom.setTeacherName(TeacherName);
-			}*/
 			
 			private String tem;
 			private String temRoom;
@@ -104,15 +71,11 @@
 				}
 			}
 			
-			public void createRegistration(String guestId,String roomId) throws ParseException//pass by reference
+			public void createRegistration(String guestId,String roomId, String roomType) throws ParseException//pass by reference
 			{
 				
 				Registration reg = new Registration();
-//				GuestApp ga= new GuestApp();
-//				Room rm = new Room();
-//				RoomApp r = new RoomApp();
-				String var; //this var is for looping condition
-				
+				Validation v=new Validation();
 				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 				//guestController.createGuest();
 				
@@ -128,15 +91,6 @@
 				reg.room_id=roomId;
 				System.out.println("Reservation room id"+reg.room_id);
 				
-				//reg.room_id=rm.roomId;
-			
-				//new RoomApp().assignRoom(g.ic);
-
-				
-				//System.out.println("Please enter the room type(Single, Double, Deluxe, VIP Suite):");
-				//reg.roomType = sc.nextLine();
-				//System.out.println("Please enter the bed type(single/double/master):");
-				//reg.bedType = sc.nextLine();
 				System.out.println("Please enter the number of adults:");
 				reg.NoOfAdult = sc.nextInt();
 				System.out.println("Please enter the number of children:");
@@ -145,24 +99,34 @@
 				System.out.println("CHECK IN DATE PARSE : " + d);
 				reg.check_in = d;
 				
-				System.out.println("Please enter the check out date MM/dd/yyyy");
+				
+				
 				try {
-					d = df.parse(sc.next());
-					System.out.println("CHECK OUT DATE PARSE : " + d);
+					
+					do {
+						System.out.println("Please enter the check out date MM/dd/yyyy");
+						d = df.parse(sc.next());
+						if(v.CheckValidCheckOutDate(reg.check_in,d)==false) {
+							System.out.println("Invalid checkout date,please enter again!");
+						}
+					}
+					while(v.CheckValidCheckOutDate(reg.check_in,d)==false);
+					
+					
 					reg.check_out = d;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//System.out.println("Please enter the room type");
-				//register.roomType = sc.nextLine();
+				
+				reg.roomType = roomType;
 				
 				reg.status= AppData.RES_STATUS_CHECKED_IN;
 				reg.res_id=UUID.randomUUID().toString();
 				
 				register.add(reg);
 				
-				System.out.println("Guest created successfully!");
+				System.out.println("Walk In created successfully!");
 				
 				
 				try {

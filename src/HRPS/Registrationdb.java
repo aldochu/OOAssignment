@@ -28,6 +28,7 @@ public class Registrationdb extends StoreData{
 						temp.res_id = star.nextToken().trim();
 						temp.guestId = star.nextToken().trim();
 						temp.room_id = star.nextToken().trim();
+						temp.roomType= star.nextToken().trim();
 						temp.NoOfAdult = Integer.parseInt(star.nextToken().trim());	
 						temp.NoOfChild = Integer.parseInt(star.nextToken().trim());	
 						
@@ -66,6 +67,8 @@ public class Registrationdb extends StoreData{
 		builder.append(temp.guestId.trim());
 		builder.append(SEPARATOR);
 		builder.append(temp.room_id.trim());
+		builder.append(SEPARATOR);
+		builder.append(temp.roomType.trim());
 		builder.append(SEPARATOR);
 		builder.append(temp.NoOfAdult);
 		builder.append(SEPARATOR);
