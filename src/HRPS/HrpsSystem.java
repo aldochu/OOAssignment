@@ -13,7 +13,6 @@ public class HrpsSystem {
 		PaymentApp payController = new PaymentApp();
 		ReservationApp ReservationController = new ReservationApp();
 		RegistrationApp RegistrationController = new RegistrationApp();
-
 		RoomServiceApp roomSvcController = new RoomServiceApp();
 		
 		do {
@@ -283,60 +282,50 @@ public class HrpsSystem {
 								 break;
 							 default: System.out.println("invalid input");
 						 }
-					 } while (choice != 9);
+					 } while(choice != 9);
 					 break;
-				 
-
-				 case 5: 
-					 do {
-							System.out.println("Perform the following methods:");
-							System.out.println("1: Add food to catalogue");
-							System.out.println("2: Update food in catalogue");
-							System.out.println("3: Remove food from catalogue");
-							System.out.println("4: Add order");
-							System.out.println("5: Update order status");
-							System.out.println("6: Remove Order ");
-							System.out.println("7: Return");
-							choice = sc.nextInt();
-							switch (choice) {
-								 case 1: 
-								 {
-									 roomSvcController.createFoodData();
-								     break;
-								 }
-								 case 2:
-								 {
-									 roomSvcController.updateFood();
-								     break;
-								 }
-								 case 3:
-								 {
-									 roomSvcController.removeFood();
-								     break;
-								 }
-								 case 4:
-								 {
-									 roomSvcController.createOrder();
-									 break;
-								 }
-								 case 5:
-								 {
-									 roomSvcController.updateOrder();
-									 break;
-								 }
-								 case 6: 
-								 {
-									 roomSvcController.removeOrder();
-									 break;
-								 }
-								 case 7:
-									 break;
-								 default: System.out.println("invalid input");
-								}
-							
-							}while (choice != 7);
 					 
-				 break; 
+				 case 5: 
+					 do
+					 {
+						System.out.println("Perform the following methods:");
+						System.out.println("1: Add food to catalogue");
+						System.out.println("2: Update food in catalogue");
+						System.out.println("3: Remove food from catalogue");
+						System.out.println("4: Add order");
+						System.out.println("5: Update order status");
+						System.out.println("6: Remove Order ");
+						System.out.println("7: Return");
+						choice = sc.nextInt();
+						switch (choice) 
+						{
+							 case 1: 
+								 roomSvcController.createFoodData();
+								 break;
+								 
+							 case 2:
+								 roomSvcController.updateFood();
+							     break;
+								 
+							 case 3:
+								 roomSvcController.removeFood();
+							     break;
+							 case 4:
+								 roomSvcController.createOrder();
+								 break;
+							 case 5:
+								 roomSvcController.updateOrder();
+								 break;
+							 case 6: 
+								 roomSvcController.removeOrder();
+								 break;
+							 case 7:
+								 break;
+							 default: System.out.println("invalid input");
+						}
+					}while (choice != 7); 
+				 break;
+				 
 				 case 6:
 					 do 
 					 {

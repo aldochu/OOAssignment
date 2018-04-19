@@ -226,16 +226,22 @@ public class RoomApp {
 			if(hotelRoom.get(i).roomId.equals(id))
 			{
 				Room temp = hotelRoom.get(i);
-				updateRoomDetails(temp); //pass by reference
+				temp = updateRoomDetails(temp); //pass by reference
 				hotelRoom.remove(i); //delete from the searched index
 				hotelRoom.add(i, temp); //add the new updated record into the deleted index
+				try {
+					db.saveClass("room.txt", hotelRoom);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
 				return 1;
 			}
 		}
 		return 0;
 	}
 	
-	private void updateRoomDetails(Room _hotelRoom)
+	private Room updateRoomDetails(Room _hotelRoom)
 
 	{
 		int choice;
@@ -286,6 +292,8 @@ public class RoomApp {
 				default: System.out.println("Invalid option. Please try again.");
 			}
 		} while (choice < 9);
+		
+		return _hotelRoom;
 	}
 
 	//update status to reserved 
