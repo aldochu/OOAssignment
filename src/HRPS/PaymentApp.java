@@ -96,7 +96,7 @@ public class PaymentApp
 
 		pm.tcost = pm.roomcost + pm.roomsvc + pm.roomtax;
 		
-		if(guest.ccdetails.type == null)
+		if(guest.ccdetails == null)
 		{
 			pm.payType = "Cash";
 		}
