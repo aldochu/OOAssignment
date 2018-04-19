@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.concurrent.Executors;
@@ -27,7 +25,7 @@ import HRPS.GuestData;
 		private static final int NoOfRoomPerFloor = 0;
 		GuestApp guestController = new GuestApp();
 		RoomApp roomController = new RoomApp();
-		private static ArrayList<Reservation> reserve = new ArrayList<Reservation>();
+		private static ArrayList<Reservation> reserve = new ArrayList<Reservation>(); 
 		private static Reservationdb db = new Reservationdb();
 		private Room rm;
 		Scanner sc = new Scanner(System.in);
@@ -37,43 +35,11 @@ import HRPS.GuestData;
 		{
 		try {
 		db.readClass("reservation.txt", reserve); //to read data from files
-		//for (int k = 0 ; k < reserve.size() ; k++)
-			//System.out.println(reserve.get(k).res_id);
-		//printResOnly());
 		} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}
 		}
-		
-	
-
-		/*public int createReservation()
-		{
-			
-			
-			try {
-				db.readClass("reservation.txt", reserve); //to read data from files
-				
-				for(int i = 0;i<reserve.size();i++)
-				{
-					
-						createRes(); //pass by reference
-									
-					}
-				
-				return 0;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return 0;
-		
-
-		}
-		
-		*/
-
 		
 		private String tem;
 		private String temRoom;
@@ -104,14 +70,11 @@ import HRPS.GuestData;
 		
 		public void createRes(String guestId)//pass by reference
 		{
-			
+			Room rm = new Room();
 			Reservation res = new Reservation();
 			Validation v =new Validation();
-
-//			String var; //this var is for looping condition
 			
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-			//guestController.createGuest();
 			
 			Date d;
 			String temp;
@@ -161,37 +124,28 @@ import HRPS.GuestData;
 				e.printStackTrace();
 			}
 			
-			System.out.println("Please enter the room type:");
-			System.out.println("Single/Double/Deluxe/VIP");
-			res.room_id = v.CheckRoomVacancyFromReservation(res.check_in,res.check_out, reserve).roomId;
+			rm = v.CheckRoomVacancyFromReservation(res.check_in,res.check_out, reserve);
 
-			
-			if( res.room_id!= null){
+			res.roomType = rm.roomType;
+			if(rm.roomId != null){
 				System.out.println("Reservation is confirmed");
 				
 			res.status= AppData.RES_STATUS_CONFIRMED;
-		
-		
+			res.room_id = rm.roomId;
 			System.out.println(res.status);
+			System.out.println(res.roomType);
 			}
-			else {			
+			else if(rm.roomId == null){			
 
 				System.out.println("Your reservation is in waitlist");
 				res.status=AppData.RES_STATUS_WAITLIST;
 				System.out.println(res.status);	
 				res.room_id="waitlist";
-				res.roomType = v.CheckRoomVacancyFromReservation(res.check_in,res.check_out, reserve).roomType;
 				System.out.println(res.roomType);
 			}
 			
 			
-			System.out.println("Reservation room id"+res.room_id);
-			
-//			res.room_id=roomId;
-//			System.out.println("Reservation room id"+res.room_id);
-			
-		
-			//new RoomApp().assignRoom(g.ic);
+			System.out.println("Reservation room id "+res.room_id);
 
 			
 			System.out.println("Please enter the number of adults:");
@@ -199,18 +153,11 @@ import HRPS.GuestData;
 			System.out.println("Please enter the number of children:");
 			res.NoOfChild = sc.nextInt();
 			
-			//System.out.println("Please enter the room type");
-			//reserve.roomType = sc.nextLine();
-			
-			
-			
-			
-			
 			res.res_id=UUID.randomUUID().toString();
 			
 			reserve.add(res);
 			
-			System.out.println("Guest created successfully!");
+			System.out.println("Reservation created successfully!");
 			
 			
 			try {
@@ -224,36 +171,6 @@ import HRPS.GuestData;
 
 
 		}
-		
-		
-
-		
-		/*public int validateguestId(Reservation reserve,Guest hotelGuest) {
-			for(int i = 0;i<reserve.length;i++)
-			{
-		
-				if(reserve.guestId.equals(hotelGuest.guestId))
-				{
-					updatereservation(reserve[i]); //pass by reference
-					return 1;
-				}
-			}
-		}*/
-		
-			/*public void getResStatus(String[] res_status) {
-			String todayDate="15-03-2018";
-			if(todayDate.compareTo(check_in)>0 && rm_status="occupied"){
-	            System.out.println("Today day is after Checkin");
-	            System.out.println("Checked_in");
-	        }else if(check_in.compareTo(todayDate)<0){
-	            System.out.println("Check in is before Today date");
-	        }
-			
-	        else{
-	            System.out.println("Date1 is equal to Date2");
-	        }
-			
-		}*/
 		
 			public int updateRes()
 			{
@@ -295,8 +212,7 @@ import HRPS.GuestData;
 					System.out.println("3: Number of adults");
 					System.out.println("4: Number of children");
 					System.out.println("5: Room Type");
-					System.out.println("6: Bed Type");
-					System.out.println("7: quit");
+					System.out.println("6: quit");
 					choice = sc.nextInt();
 					switch (choice) {
 					 case 1: 
@@ -332,7 +248,7 @@ import HRPS.GuestData;
 					 break;
 					 case 5:
 						 System.out.println("Please enter the room type of your choice:");
-						 reserve.room_id = sc.nextLine();
+						 reserve.roomType = sc.nextLine();
 						
 					 break;
 					 case 6:
@@ -381,11 +297,12 @@ import HRPS.GuestData;
 			
 			public void deleteRes()
 			{
-				Reservation tempRes1 = new Reservation(); //i-1
-				Reservation tempRes2 = new Reservation(); //i+1
-				Validation v =new Validation();
-				String res_No,roomType,roomNo;
-				Date in,out;
+				RoomApp rm = new RoomApp();
+				String res_No;
+				String roomType;
+				String roomNo;
+				Date in;
+				Date out;
 				System.out.println("Please enter reservation number to delete");
 				res_No = sc.nextLine();
 				int flag = 0;
@@ -393,8 +310,24 @@ import HRPS.GuestData;
 				{
 					if(reserve.get(i).res_id.equals(res_No))
 					{
-						tempRes1 = reserve.get(i-1);
-						tempRes2 = reserve.get(i+1);
+						in = reserve.get(i).check_in;
+						out = reserve.get(i).check_out;
+						roomNo = reserve.get(i).room_id;
+						roomType = reserve.get(i).roomType;
+						
+						for(int j = 0; j < reserve.size();j++)
+						{
+							if(reserve.get(j).roomType.equals(roomType) && reserve.get(j).status == AppData.RES_STATUS_WAITLIST)
+							{
+								if((reserve.get(j).check_in.equals(in) && reserve.get(j).check_out.equals(out)) || (reserve.get(j).check_in.equals(in) && reserve.get(j).check_out.before(out)) || (reserve.get(j).check_in.after(in) && reserve.get(j).check_in.equals(out)) || (reserve.get(j).check_in.after(in) && reserve.get(j).check_in.before(out) && reserve.get(j).check_out.before(out))) 
+								{
+									reserve.get(j).room_id = roomNo;
+									reserve.get(j).status = AppData.RES_STATUS_CONFIRMED;
+									System.out.println(reserve.get(j).guestId + " reservation status is now " +reserve.get(j).status);
+									break;
+								}
+							}
+						}
 						reserve.remove(i);
 						flag = 1;
 						System.out.println("Reservation Deleted");
@@ -405,21 +338,6 @@ import HRPS.GuestData;
 				if(flag == 0)
 				{
 					System.out.println("Reservation does not exists");
-				}
-				
-				if(flag == 1)
-				{
-					for(int j = 0; j < reserve.size();j++)
-					{
-						
-						if(reserve.get(j).status == AppData.RES_STATUS_WAITLIST)
-						{
-							v.CheckRoomVacancyFromReservation(reserve.get(j).check_in,reserve.get(j).check_out, reserve);
-							reserve.get(j).status=AppData.RES_STATUS_CONFIRMED;
-							System.out.println(reserve.get(j).status);
-							
-						}
-					}
 				}
 				try
 				{
@@ -432,7 +350,24 @@ import HRPS.GuestData;
 				} //to read data from files
 			}
 			
-			
+			public static void updateToReserved(String resId)
+			{				
+				for(int i = 0;i<reserve.size();i++)
+				{
+					if(reserve.get(i).res_id.equals(resId))
+					{
+						reserve.get(i).status= AppData.RES_STATUS_CONFIRMED; //Search Successfully
+					}
+				}
+				
+				try {
+					db.saveClass("reservation.txt", reserve);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //to read data from files
+
+			}
 			
 			public void checkOut(String guestId)
 			{				
@@ -496,56 +431,6 @@ import HRPS.GuestData;
 
 			}
 			
-
-
-
-
-			/*public int reservationStatus() {
-				
-				Date now = new Date();
-			      System.out.println(now.toString());
-				if(now.equals(reserve.check_in) ) {
-					System.out.println("Check in date is today");
-				}
-				return 0;
-				
-			}*/
-			
-			
-			/*public boolean isExpire(String checkInDate){
-			    if(checkInDate.isEmpty() || checkInDate.trim().equals("")){
-			        return false;
-			    }else{
-			            SimpleDateFormat sdf =  new SimpleDateFormat("MM/DD/YYYY");//("MM-dd-yyyy hh:mm:ss a"); // Jan-20-2015 1:30:55 PM
-			               Date d=null;
-			               Date d1=null;
-			            Date today=   getToday("MM/DD/YYYY");//("MM-dd-yyyy hh:mm:ss a");
-			            try {
-			                System.out.println("checkindate>> "+checkInDate);
-			                System.out.println("today>> "+today+"\n\n");
-			                d = sdf.parse(checkInDate);
-			                d1 = sdf.parse(today);
-			                if(d1.compareTo(d) <0){// not expired
-			                    return false;
-			                }else if(d.compareTo(d1)==0){// both date are same
-			                            if(d.getTime() < d1.getTime()){// not expired
-			                                return false;
-			                            }else if(d.getTime() == d1.getTime()){//expired
-			                                return true;
-			                            }else{//expired
-			                                return true;
-			                            }
-			                }else{//expired
-			                    return true;
-			                }
-			            } catch (ParseException e) {
-			                e.printStackTrace();                    
-			                return false;
-			            }
-			    }
-			}*/
-
-
 			private static long compareTime()
 			{
 				Calendar checkInTime = Calendar.getInstance();
@@ -566,29 +451,6 @@ import HRPS.GuestData;
 				System.out.println(diffhr);
 				return diffhr;
 			}
-//			 public boolean compareTime()   
-//			    {   
-//			        Calendar calendar = Calendar.getInstance();   
-//			        String am_pm;   
-//			        boolean check = true;
-//			        int hour = calendar.get( Calendar.HOUR );   
-//			        int minute = calendar.get( Calendar.MINUTE );   
-//			        // int second = calendar.get(Calendar.SECOND);   
-//			        if( calendar.get( Calendar.AM_PM ) == 0 )
-//			        {   
-//			            am_pm = "PM";   
-//			            if(hour >=1 && hour<2)   //Within check in time 
-//			            {
-//			            	check = true;
-//			            }
-//			        }               
-//			        else if(hour >2)  //check in time expired
-//					{
-//			        	check = false;
-//					}
-//			        return check;
-//			    }
-	
 	
 			public int getRoomStatus()
 			{
@@ -600,25 +462,15 @@ import HRPS.GuestData;
 			public Date getCHECK_IN_DATE(Date check_in) {
 				return check_in;
 			}
-			public void getExpired() {
+			public static void getExpired() {
 				// TODO Auto-generated method stub
 				
 				Date today=  new Date();//("MM-dd-yyyy hh:mm:ss a");
 				DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				System.out.println("Checking for expired....");
-//				String Res_Number = sc.nextLine();
-//				System.out.println(Res_Number);
 				for(int i = 0;i<reserve.size();i++)
 				{
 					if(reserve.get(i)!=null) {
-//					if(reserve.get(i).res_id.equals(Res_Number)) 
-//					{
-//						System.out.println(reserve.get(i).res_id);
-//						System.out.println(getCHECK_IN_DATE(reserve.get(i).check_in));
-//						if(today.before(reserve.get(i).check_in)) {//if (getCHECK_IN_DATE(reserve[i].check_in).compareTo(getToday(today)) <=0){
-//							System.out.println("today is an earlier date than check_in date");
-//							break;
-//						}
 						String todaydate=sdf.format(today);
 						String checkindate=sdf.format(reserve.get(i).check_in);
 						
@@ -669,9 +521,10 @@ import HRPS.GuestData;
 						
 						if(todaydate.equals(checkindate))
 						{
-							System.out.println("Checked in date is equal to today");
+							System.out.println(reserve.get(i).guestId + "Check in date is equal to today");
 
-							rm.updateToReserved(reserve.get(i).room_id,reserve.get(i).guestId);							
+							rm.updateToReserved(reserve.get(i).room_id,reserve.get(i).guestId);
+							updateToReserved(reserve.get(i).res_id);
 						}
 					}	
 					else
@@ -733,7 +586,7 @@ import HRPS.GuestData;
 			            @Override
 			            public void run() {
 			            	compareCheckinWithToday();
-			            	System.out.print("ahsuahsn");
+			            	getExpired();
 			            }
 			        };
 			 

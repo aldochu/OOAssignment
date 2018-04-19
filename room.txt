@@ -38,7 +38,7 @@
 06-06|6|6|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
 06-07|6|7|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
 06-08|6|8|Vacant|null|Double|1 Double Bed|true|false|false|false|0.0|
-07-01|7|1|Reserved|f3434343f|VIP|2 King Beds|true|true|true|true|0.0|
+07-01|7|1|Reserved|f343434f|VIP|2 King Beds|true|true|true|true|0.0|
 07-02|7|2|Vacant|null|VIP|2 King Beds|true|true|false|false|0.0|
 07-03|7|3|Reserved|eleven|Deluxe|1 King Bed|true|true|true|false|240.0|
 07-04|7|4|Vacant|null|Deluxe|1 King Bed|true|true|false|false|0.0|

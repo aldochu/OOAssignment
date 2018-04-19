@@ -140,10 +140,15 @@ public class Validation {
 	 */
 	public Room CheckRoomVacancyFromReservation(Date CheckIn,Date CheckOut,ArrayList<Reservation> R) //this will check D with the current date + k
 	{
-		int level, room;
+		int type = 0;
 		int vipCount = 0, deluxeCount = 0, singleCount = 0, doubleCount = 0; 
 		Scanner sc = new Scanner(System.in);
 		Room hotelRoom =new Room();
+		
+		System.out.println("Please enter the room type:");
+		System.out.println("Single/Double/Deluxe/VIP");
+		String roomType = sc.nextLine();
+		
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
 
@@ -152,24 +157,20 @@ public class Validation {
 
 		//20 single rooms
 		//20 double rooms
-
-		
-//
-		hotelRoom.roomType = sc.nextLine();
 		
 		//VIP
-		if(hotelRoom.roomType.equals("VIP") && vipCount < 2) {
+		if(roomType.equalsIgnoreCase("VIP") && vipCount < 2) {
 			vipCount++;
 			hotelRoom.bedType = "2 King Beds";
 //			level = 7;
 //			room = vipCount;
 			hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_VIP);
-			
+			type = 1;
 //			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Deluxe
-		else if(hotelRoom.roomType.equals("Deluxe") && deluxeCount < 6) {
+		else if(roomType.equalsIgnoreCase("Deluxe") && deluxeCount < 6) {
 			deluxeCount++;
 				System.out.println("Would you rather 2 Double Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
@@ -179,12 +180,12 @@ public class Validation {
 //			level = 7;
 //			room = deluxeCount + 2;
 				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DELUXE);
-				
+				type = 2;
 //			roomId = String.format("%02d", level) + "-" + String.format("%02d", room);
 		}
 		
 		//Double
-		else if(hotelRoom.roomType.equals("Double") && doubleCount < 20) {
+		else if(roomType.equalsIgnoreCase("Double") && doubleCount < 20) {
 			doubleCount++;
 				System.out.println("Would you rather 2 Single Beds? Y:Yes");
 				if(sc.nextLine() == "Y") 
@@ -192,7 +193,7 @@ public class Validation {
 				else 
 					hotelRoom.bedType = "1 Double Bed";
 				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DOUBLE);
-			
+				type = 3;
 //			level = (doubleCount + singleCount) / 8 + 2;
 //			room = (doubleCount + singleCount) % 8;
 //			if(room == 0) room = 8;
@@ -200,10 +201,10 @@ public class Validation {
 		}
 		
 		//Single
-		else if(hotelRoom.roomType.equals("Single") && singleCount < 20) {
+		else if(roomType.equalsIgnoreCase("Single") && singleCount < 20) {
 			singleCount++;
 			hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_SINGLE);
-			
+			type = 4;
 //			bedType = "1 Single Bed";
 //			level = (doubleCount + singleCount) / 8 + 2;
 //			room = (doubleCount + singleCount) % 8;
@@ -244,27 +245,28 @@ public class Validation {
 //					return hotelRoom.get(i); //Please return room
 					
 //			return hotelRoom;
+		System.out.println(hotelRoom.roomType);
 		
-		
-		switch(hotelRoom.roomType)
+		switch(type)
 		{
-		case "1": //VIP room 07-01 - 07-02
+		case 1: //VIP room 07-01 - 07-02
 			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,7,1,1,2);
 			return hotelRoom;
-		case "2":  //Deluxe| room 07-03 - 07-08
+		case 2:  //Deluxe| room 07-03 - 07-08
 			
 			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,7,3,1,6);
 			return hotelRoom;
 			
-		case "3":  //Single room 02-01 - 02-08 & 03-01 - 03-08 
+		case 3:  //Single room 02-01 - 02-08 & 03-01 - 03-08 
 			
 			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,2,1,2,8);
 			return hotelRoom;
 			
-		case "4":  //Single room 04-01 - 04-08 & 05-01 - 05-08 & 06-01 - 06-08 
+		case 4:  //Single room 04-01 - 04-08 & 05-01 - 05-08 & 06-01 - 06-08 
 			
 			hotelRoom.roomId = SearchRoomFunction(CheckIn,CheckOut,R,4,1,3,8);
 			return hotelRoom;
+			
 		}
 		
 

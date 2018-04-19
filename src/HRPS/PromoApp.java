@@ -85,6 +85,7 @@ public class PromoApp
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	public Promo SearchPromo(String promoname) //search by name
 	{
 		for(int i = 0;i<promo.size();i++)

@@ -15,7 +15,6 @@ public class HrpsSystem {
 		RegistrationApp RegistrationController = new RegistrationApp();
 
 		RoomServiceApp roomSvcController = new RoomServiceApp();
-		//ReservationApp.DemoScheduler(roomController.updateToReserved(guestId));
 		
 		do {
 			ReservationApp.DemoScheduler();
@@ -51,13 +50,11 @@ public class HrpsSystem {
 							 break;
 							 case 4:
 								 break;
-								 default: System.out.println("invalid input");
+								 
+							default: System.out.println("invalid input");
 							}
 						} while (choice != 4);
 					 break;
-
-		//RoomServiceApp roomSvcController = new RoomServiceApp();			 
-					 
 		 case 2 : 
 			do 
 			{
@@ -67,25 +64,13 @@ public class HrpsSystem {
 			System.out.println("2: Add Reservation");
 			System.out.println("3: Update Reservation");
 			System.out.println("4: Print Reservation");
-			System.out.println("5: Check status");
+			System.out.println("5: Delete Reservation");
 			System.out.println("6: Return to menu");
 			choice = sc.nextInt();
 			switch (choice) 
 			{
 			 case 1:
 				 boolean g;
-				 boolean rmno;
-//				 System.out.println("Please enter the guest id");
-//				 sc.nextLine();
-//					String guestId = sc.nextLine();
-//				 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
-//				 if(g==false)
-//					 System.out.println("Guest does not exists");
-//				 
-//				 rmno=ReservationController.getRoomId(roomController.assignRoom(guestId));
-//				 if(g==true) {
-//					 System.out.println("Room number in reservation");
-//				 }
 				 System.out.println("Please enter the guest id");
 				 sc.nextLine();
 					String guestId = sc.nextLine();
@@ -98,9 +83,7 @@ public class HrpsSystem {
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-			
-				 
+				}	 
 			 break;
 			 
 			 case 2:
@@ -121,62 +104,18 @@ public class HrpsSystem {
 					 }
 				 }while(g == false);
 			break;
-//				 do{
-//						sc.nextLine();
-//					System.out.println("Please enter the guest id");
-//					guestId = sc.nextLine();
-//					
-//				 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
-//				if(g==true)	{
-//					ReservationController.createRes(guestId);
-//					break;
-//				 }
-//				 }
-//				while (g==false);
-				 
-				
-					// System.out.println("Guest does not exists");
-				
-//				 Room newResRoom = roomController.assignRoom(guestId);				 
-//				 try {
-//					RegistrationController.createRegistration(guestId, newResRoom.roomId);
-//				} catch (ParseException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				 
-				 
-			//	 ReservationController.createRes(guestId);
-							 
-						case 3: 
-							ReservationController.updateRes();
-						break;
-							 
-						case 4: 
-							ReservationController.printResOnly();
-							break;
-						case 5: 
-							System.out.println("Please enter the guest id");
-							sc.nextLine();
-							guestId = sc.nextLine();
-							g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
-								if(g==false)
-								System.out.println("Guest does not exists");
-							Room waitlistRoom = roomController.assignRoom(guestId);				 
-							boolean waitRoom=ReservationController.checkRoom(waitlistRoom);
-//							if(vaidRoom==false) {
-//								System.out.println("Room number in reservation");
-//							}
-//							else 
-//							{
-//									 
-//							}
-//							ReservationController.createRes(guestId,newRoom.roomId);
-//							break;
-							
-						 case 6:
-							 break;
-						 default: System.out.println("invalid input");
+			case 3: 
+				ReservationController.updateRes();
+				break;
+			case 4: 
+				ReservationController.printResOnly();
+				break;
+			case 5: 
+				ReservationController.deleteRes();
+				break;							
+			case 6:
+				break;
+				default: System.out.println("invalid input");
 					}
 				 } while (choice != 6);
 				 break;
