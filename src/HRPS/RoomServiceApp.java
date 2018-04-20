@@ -8,14 +8,30 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.util.Scanner;
-
+/**
+ * 
+This class is the manager class of Room Service, it contains all the functional logic required by the system
+ @author Kevin Jonathan
+ @version 1.0
+ @since 2018-04-20
+ *
+ */
 public class RoomServiceApp 
 {
+	/**
+	 * An arraylist of food and room service data type to store and manipulate data
+	 */
+	
 	private ArrayList<Food> hotelFood = new ArrayList<Food>();
 	private FoodData dbFood = new FoodData();
 	private ArrayList<RoomService> hotelService = new ArrayList<RoomService>();
 	private RoomServiceData dbSvc = new RoomServiceData();
 	Scanner sc = new Scanner(System.in);
+	
+	/**
+	 * Default constructor, using the data access class to store data from text file to the Guest arraylist
+	 */
+	
 	protected RoomServiceApp()
 	{
 		try {
@@ -32,7 +48,14 @@ public class RoomServiceApp
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * This function is to create a new food item, it will ask for user input for food item
+	 * (the name, description, and its price) and call the
+	 * data access class function upon creation to update the text file
+	 * @return 1 if function executed successfully
+	 */
+	
 	public int createFoodData()
 	{
 	Food _hotelFood = new Food();
@@ -64,6 +87,13 @@ public class RoomServiceApp
 	return 1;
     }
 	
+	/**
+	 * This function is to update an existing food item, it will display the existing food items,
+	 * ask the user to enter one of the food name, call the function updateFoodDetails, 
+	 * replace the old food data with the new food data, and call the
+	 * data access class function upon creation to update the text file
+	 */
+	
 	public void updateFood()
 	{
 		sc.nextLine();
@@ -92,6 +122,11 @@ public class RoomServiceApp
 			e.printStackTrace();
 		} //to read data from files
 	}
+
+	/**
+	 * This function is an extension of the function updateFood,
+	 * It will prompt the user to change one of the details (name,description,price)  
+	 */
 	
 	private void updateFoodDetails(Food hotelfood)
 	{
@@ -128,6 +163,12 @@ public class RoomServiceApp
 			} while (choice > 3);
 	}
 	
+	/**
+	 * This function is to remove an existing food item, it will display the existing food items,
+	 * ask the user to enter one of the food name to remove the food from the list, and call the
+	 * data access class function upon creation to update the text file
+	 */
+	
 	public void removeFood()
 	{
 		sc.nextLine();
@@ -154,7 +195,11 @@ public class RoomServiceApp
 			e.printStackTrace();
 		} //to read data from files
 	}
-	
+	/**
+	 * This function is to detect whether certain food exists in the catalogue
+	 * @return null if no such food detected
+	 * @return the food and its properties if such food exists
+	 */
 	public Food SearchFood(String name)
 	{
 		for(int i = 0;i<hotelFood.size();i++)
@@ -166,20 +211,30 @@ public class RoomServiceApp
 		}	
 		return null; 
 	}
-	
+	/**
+	 * This function is to print a certain food in the list with its properties 
+	 */
 	private void printFood(Food hotelfood)
 	{
 		if(hotelfood == null)
 			return;
 		System.out.println(hotelfood.name +"|"+hotelfood.description + "|"+hotelfood.price);	
 	}
-	
+	/**
+	 * This function is to print all the food in the list
+	 * it will call the function printFood multiple times (until all the food has been printed)
+	 */
 	public void printFoodList()
 	{
 		for(int i = 0;i<hotelFood.size();i++)
 			printFood(hotelFood.get(i));
 	}
-	
+	/**
+	 * This function is to create a new order, it will ask for user input for room number,
+	 * show the list of food, prompt the user to select the food, his remarks, and the status of the order,
+	 * and call the data access class function upon creation to update the text file
+	 * @return 1 if function executed successfully
+	 */
 	public int createOrder()
 	{
 		sc.nextLine();
@@ -246,7 +301,12 @@ public class RoomServiceApp
 		} //to read data from files
 		return 1;
 	 }
-	
+	/**
+	 * This function is to update an existing order, it will 
+	 * show the list of orders, ask for user input for order number,call the function updateOrderDetails,
+	 * replace the old order data with the new order data,
+	 * and call the data access class function upon creation to update the text file
+	 */
 	public void updateOrder()
 	{
 		sc.nextLine();
@@ -275,7 +335,10 @@ public class RoomServiceApp
 			e.printStackTrace();
 		} //to read data from files
 	}
-	
+	/**
+	 * This function is an extension of the function updateOrder,
+	 * It will prompt the user to change one of the details (remarks, status, food adding/removing, paid status)  
+	 */
 	private void updateOrderDetails(RoomService hotelService)
 	{
 		int choice;

@@ -8,8 +8,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class FoodData extends StoreData{
+/**
+ * 
+A data access class extends from the StoreData abstract class
+ @author Kevin Jonathan
+ @version 1.0
+ @since 2018-04-20
+ *
+ */
 
+public class FoodData extends StoreData{
+	/**
+	 * Override function from StoreData abstact function. Format the data read from
+	 * text file and store into the arraylist
+	 * @param filename The name of the text file to save to
+	 * @param FoodArray The arraylist reference 
+	 * @throws IOException
+	 */
 	public void readClass(String filename, ArrayList FoodArray) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -38,7 +53,13 @@ public class FoodData extends StoreData{
 		        }	
 		
 	}
-
+	/**
+	 * Override function from StoreData abstact function. Format the data from arraylist
+	 * and store into the text file
+	 * @param filename The name of the text file to save to
+	 * @param FoodArray The arraylist reference 
+	 * @throws IOException
+	 */
 	@Override
 	public void saveClass(String filename, ArrayList FoodArray) throws IOException {
 		// TODO Auto-generated method stub
