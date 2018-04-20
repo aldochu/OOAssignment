@@ -203,6 +203,7 @@
 				{
 					DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 					printResOnly();
+					Validation v =new Validation();
 					
 					int choice;
 					do {
@@ -219,6 +220,7 @@
 						 case 1: 
 							 System.out.println("Please enter the updated check in date (MM/DD/YYYY)"
 							 		+ "");
+							 
 							 try {
 								 register.check_in = df.parse(sc.next());
 								} catch (ParseException e) {

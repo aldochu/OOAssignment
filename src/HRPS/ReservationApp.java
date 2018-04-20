@@ -108,6 +108,7 @@ This class is the manager class of Reservation, it contains all the functional l
 			
 			Date d;
 			String temp;
+			String forDate="";
 		
 			res.guestId=guestId;
 			
@@ -115,7 +116,14 @@ This class is the manager class of Reservation, it contains all the functional l
 				
 				do {
 					System.out.println("Please enter the check in date MM/dd/yyyy");
-					d = df.parse(sc.nextLine());
+					forDate=sc.nextLine();
+					if(!forDate.equals("")) {
+						d = df.parse(forDate);
+					}
+					else {
+						forDate=sc.nextLine();
+						d = df.parse(forDate);
+					}
 					if(v.CheckValidCheckInDate(d)==false) {
 						System.out.println("Invalid checkin date,please enter again!");
 					}
@@ -135,9 +143,13 @@ This class is the manager class of Reservation, it contains all the functional l
 				
 				do {
 					System.out.println("Please enter the check out date MM/dd/yyyy");
-					d = df.parse(sc.next());
-					if(v.CheckValidCheckOutDate(res.check_in,d)==false) {
-						System.out.println("Invalid checkout date,please enter again!");
+					forDate=sc.nextLine();
+					if(!forDate.equals("")) {
+						d = df.parse(forDate);
+					}
+					else {
+						forDate=sc.nextLine();
+						d = df.parse(forDate);
 					}
 				}
 				while(v.CheckValidCheckOutDate(res.check_in,d)==false);
@@ -157,16 +169,12 @@ This class is the manager class of Reservation, it contains all the functional l
 				
 			res.status= AppData.RES_STATUS_CONFIRMED;
 			res.room_id = rm.roomId;
-			System.out.println(res.status);
-			System.out.println(res.roomType);
 			}
 			else if(rm.roomId == null){			
 
 				System.out.println("Your reservation is in waitlist");
 				res.status=AppData.RES_STATUS_WAITLIST;
-				System.out.println(res.status);	
 				res.room_id="waitlist";
-				System.out.println(res.roomType);
 			}
 			
 			
@@ -174,9 +182,11 @@ This class is the manager class of Reservation, it contains all the functional l
 
 			
 			System.out.println("Please enter the number of adults:");
-			res.NoOfAdult = sc.nextInt();
+			res.NoOfAdult=sc.nextInt();
+			
 			System.out.println("Please enter the number of children:");
 			res.NoOfChild = sc.nextInt();
+			
 			
 			res.res_id=UUID.randomUUID().toString();
 			
@@ -218,12 +228,10 @@ This class is the manager class of Reservation, it contains all the functional l
 						reserve.remove(i); //delete from the searched index
 						reserve.add(i, temp); //add the new updateed record into the deleted index
 						return 1;
-					}
-					//error message for incorrect reservation id
-					
+					}	
+				
 				}
-				
-				
+				 
 				return 0;
 			}	
 			
@@ -239,6 +247,8 @@ This class is the manager class of Reservation, it contains all the functional l
 			{
 				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 				printResOnly();
+				Validation v=new Validation();
+				
 				
 				int choice;
 				do {
@@ -254,6 +264,7 @@ This class is the manager class of Reservation, it contains all the functional l
 					 case 1: 
 						 System.out.println("Please enter the updated check in date (MM/DD/YYYY)"
 						 		+ "");
+						 
 						 try {
 							 reserve.check_in = df.parse(sc.next());
 							} catch (ParseException e) {
@@ -319,6 +330,7 @@ This class is the manager class of Reservation, it contains all the functional l
 			
 			/**
 			 * This function prints details of all the reservations
+			 * @param  
 			 */
 			public void printResOnly() {
 				if(reserve == null)
