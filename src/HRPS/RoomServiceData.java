@@ -54,9 +54,9 @@ public class RoomServiceData extends StoreData{
 					temp.remark = star.nextToken().trim();
 					temp.status = star.nextToken().trim();
 					temp.paid = Boolean.parseBoolean(star.nextToken().trim());
-					Food myfoodList = new Food();
 					while(star2.hasMoreTokens())
 					{
+						Food myfoodList = new Food();
 						String food = star2.nextToken().trim();
 						double price = Double.parseDouble(star2.nextToken().trim());
 						myfoodList.name = food;
