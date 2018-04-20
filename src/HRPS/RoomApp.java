@@ -86,8 +86,15 @@ public class RoomApp {
 		System.out.println("Single/Double/Deluxe/VIP");
 		roomType = sc.next();
 		
+		while(!roomType.equalsIgnoreCase("Single") && !roomType.equalsIgnoreCase("Double") && !roomType.equalsIgnoreCase("Deluxe") && !roomType.equalsIgnoreCase("VIP"))
+		{
+			System.out.println("Error input.Please enter the room type again:");
+			System.out.println("Single/Double/Deluxe/VIP");
+			roomType = sc.nextLine();
+		}
+		
 		//VIP
-		if(roomType.equals("VIP") && vipCount < 2) {
+		if(roomType.equalsIgnoreCase("VIP") && vipCount < 2) {
 			vipCount++;
 			bedType = "2 King Beds";
 			city = true;
@@ -95,7 +102,7 @@ public class RoomApp {
 		}
 		
 		//Deluxe
-		else if(roomType.equals("Deluxe") && deluxeCount < 6) {
+		else if(roomType.equalsIgnoreCase("Deluxe") && deluxeCount < 6) {
 			deluxeCount++;
 			city = true;
 			smoke = true;
@@ -103,6 +110,15 @@ public class RoomApp {
 				System.out.println("1. 1 King Bed");
 				System.out.println("2. 2 Double Beds");
 				choice = sc.nextInt();
+				
+				while(choice != 1 && choice != 2)
+				{
+					System.out.println("Error Input. Choice of Bed Type");
+					System.out.println("1. 1 Double Bed");
+					System.out.println("2. 2 Single Beds");
+					choice = sc.nextInt();
+				}
+				
 				if(choice == 1 && oneKing < 3) {
 					oneKing++;
 					bedType = "1 King Bed";
@@ -118,12 +134,20 @@ public class RoomApp {
 		}
 		
 		//Double
-		else if(roomType.equals("Double") && doubleCount < 20) {
+		else if(roomType.equalsIgnoreCase("Double") && doubleCount < 20) {
 			doubleCount++;
 				System.out.println("Choice of Bed Type");
 				System.out.println("1. 1 Double Bed");
 				System.out.println("2. 2 Single Beds");
 				choice = sc.nextInt();
+				
+				while(choice != 1 && choice != 2)
+				{
+					System.out.println("Error Input. Choice of Bed Type");
+					System.out.println("1. 1 Double Bed");
+					System.out.println("2. 2 Single Beds");
+					choice = sc.nextInt();
+				}
 				if(choice == 1 && oneDouble < 16) {
 					oneDouble++;
 					bedType = "1 Double Bed";
@@ -138,7 +162,7 @@ public class RoomApp {
 		}
 		
 		//Single
-		else if(roomType.equals("Single") && singleCount < 20) {
+		else if(roomType.equalsIgnoreCase("Single") && singleCount < 20) {
 			singleCount++;
 			bedType = "1 Single Bed";
 			}
@@ -146,14 +170,41 @@ public class RoomApp {
 		else 
 			return null;
 		
-		if(roomType.equals("Double") || roomType.equals("Single")) {
-			System.out.println("Do you wish to have city view? Y: Yes");
-			if(sc.next().equals("Y")) {
-				city = true;
-				
+		if(roomType.equalsIgnoreCase("Double") || roomType.equalsIgnoreCase("Single")) {
+			System.out.println("Do you wish to have city view? Y: Yes N:No");
+			String n = sc.next();
+			
+			while(!n.equalsIgnoreCase("y") && !n.equalsIgnoreCase("n"))
+			{
+				System.out.println("Error Input.Do you wish to have city view? Y: Yes N:No");
+				n = sc.next();
 			}
-			System.out.println("Do you wish to have smoking area? Y: Yes");
-			if(sc.next().equals("Y")) smoke = true;
+			
+			if(n.equalsIgnoreCase("Y")) {
+				city = true;
+			}
+			else if(n.equalsIgnoreCase("n"))
+			{
+				city = false;
+			}
+			
+			
+			System.out.println("Do you wish to have smoking area? Y: Yes N:No");
+			n = sc.next();
+			
+			while(!n.equalsIgnoreCase("y") && !n.equalsIgnoreCase("n"))
+			{
+				System.out.println("Error Input.Do you wish to have smoking area? Y: Yes N:No");
+				n = sc.next();
+			}
+			if(n.equalsIgnoreCase("Y")) 
+			{
+				smoke = true;
+			}
+			else if(n.equalsIgnoreCase("n"))
+			{
+				smoke = false;
+			}
 			
 		}
 			
@@ -163,11 +214,39 @@ public class RoomApp {
 					//assign room
 					hotelRoom.get(i).guestIc = guestIC;
 					hotelRoom.get(i).status = "Occupied";
+					System.out.println("Do you wish to have breakfast included? Y: Yes N: No");
+					String a = sc.next();
 					
-					System.out.println("Do you wish to have breakfast included? Y: Yes");
-					if(sc.next().equals("Y")) hotelRoom.get(i).breakfast = true;
-					System.out.println("Do you wish to have WiFi enabled? Y: Yes");
-					if(sc.next().equals("Y")) hotelRoom.get(i).wifi = true;
+					while(!a.equalsIgnoreCase("y") && !a.equalsIgnoreCase("n"))
+					{
+						System.out.println("Error Input.Do you wish to have breakfast included? Y: Yes N: No");
+						a = sc.next();
+					}
+					if(a.equalsIgnoreCase("Y"))
+					{
+						hotelRoom.get(i).breakfast = true;
+					}
+					if(a.equalsIgnoreCase("n"))
+					{
+						hotelRoom.get(i).breakfast = false;
+					}
+					
+					System.out.println("Do you wish to have WiFi enabled? Y: Yes N: No");
+					a = sc.next();
+					
+					while(!a.equalsIgnoreCase("y") && !a.equalsIgnoreCase("n"))
+					{
+						System.out.println("Error Input.Do you wish to have WiFi enabled? Y: Yes N: No");
+						a = sc.next();
+					}
+					if(a.equalsIgnoreCase("Y"))
+					{
+						hotelRoom.get(i).wifi = true;
+					}
+					else if(a.equalsIgnoreCase("n"))
+					{
+						hotelRoom.get(i).wifi = false;
+					}
 					hotelRoom.get(i).rate = calculateRate(guestIC);
 					
 					System.out.println("Your room is " + hotelRoom.get(i).roomId + " Thank you. ");
