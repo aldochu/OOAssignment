@@ -424,7 +424,12 @@ public class RoomServiceApp
 			} while (choice >5);
 		//return hotelService;
 	}
-	
+	/**
+	 * This function is to detect whether an unpaid room service for a room exists
+	 * @return null if no such service found
+	 * @return the service if there is such service
+	 *  
+	 */
     public RoomService GetRoomService(String roomA)
 	{
     	for(int i = 0;i<hotelService.size();i++)
@@ -437,7 +442,11 @@ public class RoomServiceApp
 		}
     	return null;
 	}
-    
+    /**
+	 * This function is to get the total payment for a certain room service from a certain room
+	 * @return total price of room service
+	 *  
+	 */
     public double GetTotal(String roomA)
     {
     	RoomService temp = GetRoomService(roomA);
@@ -446,6 +455,13 @@ public class RoomServiceApp
     		    total = total + temp.foodList.get(j).price;	
     	return total;
     }
+    
+    /**
+	 * This function is to remove an existing order, it will display the existing orders,
+	 * ask the user to enter one of the order number to remove the order from the list, and call the
+	 * data access class function upon creation to update the text file
+	 */
+    
 	public void removeOrder()
 	{
 		sc.nextLine();
@@ -472,6 +488,10 @@ public class RoomServiceApp
 		} //to read data from files
 	}
 	
+	/**
+	 * This function is to print a certain order in the list with its properties 
+	 */
+	
 	private void printRoomService(RoomService hotelService)
 	{
 		if(hotelService == null)
@@ -483,13 +503,19 @@ public class RoomServiceApp
 		}
 		System.out.println("|"+hotelService.remark +"|"+hotelService.status + "|"+hotelService.paid);
 	}
-	
+	/**
+	 * This function is to print all the orders in the list
+	 * it will call the function printRoomService multiple times (until all the orders has been printed)
+	 */
 	private void printRoomServiceList()
 	{
 		for(int i = 0;i<hotelService.size();i++)
 			printRoomService(hotelService.get(i));
 	}
-	
+	/**
+	 * This function is to change the paid status of a selected order to "paid" 
+	 * and  to call the data access class function upon creation to update the text file
+	 */
 	public void paid(Integer orderid)
 	{				
 		for(int i = 0;i<hotelService.size();i++)
