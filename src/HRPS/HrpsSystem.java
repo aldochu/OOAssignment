@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class HrpsSystem {
 
 	public static void main(String[] args) {
-		int choice;
+		String choice;
 		RoomApp roomController = new RoomApp();
 		Scanner sc = new Scanner(System.in);
 		GuestApp guestController = new GuestApp();
@@ -25,36 +25,36 @@ public class HrpsSystem {
 				System.out.println("5: Room Service Management");
 				System.out.println("6: Promo Codes Management");
 				System.out.println("7: Exit");
-				choice = sc.nextInt();
+				choice = sc.nextLine();
 				switch (choice) {
-				 case 1:
+				 case "1":
 					 do {
 							System.out.println("Perform the following methods:");
 							System.out.println("1: Add guest");
 							System.out.println("2: Update guest");
 							System.out.println("3: Show guest details");
 							System.out.println("4: Return");
-							choice = sc.nextInt();
+							choice = sc.nextLine();
 							switch (choice) {
-							 case 1: 
+							 case "1": 
 								 guestController.createGuest();
 							 break;
 							 
-							 case 2: 
+							 case "2": 
 								 guestController.updateGuest();
 							 break;
 							 
-							 case 3: 
+							 case "3": 
 								 guestController.printGuestDetail();
 							 break;
-							 case 4:
+							 case "4":
 								 break;
 								 
 							default: System.out.println("invalid input");
 							}
-						} while (choice != 4);
+						} while (!choice.equals("4"));
 					 break;
-		 case 2 :
+		 case "2" :
 			do 
 			{
 			ReservationApp.DemoScheduler();
@@ -65,14 +65,14 @@ public class HrpsSystem {
 			System.out.println("4: Print Reservation");
 			System.out.println("5: Delete Reservation");
 			System.out.println("6: Return to menu");
-			choice = sc.nextInt();
+			choice = sc.nextLine();
 			switch (choice) 
 			{
-			 case 1:
+			 case "1":
 				 boolean g;
 				 String guestId;
 				 System.out.println("Please enter the guest id");
-					guestId = sc.next();
+					guestId = sc.nextLine();
 					g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
 				 if(g==false)
 					 System.out.println("Guest does not exists");
@@ -89,11 +89,13 @@ public class HrpsSystem {
 				}	 
 			 break;
 			 
-			 case 2:
+			 case "2":
 				 do
 				 {
+					 
 					 System.out.println("Please enter the guest id");
-					 guestId = sc.next();
+					 guestId = sc.nextLine();
+					 
 					 g=ReservationController.getuser(guestController.SearchGuestByIc(guestId));
 					 
 					 if(g == false)
@@ -102,28 +104,29 @@ public class HrpsSystem {
 					 }
 					 else
 					 {
+						 
 						 ReservationController.createRes(guestId);
 						 break;
 					 }
 				 }while(g == false);
 			break;
-			case 3: 
+			case "3": 
 				ReservationController.updateRes();
 				break;
-			case 4: 
+			case "4": 
 				ReservationController.printResOnly();
 				break;
-			case 5: 
+			case "5": 
 				ReservationController.deleteRes();
 				break;							
-			case 6:
+			case "6":
 				break;
 				default: System.out.println("invalid input");
 					}
-				 } while (choice != 6);
+				 } while (!choice.equals("6"));
 				 break;
 				 
-				 case 3: 
+				 case "3": 
 				 do 
 				 {
 					 System.out.println("Perform the following methods:");
@@ -133,14 +136,15 @@ public class HrpsSystem {
 					 System.out.println("4: Show All Payments");
 					 System.out.println("5: Show Occupancy Report On Date");
 					 System.out.println("6: Return");
-					 choice = sc.nextInt();
+					 choice = sc.nextLine();
 					 switch (choice) {
-					 case 1: 
+					 case "1": 
 					 	 boolean g;
 					 	 int flag = 0;
 					 	 String resId,roomId,guestId;
 					 	do
 						 {
+					 		
 						 	 System.out.println("Enter Guest IC");
 						 	 guestId = sc.nextLine();
 						 	 g = payController.checkGuest(guestController.SearchGuestByIc(guestId));
@@ -208,26 +212,26 @@ public class HrpsSystem {
 						 }
 						 break;
 							 
-						 case 2: 
+						 case "2": 
 							 payController.printTodayPayments();
 							 break;
-						 case 3: 
+						 case "3": 
 							 payController.printPastPayments();
 							 break;
-						 case 4: 
+						 case "4": 
 							 payController.printAllPayments();
 							 break;
-						 case 5: 
+						 case "5": 
 							 payController.printOccupancyReportByDate();
 								 break;
-						 case 6:
+						 case "6":
 							 break;
 						 default: System.out.println("invalid input");
 					}
-				 } while (choice != 6);
+				 } while (!choice.equals("6"));
 				 break;
 				 
-				 case 4:
+				 case "4":
 					 do {
 						 System.out.println("Perform the following methods:");
 						 System.out.println("1: Assign Room");
@@ -239,54 +243,54 @@ public class HrpsSystem {
 						 System.out.println("7. Check In");
 						 System.out.println("8. Check Out");
 						 System.out.println("9: Return");
-						 choice = sc.nextInt();
+						 choice = sc.nextLine();
 						 switch (choice) {
-						 	 case 1: 
+						 	 case "1": 
 								 System.out.println("Please enter your NRIC: ");
 								 roomController.assignRoom(sc.next());
 							 break;
 							 
-							 case 2: 
+							 case "2": 
 								 roomController.updateRoom();
 								 break;
 							 
-							 case 3: 
+							 case "3": 
 								 roomController.checkAvailability();
 								 break;
-							 case 4:
+							 case "4":
 								 roomController.roomStatisticReport();
 								 break;
 								 
-							 case 5:
+							 case "5":
 								 String guestIc;
 								 System.out.println("Please enter guest IC: ");
 								guestIc = sc.nextLine();
 								 roomController.calculateRate(guestIc);
 								 break;
 								 
-							 case 6: 
+							 case "6": 
 								 roomController.displayRoom();
 								 break;
 								 
-							 case 7:
+							 case "7":
 								 System.out.println("Please enter the room ID for checking in: ");
 								 roomController.checkIn(sc.next());
 								 break;
 								 
-							 case 8:
+							 case "8":
 								 System.out.println("Please enter the room ID for checking out: ");
 								 roomController.checkOut(sc.next());
 								 break;
 								 
-							 case 9:
+							 case "9":
 								 break;
 							 default: System.out.println("invalid input");
 						 }
-					 } while(choice != 9);
+					 } while(!choice.equals("9"));
 					 break;
 					 
-				 case 5: 
-					 int choice1 = 0;
+				 case "5": 
+					 String choice1 = "0";
 					 do
 					 {
 						System.out.println("Perform the following methods:");
@@ -297,37 +301,37 @@ public class HrpsSystem {
 						System.out.println("5: Update order status");
 						System.out.println("6: Remove Order ");
 						System.out.println("7: Return");
-						choice1 = sc.nextInt();
+						choice1 = sc.nextLine();
 						switch (choice1) 
 						{
-							 case 1: 
+							 case "1": 
 								 roomSvcController.createFoodData();
 								 break;
 								 
-							 case 2:
+							 case "2":
 								 roomSvcController.updateFood();
 							     break;
 								 
-							 case 3:
+							 case "3":
 								 roomSvcController.removeFood();
 							     break;
-							 case 4:
+							 case "4":
 								 roomSvcController.createOrder();
 								 break;
-							 case 5:
+							 case "5":
 								 roomSvcController.updateOrder();
 								 break;
-							 case 6: 
+							 case "6": 
 								 roomSvcController.removeOrder();
 								 break;
-							 case 7:
+							 case "7":
 								 break;
 							 default: System.out.println("invalid input");
 						}
-					}while (choice1 != 7); 
+					}while (!choice1.equals("7")); 
 				 break;
 				 
-				 case 6:
+				 case "6":
 					 do 
 					 {
 						 System.out.println("Perform the following methods:");
@@ -335,33 +339,33 @@ public class HrpsSystem {
 						 System.out.println("2: Delete Promo");
 						 System.out.println("3: Show Current Promos");
 						 System.out.println("4: Return");
-						 choice = sc.nextInt();
+						 choice = sc.nextLine();
 						 switch (choice) 
 						 {
-						 	 case 1: 
+						 	 case "1": 
 						 		 promoController.createPromo();
 							 break;
 								 
-							 case 2: 
+							 case "2": 
 								 promoController.deletePromo();;
 								 break;
-							 case 3: 
+							 case "3": 
 								 promoController.printPromo();
 								 break;
-							 case 4:
+							 case "4":
 								 break;
 							 default: System.out.println("invalid input");
 						}
-					 } while (choice != 4);
+					 } while (!choice.equals("4"));
 				 break; 
 
 
 				 
-				 case 7: System.out.println("Exit program ….");
+				 case "7": System.out.println("Exit program ….");
 				 break;
 				 default: System.out.println("invalid input");
 				}
-			} while (choice != 7);
+			} while (!choice.equals("7"));
 		sc.close();
 	}
 
