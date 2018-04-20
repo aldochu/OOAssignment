@@ -234,59 +234,30 @@ public class HrpsSystem {
 				 case "4":
 					 do {
 						 System.out.println("Perform the following methods:");
-						 System.out.println("1: Assign Room");
-						 System.out.println("2: Update Room");
-						 System.out.println("3: Check Availability");
-						 System.out.println("4: Room Status Statistic Report");
-						 System.out.println("5: Calculate Rate");
-						 System.out.println("6: Print Room");
-						 System.out.println("7. Check In");
-						 System.out.println("8. Check Out");
-						 System.out.println("9: Return");
+						
+						 System.out.println("1: Update Room");
+						 System.out.println("2: Check Availability");
+						 System.out.println("3: Room Status Statistic Report");
+						 System.out.println("4: Return");
 						 choice = sc.nextLine();
 						 switch (choice) {
-						 	 case "1": 
-								 System.out.println("Please enter your NRIC: ");
-								 roomController.assignRoom(sc.next());
-							 break;
+
 							 
-							 case "2": 
+							 case "1": 
 								 roomController.updateRoom();
 								 break;
 							 
-							 case "3": 
+							 case "2": 
 								 roomController.checkAvailability();
 								 break;
-							 case "4":
+							 case "3":
 								 roomController.roomStatisticReport();
-								 break;
-								 
-							 case "5":
-								 String guestIc;
-								 System.out.println("Please enter guest IC: ");
-								guestIc = sc.nextLine();
-								 roomController.calculateRate(guestIc);
-								 break;
-								 
-							 case "6": 
-								 roomController.displayRoom();
-								 break;
-								 
-							 case "7":
-								 System.out.println("Please enter the room ID for checking in: ");
-								 roomController.checkIn(sc.next());
-								 break;
-								 
-							 case "8":
-								 System.out.println("Please enter the room ID for checking out: ");
-								 roomController.checkOut(sc.next());
-								 break;
-								 
-							 case "9":
+								 break;		 
+							 case "4":
 								 break;
 							 default: System.out.println("invalid input");
 						 }
-					 } while(!choice.equals("9"));
+					 } while(!choice.equals("4"));
 					 break;
 					 
 				 case "5": 
