@@ -102,6 +102,8 @@ public class GuestApp {
 			}
 			else if(var.equals("N"))
 				_hotelGuest.ccdetails = null;
+			else
+				System.out.println("Invalid input, please try again");
 			}while(!var.equals("Y") && !var.equals("N"));
 		
 		hotelGuest.add(_hotelGuest);
