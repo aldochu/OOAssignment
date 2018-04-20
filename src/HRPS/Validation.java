@@ -149,6 +149,12 @@ public class Validation {
 		System.out.println("Single/Double/Deluxe/VIP");
 		String roomType = sc.nextLine();
 		
+		while(!roomType.equalsIgnoreCase("Single") && !roomType.equalsIgnoreCase("Double") && !roomType.equalsIgnoreCase("Deluxe") && !roomType.equalsIgnoreCase("VIP"))
+		{
+			System.out.println("Error input.Please enter the room type again:");
+			System.out.println("Single/Double/Deluxe/VIP");
+			roomType = sc.nextLine();
+		}
 		//48 rooms; 6 floors - level 2 to 7; 8 rooms each floor
 		//top floor: 2 VIP, 6 deluxe
 
@@ -159,6 +165,7 @@ public class Validation {
 		//20 double rooms
 		
 		//VIP
+		
 		if(roomType.equalsIgnoreCase("VIP") && vipCount < 2) {
 			vipCount++;
 			hotelRoom.bedType = "2 King Beds";
@@ -172,11 +179,22 @@ public class Validation {
 		//Deluxe
 		else if(roomType.equalsIgnoreCase("Deluxe") && deluxeCount < 6) {
 			deluxeCount++;
-				System.out.println("Would you rather 2 Double Beds? Y:Yes");
-				if(sc.nextLine() == "Y") 
+				System.out.println("Would you rather 2 Double Beds? Y:Yes N:No");
+				String btype = sc.nextLine();
+				while(!btype.equalsIgnoreCase("y") && !btype.equalsIgnoreCase("n"))
+				{
+					System.out.println("Would you rather 2 Double Beds? Y:Yes N:No");
+					btype = sc.nextLine();
+					
+				}
+				if(btype.equalsIgnoreCase("y")) 
+				{
 					hotelRoom.bedType = "2 Double Beds";
-				else 
+				}
+				else if(btype.equalsIgnoreCase("n"))
+				{
 					hotelRoom.bedType = "1 King Bed";
+				}
 //			level = 7;
 //			room = deluxeCount + 2;
 				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DELUXE);
@@ -187,11 +205,22 @@ public class Validation {
 		//Double
 		else if(roomType.equalsIgnoreCase("Double") && doubleCount < 20) {
 			doubleCount++;
-				System.out.println("Would you rather 2 Single Beds? Y:Yes");
-				if(sc.nextLine() == "Y") 
-					hotelRoom.bedType = "2 Single Beds";
-				else 
-					hotelRoom.bedType = "1 Double Bed";
+				System.out.println("Would you rather 2 Single Beds? Y:Yes N:No");
+				String btype = sc.nextLine();
+				while(!btype.equalsIgnoreCase("y") && !btype.equalsIgnoreCase("n"))
+				{
+					System.out.println("Would you rather 2 Double Beds? Y:Yes N:No");
+					btype = sc.nextLine();
+					
+				}
+				if(btype.equalsIgnoreCase("y")) 
+				{
+					hotelRoom.bedType = "2 Double Beds";
+				}
+				else if(btype.equalsIgnoreCase("n"))
+				{
+					hotelRoom.bedType = "1 King Bed";
+				}
 				hotelRoom.roomType=Integer.toString(AppData.ROOM_TYPE_DOUBLE);
 				type = 3;
 //			level = (doubleCount + singleCount) / 8 + 2;
